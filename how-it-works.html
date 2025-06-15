@@ -1,38 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>How It Works – Kivo</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Kivo – How It Works
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
   <script>
-    tailwind.config = {
+   tailwind.config = {
       theme: {
         extend: {
           fontFamily: { sans: ['Inter', 'sans-serif'] },
-          colors: { cerulean: '#007BA7', emerald: '#50C878' }
+          colors: {
+            cerulean: '#007BA7',
+            emerald: '#00B386',
+            graphite: '#1F1F1F'
+          }
         }
       }
     }
   </script>
-</head>
-<body class="bg-white text-gray-800 font-sans">
-  <header class="w-full px-6 py-4 flex justify-between items-center shadow">
-    <a href="index.html" class="text-xl font-bold text-cerulean">kivo</a>
-    <nav class="space-x-4 text-sm font-medium">
-      <a href="about.html" class="text-gray-600 hover:text-cerulean transition">About</a>
-    </nav>
+ </head>
+ <body class="font-sans bg-white text-graphite">
+  <header class="sticky top-0 bg-white shadow z-50 px-6 py-4 flex justify-between items-center">
+   <a class="text-xl font-bold text-cerulean" href="index.html">
+    kivo
+   </a>
+   <nav class="flex items-center space-x-6 text-sm font-medium">
+    <a class="text-gray-700 hover:text-cerulean" href="how-it-works.html">
+     How it Works
+    </a>
+    <a class="text-gray-700 hover:text-cerulean" href="about.html">
+     About
+    </a>
+    <a class="text-gray-700 hover:text-cerulean" href="faq.html">
+     FAQs
+    </a>
+    <a class="text-gray-700 hover:text-cerulean" href="contact.html">
+     Contact
+    </a>
+    <a class="text-gray-700 hover:text-cerulean" href="privacy.html">
+     Privacy
+    </a>
+    <a class="bg-cerulean text-white px-4 py-2 rounded hover:bg-emerald transition" href="index.html#get-started">
+     Check Affordability
+    </a>
+   </nav>
   </header>
-  <main class="px-6 py-20 max-w-3xl mx-auto">
-    <h1 class="text-3xl font-bold mb-8 text-center">How Kivo Works</h1>
-    <ol class="space-y-6 list-decimal list-inside text-lg text-gray-700">
-      <li><strong>Answer a few simple questions.</strong> Your income, deposit, and goals help us begin.</li>
-      <li><strong>Connect to your bank (securely).</strong> With Open Banking, we analyse affordability without paperwork.</li>
-      <li><strong>Get tailored insights instantly.</strong> No waiting for a broker callback. Kivo crunches the numbers for you.</li>
-    </ol>
-    <div class="text-center mt-10">
-      <a href="index.html" class="text-cerulean hover:underline">← Back to Home</a>
+  <section class="max-w-4xl mx-auto px-6 py-20">
+   <h1 class="text-4xl font-bold text-center mb-12">
+    How Kivo Works
+   </h1>
+   <div class="space-y-10 text-gray-700 text-lg">
+    <div>
+     <h2 class="text-2xl font-semibold mb-2 text-emerald">
+      Step 1: Tell Us About You
+     </h2>
+     <p>
+      Answer a few simple questions about your income, deposit, and housing goals. No credit checks, no paperwork.
+     </p>
     </div>
-  </main>
-</body>
+    <div>
+     <h2 class="text-2xl font-semibold mb-2 text-emerald">
+      Step 2: (Optional) Connect Your Bank
+     </h2>
+     <p>
+      Use Open Banking to securely assess your real affordability based on your actual spending — not just what you tell us. This improves your accuracy and Kivo Score.
+     </p>
+    </div>
+    <div>
+     <h2 class="text-2xl font-semibold mb-2 text-emerald">
+      Step 3: Get Your Kivo Score
+     </h2>
+     <p>
+      We use AI to analyse your mortgage readiness. You’ll see a personalised Kivo Score and advice tailored to you — not the average buyer.
+     </p>
+    </div>
+    <div>
+     <h2 class="text-2xl font-semibold mb-2 text-emerald">
+      Step 4: Take Action
+     </h2>
+     <p>
+      We’ll help you plan your next steps — whether that’s improving your finances, connecting with a broker, or starting your application.
+     </p>
+    </div>
+   </div>
+  </section>
+  <footer class="text-sm text-gray-600 bg-white border-t py-10 px-6 mt-10">
+   <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+    <div>
+     <h4 class="font-semibold text-gray-800 mb-2">
+      Product
+     </h4>
+     <ul class="space-y-1">
+      <li>
+       <a class="hover:underline" href="how-it-works.html">
+        How it Works
+       </a>
+      </li>
+      <li>
+       <a class="hover:underline" href="index.html#get-started">
+        Get Started
+       </a>
+      </li>
+     </ul>
+    </div>
+    <div>
+     <h4 class="font-semibold text-gray-800 mb-2">
+      Company
+     </h4>
+     <ul class="space-y-1">
+      <li>
+       <a class="hover:underline" href="about.html">
+        About
+       </a>
+      </li>
+      <li>
+       <a class="hover:underline" href="contact.html">
+        Contact
+       </a>
+      </li>
+     </ul>
+    </div>
+    <div>
+     <h4 class="font-semibold text-gray-800 mb-2">
+      Legal
+     </h4>
+     <ul class="space-y-1">
+      <li>
+       <a class="hover:underline" href="privacy.html">
+        Privacy Policy
+       </a>
+      </li>
+      <li>
+       <a class="hover:underline" href="faq.html">
+        FAQs
+       </a>
+      </li>
+     </ul>
+    </div>
+    <div>
+     <h4 class="font-semibold text-gray-800 mb-2">
+      Follow
+     </h4>
+     <ul class="space-y-1">
+      <li>
+       <a class="hover:underline" href="mailto:support@getkivo.co.uk">
+        Email Support
+       </a>
+      </li>
+     </ul>
+    </div>
+   </div>
+   <div class="text-center mt-8 text-xs text-gray-500">
+    © 2025 Kivo · FCA Registration Pending · Designed by Josh Dolphin
+   </div>
+  </footer>
+ </body>
 </html>
