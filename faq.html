@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kivo – FAQs</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            cerulean: '#007BA7',
+            emerald: '#00B386',
+            graphite: '#1F1F1F'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-white text-graphite">
+
+<header class="sticky top-0 bg-white shadow z-50 px-6 py-4 flex justify-between items-center">
+  <a href="index.html" class="text-xl font-bold text-cerulean">kivo</a>
+  <nav class="space-x-6 text-sm font-medium hidden md:flex">
+    <a href="how-it-works.html" class="text-gray-700 hover:text-cerulean">How it Works</a>
+    <a href="about.html" class="text-gray-700 hover:text-cerulean">About</a>
+    <a href="faq.html" class="text-gray-700 hover:text-cerulean">FAQs</a>
+    <a href="index.html#get-started" class="bg-cerulean text-white px-4 py-2 rounded hover:bg-emerald transition">Check Affordability</a>
+  </nav>
+</header>
+
+<section class="max-w-3xl mx-auto px-6 py-20">
+  <h1 class="text-4xl font-bold text-center mb-12">Frequently Asked Questions</h1>
+  <div class="space-y-6 text-left">
+    <details class="bg-gray-50 p-4 rounded shadow">
+      <summary class="cursor-pointer font-semibold">Is using Kivo free?</summary>
+      <p class="mt-2 text-gray-600">Yes — it's completely free. We may earn a commission from lenders if you apply through us, but you always see the best options regardless.</p>
+    </details>
+    <details class="bg-gray-50 p-4 rounded shadow">
+      <summary class="cursor-pointer font-semibold">Does Kivo affect my credit score?</summary>
+      <p class="mt-2 text-gray-600">Nope. We don’t run any credit checks — everything is based on your input and optional Open Banking data.</p>
+    </details>
+    <details class="bg-gray-50 p-4 rounded shadow">
+      <summary class="cursor-pointer font-semibold">Is Open Banking safe?</summary>
+      <p class="mt-2 text-gray-600">Yes — it’s regulated and secure. You’re always in control, and we never see your login details.</p>
+    </details>
+    <details class="bg-gray-50 p-4 rounded shadow">
+      <summary class="cursor-pointer font-semibold">Can I talk to a real person?</summary>
+      <p class="mt-2 text-gray-600">Yes — we offer live support and partner with trusted mortgage advisers for more complex cases.</p>
+    </details>
+    <details class="bg-gray-50 p-4 rounded shadow">
+      <summary class="cursor-pointer font-semibold">What is a Kivo Score?</summary>
+      <p class="mt-2 text-gray-600">It’s our way of helping you understand how close you are to mortgage readiness, using your financial profile and goals.</p>
+    </details>
+  </div>
+</section>
+
+<footer class="text-center text-sm py-8 text-gray-500 bg-white border-t mt-10">
+  © 2025 Kivo · FCA Registration Pending · Designed by Josh Dolphin
+</footer>
+
+</body>
+</html>
