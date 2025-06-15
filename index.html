@@ -2,42 +2,100 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kivo – AI Mortgage Advisor</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            cerulean: '#007BA7',
+            emerald: '#50C878'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    ::selection { background: #007BA7; color: white; }
+  </style>
 </head>
-<body class="bg-white text-gray-800 font-sans">
+<body class="font-sans bg-white text-gray-800">
 
-  <header class="w-full px-6 py-4 flex justify-between items-center shadow">
-    <h1 class="text-xl font-bold text-blue-600">kivo</h1>
-    <nav class="space-x-4 text-sm">
-      <a href="about.html" class="text-gray-600 hover:text-blue-600">About</a>
-      <a href="how-it-works.html" class="text-gray-600 hover:text-blue-600">How It Works</a>
+  <!-- Header -->
+  <header class="sticky top-0 bg-white shadow z-50 px-6 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold text-cerulean">kivo</h1>
+    <nav class="space-x-6 text-sm font-medium">
+      <a href="about.html" class="text-gray-600 hover:text-cerulean transition">About</a>
+      <a href="how-it-works.html" class="text-gray-600 hover:text-cerulean transition">How It Works</a>
+      <a href="#get-started" class="bg-cerulean text-white px-4 py-2 rounded hover:bg-emerald transition">Check Affordability</a>
     </nav>
   </header>
 
-  <section class="text-center px-6 py-20 bg-blue-50">
-    <h2 class="text-4xl font-bold mb-4">AI mortgage advice, without the jargon.</h2>
-    <p class="text-lg mb-6">Find out what you could borrow — in 2 minutes, no paperwork.</p>
-    <a href="#cta" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition">
-      Check what I can afford
-    </a>
+  <!-- Hero -->
+  <section class="bg-gradient-to-b from-blue-50 to-white text-center px-6 py-24">
+    <h2 class="text-5xl font-bold text-gray-900 mb-6 tracking-tight">AI mortgage advice,<br>without the jargon.</h2>
+    <p class="text-xl text-gray-600 max-w-xl mx-auto mb-8">Find out what you could borrow — in 2 minutes, no paperwork, no pressure.</p>
+    <a href="#get-started" class="inline-block bg-cerulean text-white px-8 py-3 rounded-lg shadow hover:bg-emerald transition text-lg font-semibold">Get Started</a>
   </section>
 
-  <section id="cta" class="bg-blue-600 text-white text-center py-16 px-6">
-    <h3 class="text-2xl font-bold mb-4">Ready to get started?</h3>
-    <p class="mb-6">Start your journey to homeownership in minutes — for free.</p>
+  <!-- Features -->
+  <section class="max-w-6xl mx-auto px-6 py-20">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+      <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+        <img src="https://www.svgrepo.com/show/491435/bank.svg" alt="Open Banking" class="w-12 h-12 mx-auto mb-4">
+        <h3 class="text-lg font-semibold text-cerulean mb-2">Open Banking</h3>
+        <p>Connect your bank safely to get a real-time, personalised borrowing estimate.</p>
+      </div>
+      <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+        <img src="https://www.svgrepo.com/show/379470/no-money.svg" alt="No Fees" class="w-12 h-12 mx-auto mb-4">
+        <h3 class="text-lg font-semibold text-cerulean mb-2">No Fees</h3>
+        <p>No broker commissions or hidden costs. Kivo gives it to you straight.</p>
+      </div>
+      <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+        <img src="https://www.svgrepo.com/show/510967/ai-chip.svg" alt="AI Smart Insights" class="w-12 h-12 mx-auto mb-4">
+        <h3 class="text-lg font-semibold text-cerulean mb-2">Smart Insights</h3>
+        <p>Backed by AI and trained on market data — tailored advice, no cookie-cutter reports.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="bg-gray-50 py-20">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h3 class="text-2xl font-bold mb-10 text-gray-800">What early users are saying</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+        <blockquote class="bg-white p-6 rounded-xl shadow">
+          <p class="italic mb-2">“I got clarity in minutes. This is miles ahead of my last mortgage broker.”</p>
+          <cite class="text-sm text-gray-500">– Alex R., First-time Buyer</cite>
+        </blockquote>
+        <blockquote class="bg-white p-6 rounded-xl shadow">
+          <p class="italic mb-2">“Honestly? I thought it was too good to be true. But it just works.”</p>
+          <cite class="text-sm text-gray-500">– Priya K., Self-Employed</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section id="get-started" class="bg-cerulean text-white text-center py-20 px-6">
+    <h3 class="text-3xl font-bold mb-4">Ready to get started?</h3>
+    <p class="mb-8 text-lg">See what you could afford in under 2 minutes.</p>
     <form action="https://formspree.io/f/your-form-id" method="POST" class="max-w-md mx-auto">
       <input type="email" name="email" required placeholder="you@example.com"
-        class="w-full px-4 py-2 rounded text-gray-800 mb-4" />
-      <button type="submit" class="w-full bg-white text-blue-600 py-2 rounded font-semibold hover:bg-gray-100">
+        class="w-full px-4 py-3 rounded text-gray-800 mb-4 outline-none focus:ring-2 ring-emerald" />
+      <button type="submit" class="w-full bg-white text-cerulean py-3 rounded font-semibold hover:bg-gray-100">
         Join the waitlist
       </button>
     </form>
   </section>
 
-  <footer class="text-center text-sm py-6 text-gray-500">
-    © 2025 Kivo. Brand & Product Vision by Josh Dolphin.
+  <!-- Footer -->
+  <footer class="text-center text-sm py-8 text-gray-500">
+    Built with care by Josh Dolphin · © 2025 Kivo
   </footer>
 
 </body>

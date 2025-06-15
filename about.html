@@ -5,19 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>About – Kivo</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: { cerulean: '#007BA7', emerald: '#50C878' }
+        }
+      }
+    }
+  </script>
 </head>
 <body class="bg-white text-gray-800 font-sans">
   <header class="w-full px-6 py-4 flex justify-between items-center shadow">
-    <a href="index.html" class="text-xl font-bold text-blue-600">kivo</a>
-    <nav class="space-x-4 text-sm">
-      <a href="how-it-works.html" class="text-gray-600 hover:text-blue-600">How It Works</a>
+    <a href="index.html" class="text-xl font-bold text-cerulean">kivo</a>
+    <nav class="space-x-4 text-sm font-medium">
+      <a href="how-it-works.html" class="text-gray-600 hover:text-cerulean transition">How It Works</a>
     </nav>
   </header>
-  <main class="px-6 py-16 max-w-3xl mx-auto text-center">
-    <h1 class="text-3xl font-bold mb-4">Why We Built Kivo</h1>
-    <p class="text-lg mb-4">Mortgages shouldn’t be confusing, stressful, or stuck in the past. Kivo is here to change that.</p>
-    <p class="mb-6">With AI-driven guidance and modern design, we help people get clear answers about what they can afford — fast. No fees. No fluff. Just better outcomes.</p>
-    <a href="index.html" class="text-blue-600 hover:underline">← Back to Home</a>
+  <main class="px-6 py-20 max-w-3xl mx-auto text-center">
+    <h1 class="text-3xl font-bold mb-6">Our Mission at Kivo</h1>
+    <p class="text-lg text-gray-600 mb-4">Kivo was born from frustration — outdated mortgage systems, hidden fees, and hours of paperwork. We knew there had to be a better way.</p>
+    <p class="text-gray-700 mb-6">We're building an AI-first approach to mortgages: accessible, fair, and built for people — not just banks.</p>
+    <a href="index.html" class="text-cerulean hover:underline">← Back to Home</a>
   </main>
 </body>
 </html>
