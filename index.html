@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kivo – AI Mortgage Advisor</title>
+  <title>Kivo – Smarter Mortgage Advice</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
@@ -13,89 +15,91 @@
           fontFamily: { sans: ['Inter', 'sans-serif'] },
           colors: {
             cerulean: '#007BA7',
-            emerald: '#50C878'
+            emerald: '#00B386',
+            graphite: '#1F1F1F'
           }
         }
       }
     }
   </script>
-  <style>
-    ::selection { background: #007BA7; color: white; }
-  </style>
 </head>
-<body class="font-sans bg-white text-gray-800">
+<body class="font-sans bg-white text-graphite">
 
   <!-- Header -->
   <header class="sticky top-0 bg-white shadow z-50 px-6 py-4 flex justify-between items-center">
-    <h1 class="text-xl font-bold text-cerulean">kivo</h1>
+    <a href="index.html" class="text-xl font-bold text-cerulean">kivo</a>
     <nav class="space-x-6 text-sm font-medium">
-      <a href="about.html" class="text-gray-600 hover:text-cerulean transition">About</a>
-      <a href="how-it-works.html" class="text-gray-600 hover:text-cerulean transition">How It Works</a>
+      <a href="how-it-works.html" class="text-gray-700 hover:text-cerulean">How it Works</a>
+      <a href="about.html" class="text-gray-700 hover:text-cerulean">About</a>
+      <a href="mailto:support@getkivo.co.uk" class="text-gray-700 hover:text-cerulean">Contact</a>
       <a href="#get-started" class="bg-cerulean text-white px-4 py-2 rounded hover:bg-emerald transition">Check Affordability</a>
     </nav>
   </header>
 
   <!-- Hero -->
-  <section class="bg-gradient-to-b from-blue-50 to-white text-center px-6 py-24">
-    <h2 class="text-5xl font-bold text-gray-900 mb-6 tracking-tight">AI mortgage advice,<br>without the jargon.</h2>
-    <p class="text-xl text-gray-600 max-w-xl mx-auto mb-8">Find out what you could borrow — in 2 minutes, no paperwork, no pressure.</p>
-    <a href="#get-started" class="inline-block bg-cerulean text-white px-8 py-3 rounded-lg shadow hover:bg-emerald transition text-lg font-semibold">Get Started</a>
+  <section class="text-center px-6 py-24 bg-gradient-to-b from-blue-50 to-white">
+    <h1 class="text-5xl font-bold mb-6 leading-tight tracking-tight">AI-Powered Mortgage Advice, Without the Jargon</h1>
+    <p class="text-lg text-gray-700 max-w-xl mx-auto mb-6">Find out what you could borrow in minutes – free, secure and tailored to you.</p>
+    <a href="#get-started" class="inline-block bg-cerulean text-white px-8 py-3 rounded-lg shadow hover:bg-emerald transition text-lg font-semibold">Get Started Now</a>
+    <p class="text-sm text-gray-500 mt-2">No paperwork. No credit impact.</p>
   </section>
 
-  <!-- Features -->
-  <section class="max-w-6xl mx-auto px-6 py-20">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
-      <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-        <img src="https://www.svgrepo.com/show/491435/bank.svg" alt="Open Banking" class="w-12 h-12 mx-auto mb-4">
-        <h3 class="text-lg font-semibold text-cerulean mb-2">Open Banking</h3>
-        <p>Connect your bank safely to get a real-time, personalised borrowing estimate.</p>
+  <!-- Features Section -->
+  <section class="max-w-6xl mx-auto px-6 py-20 text-center">
+    <h2 class="text-2xl font-bold mb-12">Why Choose Kivo?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-md transition">
+        <img src="https://www.svgrepo.com/show/491435/bank.svg" alt="Bank connection icon" class="w-12 h-12 mx-auto mb-4">
+        <h3 class="text-lg font-semibold text-cerulean mb-2">Bank-Level Security</h3>
+        <p>Your data is encrypted and never shared without your consent.</p>
       </div>
-      <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-        <img src="https://www.svgrepo.com/show/379470/no-money.svg" alt="No Fees" class="w-12 h-12 mx-auto mb-4">
-        <h3 class="text-lg font-semibold text-cerulean mb-2">No Fees</h3>
-        <p>No broker commissions or hidden costs. Kivo gives it to you straight.</p>
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-md transition">
+        <img src="https://www.svgrepo.com/show/379470/no-money.svg" alt="No fees icon" class="w-12 h-12 mx-auto mb-4">
+        <h3 class="text-lg font-semibold text-cerulean mb-2">Fee-Free Advice</h3>
+        <p>We don't charge you – and we're not tied to any lender.</p>
       </div>
-      <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-        <img src="https://www.svgrepo.com/show/510967/ai-chip.svg" alt="AI Smart Insights" class="w-12 h-12 mx-auto mb-4">
-        <h3 class="text-lg font-semibold text-cerulean mb-2">Smart Insights</h3>
-        <p>Backed by AI and trained on market data — tailored advice, no cookie-cutter reports.</p>
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-md transition">
+        <img src="https://www.svgrepo.com/show/510967/ai-chip.svg" alt="AI chip icon" class="w-12 h-12 mx-auto mb-4">
+        <h3 class="text-lg font-semibold text-cerulean mb-2">Tailored by AI</h3>
+        <p>Get custom recommendations based on your unique profile.</p>
       </div>
     </div>
   </section>
 
-  <!-- Testimonials -->
+  <!-- Testimonials Section -->
   <section class="bg-gray-50 py-20">
     <div class="max-w-4xl mx-auto px-6 text-center">
-      <h3 class="text-2xl font-bold mb-10 text-gray-800">What early users are saying</h3>
+      <h2 class="text-2xl font-bold mb-10">What Our Users Say</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
         <blockquote class="bg-white p-6 rounded-xl shadow">
-          <p class="italic mb-2">“I got clarity in minutes. This is miles ahead of my last mortgage broker.”</p>
-          <cite class="text-sm text-gray-500">– Alex R., First-time Buyer</cite>
+          <p class="italic mb-2">“Kivo helped me understand what I could afford and got me a better rate than my bank offered.”</p>
+          <cite class="text-sm text-gray-500">– Alex M., Manchester</cite>
         </blockquote>
         <blockquote class="bg-white p-6 rounded-xl shadow">
-          <p class="italic mb-2">“Honestly? I thought it was too good to be true. But it just works.”</p>
-          <cite class="text-sm text-gray-500">– Priya K., Self-Employed</cite>
+          <p class="italic mb-2">“I didn’t expect it to be so easy. The advice was clear, and I never felt pressured.”</p>
+          <cite class="text-sm text-gray-500">– Priya K., London</cite>
         </blockquote>
       </div>
     </div>
   </section>
 
-  <!-- Call to Action -->
+  <!-- CTA -->
   <section id="get-started" class="bg-cerulean text-white text-center py-20 px-6">
-    <h3 class="text-3xl font-bold mb-4">Ready to get started?</h3>
-    <p class="mb-8 text-lg">See what you could afford in under 2 minutes.</p>
+    <h3 class="text-3xl font-bold mb-4">Check What You Can Afford</h3>
+    <p class="mb-8 text-lg">Answer a few questions – no credit check, no hassle.</p>
     <form action="https://formspree.io/f/your-form-id" method="POST" class="max-w-md mx-auto">
       <input type="email" name="email" required placeholder="you@example.com"
         class="w-full px-4 py-3 rounded text-gray-800 mb-4 outline-none focus:ring-2 ring-emerald" />
       <button type="submit" class="w-full bg-white text-cerulean py-3 rounded font-semibold hover:bg-gray-100">
-        Join the waitlist
+        Join the Waitlist
       </button>
     </form>
+    <p class="text-sm text-gray-100 mt-2">We’ll only contact you with mortgage insights – no spam, ever.</p>
   </section>
 
   <!-- Footer -->
-  <footer class="text-center text-sm py-8 text-gray-500">
-    Built with care by Josh Dolphin · © 2025 Kivo
+  <footer class="text-center text-sm py-8 text-gray-500 bg-white border-t mt-10">
+    © 2025 Kivo · FCA Registration Pending · Designed by Josh Dolphin
   </footer>
 
 </body>
