@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Kivo Check – Get Your Score
+  </title>
+  <script>
+   // Add sticky shadow on scroll
+    window.addEventListener("scroll", function () {
+      const header = document.getElementById("mainHeader");
+      if (window.scrollY > 20) {
+        header.classList.add("shadow-md");
+      } else {
+        header.classList.remove("shadow-md");
+      }
+    });
+
+    // Highlight active nav link
+    const path = window.location.pathname.split("/").pop();
+    document.querySelectorAll("nav a").forEach(link => {
+      if (link.getAttribute("href") === path) {
+        link.classList.add("underline", "font-semibold", "text-cerulean");
+      }
+    });
+  </script>
+  <script>
+   const form = document.getElementById('kivoForm');
+    form.addEventListener('submit', function(e) {
+      const inputs = form.querySelectorAll('input, select');
+      let valid = true;
+      inputs.forEach(input => {
+        const error = input.nextElementSibling;
+        if (input.value === '') {
+          if (!error || !error.classList.contains('text-red-500')) {
+            const msg = document.createElement('div');
+            msg.className = 'text-red-500 text-sm mt-1 opacity-0 transition-opacity duration-500';
+            msg.innerText = 'This field is required';
+            input.insertAdjacentElement('afterend', msg);
+ setTimeout(() => msg.classList.remove('opacity-0'), 10);
+          }
+          input.classList.add('border-red-500');
+          valid = false;
+        } else {
+          input.classList.remove('border-red-500');
+          if (error && error.classList.contains('text-red-500')) {
+            error.remove();
+          }
+        }
+      });
+      if (!valid) {
+        e.preventDefault();
+      }
+    });
+  </script>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+ </head>
+ <body class="bg-[#F9F5F2] text-gray-800 font-sans">
+  <header class="sticky top-0 px-6 py-4 shadow bg-[#F0E9E3] flex justify-between items-center" id="mainHeader">
+   <a class="text-xl font-bold text-cerulean" href="index.html">
+    kivo
+   </a>
+   <nav class="flex items-center space-x-6 text-sm font-medium">
+    <a class="hover:text-cerulean" href="how-it-works.html">
+     How it Works
+    </a>
+    <a class="hover:text-cerulean" href="about.html">
+     About
+    </a>
+    <a class="hover:text-cerulean" href="faq.html">
+     FAQs
+    </a>
+    <a class="hover:text-cerulean" href="contact.html">
+     Contact
+    </a>
+    <a class="hover:text-cerulean" href="privacy.html">
+     Privacy
+    </a>
+    <a class="bg-cerulean text-white px-4 py-2 rounded hover:bg-emerald transition" href="kivo-check.html">
+     Check Now
+    </a>
+   </nav>
+  </header>
+  <section class="max-w-xl mx-auto py-12 px-6">
+   <h1 class="text-3xl font-bold text-center mb-6">
+    Kivo Financial Check
+   </h1>
+   <p class="text-center mb-8 text-gray-600">
+    Let’s gather a few details to calculate your Kivo Score.
+   </p>
+   <form class="space-y-6" id="kivoForm" novalidate="true">
+    <div>
+     <label class="block mb-1 font-medium">
+      Annual Income (£)
+     </label>
+     <input class="w-full p-3 border rounded" name="income" required="" type="number"/>
+     <div class="text-xs text-gray-500 mt-1">
+      Your total gross yearly income (e.g. 42000)
+     </div>
+    </div>
+    <div>
+     <label class="block mb-1 font-medium">
+      Deposit Saved (£)
+     </label>
+     <input class="w-full p-3 border rounded" name="deposit" required="" type="number"/>
+     <div class="text-xs text-gray-500 mt-1">
+      Savings you plan to use as deposit (e.g. 10000)
+     </div>
+    </div>
+    <div>
+     <label class="block mb-1 font-medium">
+      Monthly Rent (£)
+     </label>
+     <input class="w-full p-3 border rounded" name="rent" required="" type="number"/>
+     <div class="text-xs text-gray-500 mt-1">
+      Current monthly rent amount (e.g. 800)
+     </div>
+    </div>
+    <div>
+     <label class="block mb-1 font-medium">
+      Any Existing Debt?
+     </label>
+     <select class="w-full p-3 border rounded" name="debt" required="">
+      <option value="">
+       Select one
+      </option>
+      <option value="Yes">
+       Yes
+      </option>
+      <option value="No">
+       No
+      </option>
+     </select>
+     <div class="text-xs text-gray-500 mt-1">
+      Do you have outstanding credit or loans?
+     </div>
+    </div>
+    <div>
+     <label class="block mb-1 font-medium">
+      Credit History
+     </label>
+     <select class="w-full p-3 border rounded" name="credit" required="">
+      <option value="">
+       Select one
+      </option>
+      <option value="Good">
+       Good
+      </option>
+      <option value="Fair">
+       Fair
+      </option>
+      <option value="Poor">
+       Poor
+      </option>
+     </select>
+     <div class="text-xs text-gray-500 mt-1">
+      Choose your closest credit profile
+     </div>
+    </div>
+    <div class="text-center pt-4">
+     <button class="bg-emerald text-white px-6 py-3 rounded hover:bg-cerulean transition" type="submit">
+      Get My Score
+     </button>
+    </div>
+   </form>
+  </section>
+  <script>
+   document.getElementById("kivoForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+  const formData = new FormData(this);
+  const data = {};
+  formData.forEach((value, key) => data[key] = isNaN(value) ? value : Number(value));
+  localStorage.setItem("kivoFormData", JSON.stringify(data));
+  window.location.href = "kivo-check.html";
+});
+  </script>
+ </body>
+</html>

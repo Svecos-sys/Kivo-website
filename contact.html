@@ -6,6 +6,25 @@
   <title>
    Kivo – Contact Us
   </title>
+  <script>
+   // Add sticky shadow on scroll
+    window.addEventListener("scroll", function () {
+      const header = document.getElementById("mainHeader");
+      if (window.scrollY > 20) {
+        header.classList.add("shadow-md");
+      } else {
+        header.classList.remove("shadow-md");
+      }
+    });
+
+    // Highlight active nav link
+    const path = window.location.pathname.split("/").pop();
+    document.querySelectorAll("nav a").forEach(link => {
+      if (link.getAttribute("href") === path) {
+        link.classList.add("underline", "font-semibold", "text-cerulean");
+      }
+    });
+  </script>
   <script src="https://cdn.tailwindcss.com">
   </script>
   <script>
@@ -32,7 +51,7 @@
   <meta content="https://getkivo.co.uk/og-image.jpg" property="og:image"/>
  </head>
  <body class="font-sans bg-white text-graphite" style="background-color: #F9F5F2">
-  <header class="sticky top-0 bg-white shadow z-50 px-6 py-4 flex justify-between items-center">
+  <header class="sticky top-0 bg-white shadow z-50 px-6 py-4 flex justify-between items-center" id="mainHeader" style="background-color: #F0E9E3">
    <a class="text-xl font-bold text-cerulean" href="index.html">
     kivo
    </a>
@@ -52,7 +71,7 @@
     <a class="text-gray-700 hover:text-cerulean" href="privacy.html">
      Privacy
     </a>
-    <a class="bg-cerulean text-white px-4 py-2 rounded hover:bg-emerald transition" href="kivo-score.html">
+    <a class="bg-cerulean text-white px-4 py-2 rounded hover:bg-emerald transition" href="kivo-check.html">
      Kivo Score
     </a>
    </nav>
@@ -73,7 +92,7 @@
     </button>
    </form>
   </section>
-  <footer class="text-sm text-gray-600 bg-white border-t py-10 px-6 mt-10">
+  <footer class="text-sm text-gray-600 bg-white border-t py-10 px-6 mt-10" style="background-color: #F0E9E3">
    <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
     <div>
      <h4 class="font-semibold text-gray-800 mb-2">
@@ -86,7 +105,7 @@
        </a>
       </li>
       <li>
-       <a class="hover:underline" href="kivo-score.html">
+       <a class="hover:underline" href="kivo-check.html">
         Get Started
        </a>
       </li>
