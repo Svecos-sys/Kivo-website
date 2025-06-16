@@ -1,180 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>
-   Kivo Check – Get Your Score
-  </title>
-  <script>
-   // Add sticky shadow on scroll
-    window.addEventListener("scroll", function () {
-      const header = document.getElementById("mainHeader");
-      if (window.scrollY > 20) {
-        header.classList.add("shadow-md");
-      } else {
-        header.classList.remove("shadow-md");
-      }
-    });
-
-    // Highlight active nav link
-    const path = window.location.pathname.split("/").pop();
-    document.querySelectorAll("nav a").forEach(link => {
-      if (link.getAttribute("href") === path) {
-        link.classList.add("underline", "font-semibold", "text-cerulean");
-      }
-    });
-  </script>
-  <script>
-   const form = document.getElementById('kivoForm');
-    form.addEventListener('submit', function(e) {
-      const inputs = form.querySelectorAll('input, select');
-      let valid = true;
-      inputs.forEach(input => {
-        const error = input.nextElementSibling;
-        if (input.value === '') {
-          if (!error || !error.classList.contains('text-red-500')) {
-            const msg = document.createElement('div');
-            msg.className = 'text-red-500 text-sm mt-1 opacity-0 transition-opacity duration-500';
-            msg.innerText = 'This field is required';
-            input.insertAdjacentElement('afterend', msg);
- setTimeout(() => msg.classList.remove('opacity-0'), 10);
-          }
-          input.classList.add('border-red-500');
-          valid = false;
-        } else {
-          input.classList.remove('border-red-500');
-          if (error && error.classList.contains('text-red-500')) {
-            error.remove();
-          }
-        }
-      });
-      if (!valid) {
-        e.preventDefault();
-      }
-    });
-  </script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kivo Check – Step-by-Step</title>
   <script src="https://cdn.tailwindcss.com">
-  </script>
- </head>
- <body class="bg-[#F9F5F2] text-gray-800 font-sans">
-  <header class="sticky top-0 px-6 py-4 shadow bg-[#F0E9E3] flex justify-between items-center" id="mainHeader">
-   <a class="text-xl font-bold text-cerulean" href="index.html">
-    kivo
-   </a>
-   <nav class="flex items-center space-x-6 text-sm font-medium">
-    <a class="hover:text-cerulean" href="how-it-works.html">
-     How it Works
-    </a>
-    <a class="hover:text-cerulean" href="about.html">
-     About
-    </a>
-    <a class="hover:text-cerulean" href="faq.html">
-     FAQs
-    </a>
-    <a class="hover:text-cerulean" href="contact.html">
-     Contact
-    </a>
-    <a class="hover:text-cerulean" href="privacy.html">
-     Privacy
-    </a>
-    <a class="bg-cerulean text-white px-4 py-2 rounded hover:bg-emerald transition" href="kivo-check.html">
-     Check Now
-    </a>
-   </nav>
-  </header>
-  <section class="max-w-xl mx-auto py-12 px-6">
-   <h1 class="text-3xl font-bold text-center mb-6">
-    Kivo Financial Check
-   </h1>
-   <p class="text-center mb-8 text-gray-600">
-    Let’s gather a few details to calculate your Kivo Score.
-   </p>
-   <form class="space-y-6" id="kivoForm" novalidate="true">
-    <div>
-     <label class="block mb-1 font-medium">
-      Annual Income (£)
-     </label>
-     <input class="w-full p-3 border rounded" name="income" required="" type="number"/>
-     <div class="text-xs text-gray-500 mt-1">
-      Your total gross yearly income (e.g. 42000)
-     </div>
-    </div>
-    <div>
-     <label class="block mb-1 font-medium">
-      Deposit Saved (£)
-     </label>
-     <input class="w-full p-3 border rounded" name="deposit" required="" type="number"/>
-     <div class="text-xs text-gray-500 mt-1">
-      Savings you plan to use as deposit (e.g. 10000)
-     </div>
-    </div>
-    <div>
-     <label class="block mb-1 font-medium">
-      Monthly Rent (£)
-     </label>
-     <input class="w-full p-3 border rounded" name="rent" required="" type="number"/>
-     <div class="text-xs text-gray-500 mt-1">
-      Current monthly rent amount (e.g. 800)
-     </div>
-    </div>
-    <div>
-     <label class="block mb-1 font-medium">
-      Any Existing Debt?
-     </label>
-     <select class="w-full p-3 border rounded" name="debt" required="">
-      <option value="">
-       Select one
-      </option>
-      <option value="Yes">
-       Yes
-      </option>
-      <option value="No">
-       No
-      </option>
-     </select>
-     <div class="text-xs text-gray-500 mt-1">
-      Do you have outstanding credit or loans?
-     </div>
-    </div>
-    <div>
-     <label class="block mb-1 font-medium">
-      Credit History
-     </label>
-     <select class="w-full p-3 border rounded" name="credit" required="">
-      <option value="">
-       Select one
-      </option>
-      <option value="Good">
-       Good
-      </option>
-      <option value="Fair">
-       Fair
-      </option>
-      <option value="Poor">
-       Poor
-      </option>
-     </select>
-     <div class="text-xs text-gray-500 mt-1">
-      Choose your closest credit profile
-     </div>
-    </div>
-    <div class="text-center pt-4">
-     <button class="bg-emerald text-white px-6 py-3 rounded hover:bg-cerulean transition" type="submit">
-      Get My Score
-     </button>
-    </div>
-   </form>
-  </section>
-  <script>
-   document.getElementById("kivoForm").addEventListener("submit", function(event) {
-  event.preventDefault();
-  const formData = new FormData(this);
-  const data = {};
-  formData.forEach((value, key) => data[key] = isNaN(value) ? value : Number(value));
-  localStorage.setItem("kivoFormData", JSON.stringify(data));
-  window.location.href = "kivo-check.html";
+let touchStartX = null;
+
+document.addEventListener('touchstart', function(e) {
+  touchStartX = e.changedTouches[0].screenX;
+}, false);
+
+document.addEventListener('touchend', function(e) {
+  if (touchStartX === null) return;
+  let touchEndX = e.changedTouches[0].screenX;
+  let diff = touchStartX - touchEndX;
+  if (Math.abs(diff) > 50) {
+    if (diff > 0 && currentStep < steps.length - 1) {
+      nextBtn.click();
+    } else if (diff < 0 && currentStep > 0) {
+      backBtn.click();
+    }
+  }
+  touchStartX = null;
+}, false);
+
+
+// Optional: animate a loader before redirection
+const loading = document.createElement("div");
+loading.className = "fixed inset-0 flex items-center justify-center bg-white bg-opacity-70 text-2xl font-semibold z-50 hidden";
+loading.id = "loadingOverlay";
+loading.innerHTML = "Calculating your Kivo Score...";
+document.body.appendChild(loading);
+
+function showLoader() {
+  document.getElementById("loadingOverlay").classList.remove("hidden");
+}
+
+nextBtn.addEventListener("click", () => {
+  if (currentStep === steps.length - 1) {
+    showLoader();
+  }
 });
-  </script>
- </body>
+
+</script>
+  <style>
+    .step { display: none; }
+    .step.active { display: block; animation: fade 0.5s ease-in-out; }
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800 font-sans">
+
+<header class="sticky top-0 px-6 py-4 shadow bg-blue-50 flex justify-between items-center" id="mainHeader">
+  <a href="index.html" class="text-xl font-bold text-cerulean">kivo</a>
+  <nav class="flex items-center space-x-6 text-sm font-medium">
+    <a href="how-it-works.html" class="hover:text-cerulean">How it Works</a>
+    <a href="about.html" class="hover:text-cerulean">About</a>
+    <a href="faq.html" class="hover:text-cerulean">FAQs</a>
+    <a href="contact.html" class="hover:text-cerulean">Contact</a>
+    <a href="privacy.html" class="hover:text-cerulean">Privacy</a>
+  </nav>
+</header>
+
+<section>
+  <div class="text-center py-6"><img src="https://placehold.co/400x200?text=Illustration" alt="Visual" class="mx-auto mb-4 rounded-md shadow"/></div>
+<section class="max-w-xl mx-auto py-10 px-6">
+  <h1 class="text-3xl font-bold text-center mb-4">Your Kivo Check</h1>
+  <p class="text-center text-gray-600 mb-8">We’ll ask you a few short questions to personalise your Kivo Score.</p>
+
+  
+    <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+      <div id="progressBar" class="bg-gradient-to-r from-emerald to-cerulean h-2.5 rounded-full transition-all duration-500 ease-in-out shadow-inner" style="width: 20%"></div>
+    </div>
+    <div id="steps" class="space-y-6">
+    
+    <div class="step active" data-step="0">
+      <label class="block mb-2 font-medium">💼 What’s your annual income?</label>
+      <input type="number" name="income" class="w-full p-3 border rounded" placeholder="e.g. 42000">
+    </div>
+    <div class="step" data-step="1">
+      <label class="block mb-2 font-medium">🏦 How much have you saved for a deposit?</label>
+      <input type="number" name="deposit" class="w-full p-3 border rounded" placeholder="e.g. 10000">
+    </div>
+    <div class="step" data-step="2">
+      <label class="block mb-2 font-medium">🏠 What’s your current monthly rent?</label>
+      <input type="number" name="rent" class="w-full p-3 border rounded" placeholder="e.g. 800">
+    </div>
+    <div class="step" data-step="3">
+      <label class="block mb-2 font-medium">📉 Do you have any existing debt?</label>
+      <select name="debt" class="w-full p-3 border rounded">
+        <option value="">Select one</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
+    <div class="step" data-step="4">
+      <label class="block mb-2 font-medium">💳 How’s your credit history?</label>
+      <select name="credit" class="w-full p-3 border rounded">
+        <option value="">Select one</option>
+        <option value="Good">Good</option>
+        <option value="Fair">Fair</option>
+        <option value="Poor">Poor</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="flex justify-between items-center mt-10">
+    <button id="backBtn" class="text-cerulean font-medium hover:underline hidden">← Back</button>
+    <button id="nextBtn" class="bg-cerulean text-white px-6 py-2 rounded hover:bg-emerald">Next</button>
+  </div>
+
+  <div class="text-center text-sm text-gray-500 mt-6" id="stepIndicator">Step 1 of 5</div>
+</section>
+
+<script>
+  const steps = document.querySelectorAll(".step");
+  const nextBtn = document.getElementById("nextBtn");
+  const backBtn = document.getElementById("backBtn");
+  const stepIndicator = document.getElementById("stepIndicator");
+
+  let currentStep = 0;
+
+  
+function showStep(index) {
+    const progress = ((index + 1) / steps.length) * 100;
+    document.getElementById("progressBar").style.width = progress + "%";
+
+    steps.forEach((step, i) => {
+      step.classList.toggle("active", i === index);
+    });
+    backBtn.style.display = index > 0 ? "inline-block" : "none";
+    nextBtn.textContent = index === steps.length - 1 ? "See My Score" : "Next";
+    stepIndicator.textContent = `Step ${index + 1} of ${steps.length}`;
+  }
+
+  nextBtn.addEventListener("click", () => {
+    const input = steps[currentStep].querySelector("input, select");
+    if (!input.value) {
+      input.classList.add("border-red-500");
+      return;
+    } else {
+      input.classList.remove("border-red-500");
+    }
+
+    if (currentStep < steps.length - 1) {
+      currentStep++;
+      showStep(currentStep);
+    } else {
+      // Gather data
+      const data = {};
+      document.querySelectorAll("input, select").forEach(input => {
+        data[input.name] = isNaN(input.value) ? input.value : Number(input.value);
+      });
+      localStorage.setItem("kivoFormData", JSON.stringify(data));
+      window.location.href = "kivo-score.html";
+    }
+  });
+
+  backBtn.addEventListener("click", () => {
+    if (currentStep > 0) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  });
+
+  showStep(currentStep);
+
+let touchStartX = null;
+
+document.addEventListener('touchstart', function(e) {
+  touchStartX = e.changedTouches[0].screenX;
+}, false);
+
+document.addEventListener('touchend', function(e) {
+  if (touchStartX === null) return;
+  let touchEndX = e.changedTouches[0].screenX;
+  let diff = touchStartX - touchEndX;
+  if (Math.abs(diff) > 50) {
+    if (diff > 0 && currentStep < steps.length - 1) {
+      nextBtn.click();
+    } else if (diff < 0 && currentStep > 0) {
+      backBtn.click();
+    }
+  }
+  touchStartX = null;
+}, false);
+
+
+// Optional: animate a loader before redirection
+const loading = document.createElement("div");
+loading.className = "fixed inset-0 flex items-center justify-center bg-white bg-opacity-70 text-2xl font-semibold z-50 hidden";
+loading.id = "loadingOverlay";
+loading.innerHTML = "Calculating your Kivo Score...";
+document.body.appendChild(loading);
+
+function showLoader() {
+  document.getElementById("loadingOverlay").classList.remove("hidden");
+}
+
+nextBtn.addEventListener("click", () => {
+  if (currentStep === steps.length - 1) {
+    showLoader();
+  }
+});
+
+</script>
+
+</body>
 </html>

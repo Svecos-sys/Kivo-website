@@ -1,301 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>
-   Kivo Score – Gamified
-  </title>
-  <script>
-   // Add sticky shadow on scroll
-    window.addEventListener("scroll", function () {
-      const header = document.getElementById("mainHeader");
-      if (window.scrollY > 20) {
-        header.classList.add("shadow-md");
-      } else {
-        header.classList.remove("shadow-md");
-      }
-    });
-
-    // Highlight active nav link
-    const path = window.location.pathname.split("/").pop();
-    document.querySelectorAll("nav a").forEach(link => {
-      if (link.getAttribute("href") === path) {
-        link.classList.add("underline", "font-semibold", "text-cerulean");
-      }
-    });
-  </script>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kivo Score – from your AI mortgage assistant</title>
   <script src="https://cdn.tailwindcss.com">
-   const summaryList = document.getElementById("summaryList");
-if (formData && summaryList) {
-  summaryList.innerHTML = `
-    <li>Income: £${formData.income}</li>
-    <li>Deposit: £${formData.deposit}</li>
-    <li>Rent: £${formData.rent}</li>
-    <li>Debt: ${formData.debt}</li>
-    <li>Credit History: ${formData.credit}</li>
-  `;
-}
+  const breakdown = document.getElementById("scoreBreakdown");
+  let badges = [];
 
-function downloadPDF() {
-  const formData = JSON.parse(localStorage.getItem("kivoFormData") || "{}");
-  const score = localStorage.getItem("kivoScore") || "0";
+  if (data.income >= 40000) badges.push("💼 Strong income");
+  if (data.deposit >= 15000) badges.push("💰 Great deposit");
+  if (data.rent <= 800) badges.push("🏠 Low rent-to-income ratio");
+  if (data.debt === "No") badges.push("📉 Debt-free");
+  if (data.credit === "Good") badges.push("💳 Excellent credit");
 
-  const doc = new window.jspdf.jsPDF();
-  doc.setFontSize(18);
-  doc.text("Your Kivo Score Summary", 20, 20);
-  doc.setFontSize(12);
-  doc.text(`Kivo Score: ${score}`, 20, 35);
-  doc.text(`Income: £${formData.income}`, 20, 45);
-  doc.text(`Deposit: £${formData.deposit}`, 20, 55);
-  doc.text(`Rent: £${formData.rent}`, 20, 65);
-  doc.text(`Debt: ${formData.debt}`, 20, 75);
-  doc.text(`Credit History: ${formData.credit}`, 20, 85);
-  doc.save("Kivo_Score_Summary.pdf");
-}
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js">
-   const summaryList = document.getElementById("summaryList");
-if (formData && summaryList) {
-  summaryList.innerHTML = `
-    <li>Income: £${formData.income}</li>
-    <li>Deposit: £${formData.deposit}</li>
-    <li>Rent: £${formData.rent}</li>
-    <li>Debt: ${formData.debt}</li>
-    <li>Credit History: ${formData.credit}</li>
-  `;
-}
+  breakdown.innerHTML = badges.map(b => `<div class="bg-white border rounded p-3">${b}</div>`).join("");
 
-function downloadPDF() {
-  const formData = JSON.parse(localStorage.getItem("kivoFormData") || "{}");
-  const score = localStorage.getItem("kivoScore") || "0";
+  document.getElementById("emailForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const email = this.querySelector("input").value;
+    const status = document.getElementById("emailStatus");
+    status.classList.remove("hidden");
+    status.textContent = "Sending your Kivo Score summary to " + email + "...";
+    setTimeout(() => {
+      status.textContent = "✅ Sent successfully!";
+    }, 1500);
+  });
 
-  const doc = new window.jspdf.jsPDF();
-  doc.setFontSize(18);
-  doc.text("Your Kivo Score Summary", 20, 20);
-  doc.setFontSize(12);
-  doc.text(`Kivo Score: ${score}`, 20, 35);
-  doc.text(`Income: £${formData.income}`, 20, 45);
-  doc.text(`Deposit: £${formData.deposit}`, 20, 55);
-  doc.text(`Rent: £${formData.rent}`, 20, 65);
-  doc.text(`Debt: ${formData.debt}`, 20, 75);
-  doc.text(`Credit History: ${formData.credit}`, 20, 85);
-  doc.save("Kivo_Score_Summary.pdf");
-}
-  </script>
-  <style>
-   .score-circle {
-      width: 180px;
-      height: 180px;
-      position: relative;
-      margin: 0 auto;
-    }
-    .score-label {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-weight: bold;
-      font-size: 1.5rem;
-    }
-  </style>
+</script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js">
-   const summaryList = document.getElementById("summaryList");
-if (formData && summaryList) {
-  summaryList.innerHTML = `
-    <li>Income: £${formData.income}</li>
-    <li>Deposit: £${formData.deposit}</li>
-    <li>Rent: £${formData.rent}</li>
-    <li>Debt: ${formData.debt}</li>
-    <li>Credit History: ${formData.credit}</li>
-  `;
-}
+  const breakdown = document.getElementById("scoreBreakdown");
+  let badges = [];
 
-function downloadPDF() {
-  const formData = JSON.parse(localStorage.getItem("kivoFormData") || "{}");
-  const score = localStorage.getItem("kivoScore") || "0";
+  if (data.income >= 40000) badges.push("💼 Strong income");
+  if (data.deposit >= 15000) badges.push("💰 Great deposit");
+  if (data.rent <= 800) badges.push("🏠 Low rent-to-income ratio");
+  if (data.debt === "No") badges.push("📉 Debt-free");
+  if (data.credit === "Good") badges.push("💳 Excellent credit");
 
-  const doc = new window.jspdf.jsPDF();
-  doc.setFontSize(18);
-  doc.text("Your Kivo Score Summary", 20, 20);
-  doc.setFontSize(12);
-  doc.text(`Kivo Score: ${score}`, 20, 35);
-  doc.text(`Income: £${formData.income}`, 20, 45);
-  doc.text(`Deposit: £${formData.deposit}`, 20, 55);
-  doc.text(`Rent: £${formData.rent}`, 20, 65);
-  doc.text(`Debt: ${formData.debt}`, 20, 75);
-  doc.text(`Credit History: ${formData.credit}`, 20, 85);
-  doc.save("Kivo_Score_Summary.pdf");
-}
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
-  </script>
- </head>
- <body class="bg-[#E8FAF3] font-sans text-graphite" style="background-color: #F9F5F2">
-  <header class="sticky top-0 bg-white shadow px-6 py-4 flex justify-between items-center" id="mainHeader" style="background-color: #F0E9E3">
-   <a class="text-xl font-bold text-cerulean" href="index.html">
-    kivo
-   </a>
-   <nav class="flex items-center space-x-6 text-sm font-medium">
-    <a class="hover:text-cerulean" href="how-it-works.html">
-     How it Works
-    </a>
-    <a class="hover:text-cerulean" href="about.html">
-     About
-    </a>
-    <a class="hover:text-cerulean" href="faq.html">
-     FAQs
-    </a>
-    <a class="hover:text-cerulean" href="contact.html">
-     Contact
-    </a>
-    <a class="hover:text-cerulean" href="privacy.html">
-     Privacy
-    </a>
-    <a class="bg-cerulean text-white px-4 py-2 rounded hover:bg-emerald transition" href="kivo-check.html">
-     Kivo Score
-    </a>
-   </nav>
-  </header>
-  <section class="max-w-xl mx-auto py-16 px-6 text-center">
-   <h1 class="text-3xl font-bold mb-4">
-    🎯 Your Kivo Score
-   </h1>
-   <p class="text-lg mb-8">
-    Let’s see how mortgage-ready you are...
-   </p>
-   <div class="score-circle mb-6">
-    <canvas id="scoreChart">
-    </canvas>
-    <div class="score-label" id="scoreLabel">
-     0
-    </div>
-   </div>
-   <p class="text-2xl font-semibold text-emerald mb-2" id="scoreTitle">
-   </p>
-   <p class="text-lg mb-6" id="scoreMessage">
-   </p>
-   <div class="mt-6 text-sm text-gray-600">
-    Share your score with a broker or partner:
-    <br/>
-    <code class="bg-gray-100 px-2 py-1 rounded mt-2 inline-block">
-     "I scored " + score + " on Kivo – ready to buy?"
-    </code>
-   </div>
-   <div class="bg-white rounded-lg p-6 mt-8 shadow-md text-left max-w-md mx-auto">
-    <h2 class="text-lg font-semibold mb-3">
-     📝 Your Snapshot:
-    </h2>
-    <ul class="list-disc list-inside text-sm text-gray-700" id="summaryList">
-    </ul>
-   </div>
-   <div class="text-center mt-8 space-y-4">
-    <button class="bg-emerald text-white px-5 py-2 rounded hover:bg-cerulean transition" onclick="downloadPDF()">
-     Download Summary as PDF
-    </button>
-    <a class="inline-block bg-cerulean text-white px-5 py-2 rounded hover:bg-emerald transition" href="contact.html">
-     Speak to a Broker
-    </a>
-   </div>
-   <div class="text-center mt-8">
-    <a class="bg-cerulean text-white px-6 py-2 rounded hover:bg-emerald transition" href="kivo-check.html">
-     Try Again
-    </a>
-   </div>
-  </section>
-  <script>
-   const score = parseInt(localStorage.getItem('kivoScore') || "0");
+  breakdown.innerHTML = badges.map(b => `<div class="bg-white border rounded p-3">${b}</div>`).join("");
 
-  const scoreLabel = document.getElementById("scoreLabel");
-  const scoreTitle = document.getElementById("scoreTitle");
-  const scoreMessage = document.getElementById("scoreMessage");
-
-  const labels = ["Needs work", "Getting there", "Solid start", "Ready", "Kivo Pro", "Kivo Star", "Home Hero", "Mortgage Master", "🏡 Kivo Champion!"];
-  const messages = [
-    "Let’s build up that deposit and credit confidence 💪",
-    "You’re on your way — a bit more saving could help!",
-    "Nice! You're nearly there 🔑",
-    "Looking strong — let's take the next step!",
-    "Great work! You're in a great spot 🚀",
-    "You're shining! Lenders will love this ✨",
-    "You're a Home Hero! 🦸 Time to get a quote!",
-    "Incredible — you're a Mortgage Master! 🧠",
-    "🔥 You’ve unlocked Champion status — let's go get that home!"
-  ];
-
-  const ctx = document.getElementById("scoreChart").getContext("2d");
-  const chart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      datasets: [{
-        data: [score, 8 - score],
-        backgroundColor: ['#00B386', '#E5E5E5'],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      cutout: '80%',
-      responsive: true,
-      animation: {
-        animateRotate: true,
-        duration: 1500
-      },
-      plugins: {
-        tooltip: { enabled: false },
-        legend: { display: false }
-      }
-    }
+  document.getElementById("emailForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const email = this.querySelector("input").value;
+    const status = document.getElementById("emailStatus");
+    status.classList.remove("hidden");
+    status.textContent = "Sending your Kivo Score summary to " + email + "...";
+    setTimeout(() => {
+      status.textContent = "✅ Sent successfully!";
+    }, 1500);
   });
 
+</script>
+</head>
+<body class="bg-white text-gray-800 font-sans">
+
+<header class="sticky top-0 px-6 py-4 shadow bg-blue-50 flex justify-between items-center" id="mainHeader">
+  <a href="index.html" class="text-xl font-bold text-cerulean">kivo</a>
+  <nav class="flex items-center space-x-6 text-sm font-medium">
+    <a href="how-it-works.html" class="hover:text-cerulean">How it Works</a>
+    <a href="about.html" class="hover:text-cerulean">About</a>
+    <a href="faq.html" class="hover:text-cerulean">FAQs</a>
+    <a href="contact.html" class="hover:text-cerulean">Contact</a>
+    <a href="privacy.html" class="hover:text-cerulean">Privacy</a>
+  </nav>
+</header>
+
+<section>
+  <div class="text-center py-6"><img src="https://placehold.co/400x200?text=Illustration" alt="Visual" class="mx-auto mb-4 rounded-md shadow"/></div>
+<section class="max-w-2xl mx-auto py-20 px-6 text-center">
+  <h1 class="text-3xl font-bold mb-4">🎉 Your Kivo Score is...</h1>
+  <div class="text-6xl font-extrabold text-cerulean" id="scoreReveal">0</div>
+  
+    <p class="mt-4 text-gray-600">Based on the info you shared, here’s how you did:</p>
+    <div id="scoreBreakdown" class="mt-6 space-y-2 text-left max-w-md mx-auto text-sm"></div>
+
+    <form id="emailForm" class="mt-8 max-w-md mx-auto space-y-4">
+      <label class="block font-medium">📬 Want your score emailed?</label>
+      <input type="email" required placeholder="you@example.com" class="w-full p-3 border rounded" />
+      <button type="submit" class="bg-cerulean text-white px-4 py-2 rounded hover:bg-emerald transition">Send My Score</button>
+      <p id="emailStatus" class="text-xs text-gray-500 pt-2 hidden">Sending...</p>
+    </form>
+    
+
+  <div class="mt-10">
+    <a href="index.html" class="inline-block bg-cerulean text-white px-6 py-3 rounded hover:bg-emerald transition">
+      Explore Mortgage Options →
+    </a>
+  </div>
+</section>
+
+<script>
+  const scoreElement = document.getElementById("scoreReveal");
+  const data = JSON.parse(localStorage.getItem("kivoFormData")) || {};
+
+  // Dummy calculation for demonstration
+  let score = Math.min(950, Math.max(350, Math.floor(
+    (Number(data.income || 0) / 1000) +
+    (Number(data.deposit || 0) / 500) -
+    (Number(data.rent || 0) / 10) -
+    (data.debt === 'Yes' ? 50 : 0) +
+    (data.credit === 'Good' ? 100 : data.credit === 'Fair' ? 50 : 0)
+  )));
+
+  // Animate score reveal
   let current = 0;
-  const animateLabel = () => {
-    if (current <= score) {
-      scoreLabel.textContent = current;
-      current++;
-      setTimeout(animateLabel, 120);
+  const increment = Math.ceil(score / 60);
+  const interval = setInterval(() => {
+    current += increment;
+    if (current >= score) {
+      scoreElement.textContent = score;
+      clearInterval(interval);
     } else {
-      
-scoreTitle.textContent = labels[score];
-if (score >= 8) {
-  confetti({
-    particleCount: 120,
-    spread: 80,
-    origin: { y: 0.6 },
-  });
-}
-
-      scoreMessage.textContent = messages[score];
+      scoreElement.textContent = current;
     }
-  };
-  animateLabel();
+  }, 20);
 
-const summaryList = document.getElementById("summaryList");
-if (formData && summaryList) {
-  summaryList.innerHTML = `
-    <li>Income: £${formData.income}</li>
-    <li>Deposit: £${formData.deposit}</li>
-    <li>Rent: £${formData.rent}</li>
-    <li>Debt: ${formData.debt}</li>
-    <li>Credit History: ${formData.credit}</li>
-  `;
-}
+  // Launch confetti
+  setTimeout(() => {
+    confetti({
+      particleCount: 120,
+      spread: 80,
+      origin: { y: 0.6 }
+    });
+  }, 600);
 
-function downloadPDF() {
-  const formData = JSON.parse(localStorage.getItem("kivoFormData") || "{}");
-  const score = localStorage.getItem("kivoScore") || "0";
+  const breakdown = document.getElementById("scoreBreakdown");
+  let badges = [];
 
-  const doc = new window.jspdf.jsPDF();
-  doc.setFontSize(18);
-  doc.text("Your Kivo Score Summary", 20, 20);
-  doc.setFontSize(12);
-  doc.text(`Kivo Score: ${score}`, 20, 35);
-  doc.text(`Income: £${formData.income}`, 20, 45);
-  doc.text(`Deposit: £${formData.deposit}`, 20, 55);
-  doc.text(`Rent: £${formData.rent}`, 20, 65);
-  doc.text(`Debt: ${formData.debt}`, 20, 75);
-  doc.text(`Credit History: ${formData.credit}`, 20, 85);
-  doc.save("Kivo_Score_Summary.pdf");
-}
-  </script>
- </body>
+  if (data.income >= 40000) badges.push("💼 Strong income");
+  if (data.deposit >= 15000) badges.push("💰 Great deposit");
+  if (data.rent <= 800) badges.push("🏠 Low rent-to-income ratio");
+  if (data.debt === "No") badges.push("📉 Debt-free");
+  if (data.credit === "Good") badges.push("💳 Excellent credit");
+
+  breakdown.innerHTML = badges.map(b => `<div class="bg-white border rounded p-3">${b}</div>`).join("");
+
+  document.getElementById("emailForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const email = this.querySelector("input").value;
+    const status = document.getElementById("emailStatus");
+    status.classList.remove("hidden");
+    status.textContent = "Sending your Kivo Score summary to " + email + "...";
+    setTimeout(() => {
+      status.textContent = "✅ Sent successfully!";
+    }, 1500);
+  });
+
+</script>
+
+</body>
 </html>
