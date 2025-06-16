@@ -2,115 +2,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Welcome to Kivo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: #f0f8ff;
-            color: #333;
-        }
-        header {
-            background-color: #1e88e5;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-            font-weight: 500;
-        }
-        .hero {
-            text-align: center;
-            padding: 4rem 2rem;
-            background-color: #e3f2fd;
-        }
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            color: #444;
-        }
-        .cta-button {
-            padding: 1rem 2rem;
-            background-color: #43a047;
-            color: white;
-            font-size: 1rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        .cta-button:hover {
-            background-color: #388e3c;
-        }
-        .features {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 2rem;
-            gap: 2rem;
-        }
-        .feature-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 2rem;
-            max-width: 300px;
-            text-align: center;
-        }
-        .feature-card h3 {
-            margin-bottom: 1rem;
-            color: #1e88e5;
-        }
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background-color: #1e88e5;
-            color: white;
-            margin-top: 3rem;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Welcome to Kivo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #f0f8ff;
+      color: #333;
+    }
+    header {
+      background-color: #1e88e5;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1.2rem;
+      font-weight: 500;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      background-color: #e3f2fd;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      animation: fadeIn 1.5s ease-in;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      color: #444;
+      animation: fadeIn 2s ease-in;
+    }
+    .microcopy {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+    .cta-button {
+      padding: 1rem 2rem;
+      background-color: #ff7043;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.3s ease;
+    }
+    .cta-button:hover {
+      transform: scale(1.05);
+      background-color: #f4511e;
+    }
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 2rem 1rem;
+      gap: 2rem;
+    }
+    .feature-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 2rem;
+      max-width: 300px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+    .feature-card h3 {
+      margin-bottom: 1rem;
+      color: #1e88e5;
+    }
+    .trust {
+      padding: 3rem 2rem;
+      background-color: #fff3e0;
+      text-align: center;
+    }
+    .trust h2 {
+      color: #1e88e5;
+    }
+    .trust ul {
+      list-style: none;
+      padding: 0;
+      max-width: 600px;
+      margin: 1rem auto 0 auto;
+    }
+    .trust li {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    .testimonial {
+      background: #f9fbe7;
+      padding: 2rem;
+      text-align: center;
+      font-style: italic;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: #1e88e5;
+      color: white;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 600px) {
+      .features {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div><strong>Kivo</strong></div>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="how-it-works.html">How it Works</a>
-            <a href="faq.html">FAQ</a>
-            <a href="kivo-check.html">Get Your Kivo Score</a>
-        </nav>
-    </header>
-    <section class="hero">
-        <h1>Say Hello to Your Kivo Score 👋</h1>
-        <p>We're here to help you navigate mortgages with confidence, clarity, and a little bit of fun.</p>
-        <button class="cta-button" onclick="location.href='kivo-check.html'">Check Your Kivo Score</button>
-    </section>
-    <section class="features">
-        <div class="feature-card">
-            <h3>🎯 Personalised</h3>
-            <p>Your Kivo Score adapts to your inputs to give tailored guidance for your mortgage journey.</p>
-        </div>
-        <div class="feature-card">
-            <h3>🧠 Smart & Simple</h3>
-            <p>Behind the scenes? Smart AI. On the surface? A friendly, human experience.</p>
-        </div>
-        <div class="feature-card">
-            <h3>🛟 Here to Help</h3>
-            <p>No pushy sales, no confusing jargon — just mortgage help, made easy.</p>
-        </div>
-    </section>
-    <footer>
-        &copy; 2025 Kivo Technologies Ltd. All rights reserved.
-    </footer>
+  <header role="banner">
+    <div><strong>Kivo</strong></div>
+    <nav role="navigation" aria-label="Main Navigation">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html">How it Works</a>
+      <a href="faq.html">FAQ</a>
+      <a href="kivo-check.html">Get Your Kivo Score</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Say Hello to Your Kivo Score 👋</h1>
+    <p>We're here to help you navigate mortgages with confidence, clarity, and a little bit of fun.</p>
+    <button class="cta-button" onclick="location.href='kivo-check.html'">Check Your Kivo Score</button>
+    <p class="microcopy">Takes less than 2 minutes · No impact on your credit · Totally free</p>
+  </section>
+
+  <section class="features" aria-label="Product Features">
+    <div class="feature-card">
+      <h3>🎯 Personalised</h3>
+      <p>Your Kivo Score adapts to your inputs to give tailored guidance for your mortgage journey.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🧠 Smart & Simple</h3>
+      <p>Behind the scenes? Smart AI. On the surface? A friendly, human experience.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🛟 Here to Help</h3>
+      <p>No pushy sales, no confusing jargon — just mortgage help, made easy.</p>
+    </div>
+  </section>
+
+  <section class="trust">
+    <h2>Why Kivo?</h2>
+    <ul>
+      <li>✅ Created by people who’ve been there (and bought that)</li>
+      <li>🔐 Privacy-first: Your data stays yours</li>
+      <li>📞 Real support, no bots pretending to care</li>
+    </ul>
+  </section>
+
+  <section class="testimonial">
+    ⭐️⭐️⭐️⭐️⭐️ “Kivo helped me understand what I could afford — without all the confusion.”<br>– Ellie, First-time buyer
+  </section>
+
+  <footer role="contentinfo">
+    &copy; 2025 Kivo Technologies Ltd. All rights reserved.
+  </footer>
 </body>
 </html>
