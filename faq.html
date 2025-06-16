@@ -1,86 +1,61 @@
 <!DOCTYPE html>
-
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>
+<html><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>
    Kivo – FAQs
-  </title>
-<script>
-   // Add sticky shadow on scroll
-    window.addEventListener("scroll", function () {
-      const header = document.getElementById("mainHeader");
-      if (window.scrollY > 20) {
-        header.classList.add("shadow-md");
-      } else {
-        header.classList.remove("shadow-md");
-      }
-    });
-
-    // Highlight active nav link
-    const path = window.location.pathname.split("/").pop();
-    document.querySelectorAll("nav a").forEach(link => {
-      if (link.getAttribute("href") === path) {
-        link.classList.add("underline", "font-semibold", "text-cyan-500");
-      }
-    });
-  </script>
-<script src="https://cdn.tailwindcss.com">
-</script>
-<script>
-   tailwind.config = {
+  </title><script src="https://cdn.tailwindcss.com"></script><style>
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+</style><script>
+    tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
           colors: {
-            cerulean: '#0EA5E9',
-            emerald: '#00B386',
-            graphite: '#1F1F1F'
+            cyan: {
+              50: '#ECFEFF',
+              500: '#0EA5E9',
+              700: '#0369A1'
+            },
+            emerald: '#10B981',
+            graphite: '#1F2937'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
           }
         }
       }
     }
-  </script>
-<meta content="Kivo is your AI-powered guide to mortgage affordability. Get personalised insights, improve your Kivo Score, and take the next step with clarity." name="description"/>
-<meta content="mortgage, affordability, UK mortgage, AI advisor, first-time buyer, Kivo" name="keywords"/>
-<meta content="Kivo Technologies Ltd" name="author"/>
-<meta content="Kivo – Smarter Mortgage Advice" property="og:title"/>
-<meta content="Get mortgage-ready with AI. Kivo helps you understand your affordability and improve your Kivo Score in minutes." property="og:description"/>
-<meta content="website" property="og:type"/>
-<meta content="https://getkivo.co.uk" property="og:url"/>
-<meta content="https://getkivo.co.uk/og-image.jpg" property="og:image"/>
-<style>
-@keyframes fadeSlide {
-  from {opacity: 0; transform: translateY(-10px);}
-  to {opacity: 1; transform: translateY(0);}
-}
-.kivoIntroBox {
-  animation: fadeSlide 0.6s ease-out;
-}
-</style>
-<style>
-  input[type=number]::-webkit-inner-spin-button,
-  input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  input[type=number] {
-    -moz-appearance: textfield;
-  }
-</style>
-</head>
-<body class="font-sans bg-white text-graphite" style="background-color: white">
-<header class="sticky top-0 bg-white z-50 px-6 py-4 flex justify-between items-center shadow" id="mainHeader">
-<a class="text-xl font-bold text-cyan-500" href="index.html">Kivo</a>
-<nav class="flex items-center space-x-6 text-sm font-medium">
+  </script></head><body><header class="fixed top-0 w-full transition duration-300 z-50 bg-white bg-opacity-90 backdrop-blur" id="mainHeader">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<a class="text-2xl font-extrabold text-cyan-500" href="index.html">Kivo</a>
+<nav class="flex items-center gap-6 md:gap-8 lg:gap-10 text-lg font-medium">
+<div class="relative group">
+<button class="text-graphite hover:text-cyan-500">Company</button>
+<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50 animate-fadeIn">
+<a class="block px-4 py-2 hover:bg-cyan-50" href="about.html">About</a>
+<a class="block px-4 py-2 hover:bg-cyan-50" href="security.html">Security</a>
+<a class="block px-4 py-2 hover:bg-cyan-50" href="partners.html">Partners</a>
+<a class="block px-4 py-2 hover:bg-cyan-50" href="for-advisors.html">Advisors</a>
+<a class="block px-4 py-2 hover:bg-cyan-50" href="privacy.html">Privacy</a>
+</div>
+</div>
+<div class="relative group">
+<button class="text-graphite hover:text-cyan-500">Resources</button>
+<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50">
+<a class="block px-4 py-2 hover:bg-cyan-50" href="tools.html">Tools</a>
+<a class="block px-4 py-2 hover:bg-cyan-50" href="learn.html">Learn</a>
+<a class="block px-4 py-2 hover:bg-cyan-50" href="stories.html">Stories</a>
+</div>
+</div>
 <a class="text-graphite hover:text-cyan-500" href="how-it-works.html">How it Works</a>
-<a class="text-graphite hover:text-cyan-500" href="about.html">About</a>
 <a class="text-graphite hover:text-cyan-500" href="faq.html">FAQs</a>
 <a class="text-graphite hover:text-cyan-500" href="contact.html">Contact</a>
-<a class="text-graphite hover:text-cyan-500" href="privacy.html">Privacy</a>
-<a class="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-700 transition" href="kivo-check.html">Kivo Score</a>
+<a class="bg-emerald text-white px-5 py-2.5 rounded-full shadow-md hover:shadow-lg hover:bg-cyan-700 transition-all duration-300" href="kivo-check.html">Check Your Score</a>
 </nav>
+</div>
 </header>
 <section>
 <div class="bg-cyan-50 border border-cyan-100 rounded-md p-4 text-sm text-gray-800 mb-6 flex items-start space-x-3 kivoIntroBox">
@@ -137,78 +112,8 @@
 </details>
 </div>
 </section>
-<footer class="text-sm text-gray-600 bg-white border-t py-10 px-6 mt-10" style="background-color: #eff6ff">
-<div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
-<div>
-<h4 class="font-semibold text-gray-800 mb-2">
-      Product
-     </h4>
-<ul class="space-y-1">
-<li>
-<a class="hover:underline" href="how-it-works.html">
-        How it Works
-       </a>
-</li>
-<li>
-<a class="hover:underline" href="kivo-check.html">
-        Get Started
-       </a>
-</li>
-</ul>
-</div>
-<div>
-<h4 class="font-semibold text-gray-800 mb-2">
-      Company
-     </h4>
-<ul class="space-y-1">
-<li>
-<a class="hover:underline" href="about.html">
-        About
-       </a>
-</li>
-<li>
-<a class="hover:underline" href="contact.html">
-        Contact
-       </a>
-</li>
-</ul>
-</div>
-<div>
-<h4 class="font-semibold text-gray-800 mb-2">
-      Legal
-     </h4>
-<ul class="space-y-1">
-<li>
-<a class="hover:underline" href="privacy.html">
-        Privacy Policy
-       </a>
-</li>
-<li>
-<a class="hover:underline" href="faq.html">
-        FAQs
-       </a>
-</li>
-</ul>
-</div>
-<div>
-<h4 class="font-semibold text-gray-800 mb-2">
-      Follow
-     </h4>
-<ul class="space-y-1">
-<li>
-<a class="hover:underline" href="mailto:support@getkivo.co.uk">
-        Email Support
-       </a>
-</li>
-</ul>
-</div>
-</div>
-<div class="text-center mt-8 text-xs text-gray-500">
-    © 2025 Kivo · FCA Registration Pending · Designed by Josh Dolphin
-   </div>
-<p class="text-sm text-gray-600 pt-4">💡 Kivo is your digital home-buying co-pilot. Built to make mortgages simpler, smarter, and more human.</p></footer>
 </section>
-<!-- Floating Kivo Chat Bubble -->
+ Floating Kivo Chat Bubble 
 <div class="fixed bottom-6 right-6 bg-cyan-500 text-white px-4 py-3 rounded-full shadow-lg cursor-pointer hover:bg-cyan-700 transition text-sm z-50" id="kivoChatBubble">
   💬 Need help? Kivo’s here.
 </div>
@@ -217,5 +122,76 @@
     alert("Hi! I'm Kivo 👋 Ask me anything about mortgages. This is just a placeholder — full chat assistant coming soon.");
   });
 </script>
-</body>
-</html>
+<footer class="bg-white border-t text-center text-sm text-gray-600 py-10">
+<p>© 2025 Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.</p>
+</footer><div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity duration-300 opacity-0 animate-fadeIn" id="cookiePreferencesOverlay">
+<div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
+<h2 class="text-lg font-semibold mb-4">Cookie Preferences</h2>
+<p class="text-sm text-gray-700 mb-4">We use cookies to enhance your experience. You can manage your preferences below. Read our <a class="text-cyan-700 underline hover:text-cyan-900" href="privacy.html">cookie policy</a>.</p>
+<form class="space-y-3">
+<label class="flex items-center gap-2 justify-start">
+<input checked="" class="accent-cyan-500" disabled="" type="checkbox"/>
+<span>Essential cookies (always on)</span>
+</label>
+<label class="flex items-center gap-2 justify-start">
+<input class="accent-cyan-500" id="overlayAnalytics" type="checkbox"/>
+<span>Analytics cookies</span>
+</label>
+<label class="flex items-center gap-2 justify-start">
+<input class="accent-cyan-500" id="overlayMarketing" type="checkbox"/>
+<span>Marketing cookies</span>
+</label>
+<div class="flex justify-center gap-2 pt-4">
+<button class="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="savePreferences()" type="button">Accept choices</button>
+<button class="bg-emerald text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="acceptAllCookies()" type="button">Accept all</button>
+<button class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" onclick="rejectAllCookies()" type="button">Reject all</button>
+</div>
+</form>
+</div>
+</div>
+<script>
+  function enableAnalytics() {
+    console.log("✅ Analytics cookies enabled");
+  }
+  function enableMarketing() {
+    console.log("✅ Marketing cookies enabled");
+  }
+  function savePreferences() {
+    const analytics = document.getElementById('overlayAnalytics').checked;
+    const marketing = document.getElementById('overlayMarketing').checked;
+    localStorage.setItem('cookieConsent', JSON.stringify({ analytics, marketing }));
+    if (analytics) enableAnalytics();
+    if (marketing) enableMarketing();
+    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
+  }
+  function acceptAllCookies() {
+    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: true, marketing: true }));
+    enableAnalytics();
+    enableMarketing();
+    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
+  }
+  function rejectAllCookies() {
+    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: false, marketing: false }));
+    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
+  }
+  window.onload = function () {
+  const consent = localStorage.getItem('cookieConsent');
+  if (consent) {
+    const parsed = JSON.parse(consent);
+    if (parsed.analytics) enableAnalytics();
+    if (parsed.marketing) enableMarketing();
+  } else {
+    document.getElementById('cookiePreferencesOverlay').classList.remove('hidden');
+  }
+};
+</script>
+<script>
+  window.addEventListener('scroll', () => {
+    const header = document.getElementById('mainHeader');
+    if (window.scrollY > 10) {
+      header.classList.add('bg-white', 'shadow');
+    } else {
+      header.classList.remove('bg-white', 'shadow');
+    }
+  });
+</script></body></html>
