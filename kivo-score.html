@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Kivo – Affordability Quiz
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <script>
+   tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            cerulean: '#007BA7',
+            emerald: '#00B386',
+            graphite: '#1F1F1F'
+          }
+        }
+      }
+    }
+  </script>
+ </head>
+ <body class="font-sans bg-white text-graphite">
+  <header class="sticky top-0 bg-white shadow z-50 px-6 py-4 flex justify-between items-center">
+   <a class="text-xl font-bold text-cerulean" href="index.html">
+    kivo
+   </a>
+   <nav class="flex items-center space-x-6 text-sm font-medium">
+    <a class="text-gray-700 hover:text-cerulean" href="how-it-works.html">
+     How it Works
+    </a>
+    <a class="text-gray-700 hover:text-cerulean" href="about.html">
+     About
+    </a>
+    <a class="text-gray-700 hover:text-cerulean" href="faq.html">
+     FAQs
+    </a>
+    <a class="text-gray-700 hover:text-cerulean" href="contact.html">
+     Contact
+    </a>
+    <a class="text-gray-700 hover:text-cerulean" href="privacy.html">
+     Privacy
+    </a>
+    <a class="bg-cerulean text-white px-4 py-2 rounded hover:bg-emerald transition" href="kivo-score.html">
+     Kivo Score
+    </a>
+   </nav>
+  </header>
+  <section class="max-w-xl mx-auto py-16 px-6">
+   <h1 class="text-3xl font-bold mb-6 text-center">
+    Let’s check your affordability
+   </h1>
+   <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden mb-6">
+    <div class="h-full bg-cerulean transition-all duration-300" id="progress-bar" style="width: 0%">
+    </div>
+   </div>
+   <div class="space-y-6" id="quiz">
+   </div>
+   <div class="text-center mt-10">
+    <p class="text-xl font-semibold text-white bg-emerald p-6 rounded-lg shadow mt-6 hidden" id="result">
+    </p>
+   </div>
+  </section>
+  <script>
+   const questions = [
+    { question: "What’s your annual income?", type: "number", key: "income" },
+    { question: "How much deposit do you have?", type: "number", key: "deposit" },
+    { question: "What’s your current monthly rent?", type: "number", key: "rent" },
+    { question: "Do you have any existing debts?", type: "radio", key: "debts", options: ["Yes", "No"] },
+    { question: "How’s your credit history?", type: "select", key: "credit", options: ["Good", "Fair", "Poor"] },
+    { question: "Are you a first-time buyer?", type: "radio", key: "firstTime", options: ["Yes", "No"] },
+    { question: "Where are you looking to buy?", type: "text", key: "location" },
+    { question: "Enter your email to see your result", type: "email", key: "email" }
+  ];
+
+  let state = {};
+  let currentStep = 0;
+
+  
+function renderQuiz() {
+  const progress = Math.round((currentStep / questions.length) * 100);
+  const bar = document.getElementById("progress-bar");
+  if (bar) bar.style.width = progress + "%";
+
+    const q = questions[currentStep];
+    const wrapper = document.getElementById("quiz");
+    wrapper.innerHTML = "";
+
+    const label = document.createElement("label");
+    label.className = "block text-lg font-medium mb-2";
+    label.textContent = q.question;
+
+    const inputContainer = document.createElement("div");
+
+    if (q.type === "radio") {
+      q.options.forEach(opt => {
+        const id = `${q.key}-${opt}`;
+        const div = document.createElement("div");
+        div.className = "mb-2";
+        div.innerHTML = `<input type="radio" name="${q.key}" value="${opt}" id="${id}" class="mr-2" />
+                         <label for="${id}">${opt}</label>`;
+        inputContainer.appendChild(div);
+      });
+    } else if (q.type === "select") {
+      const select = document.createElement("select");
+      select.name = q.key;
+      select.className = "w-full border p-2 rounded";
+      q.options.forEach(opt => {
+        const option = document.createElement("option");
+        option.value = opt;
+        option.textContent = opt;
+        select.appendChild(option);
+      });
+      inputContainer.appendChild(select);
+    } else {
+      const input = document.createElement("input");
+      input.type = q.type;
+      input.name = q.key;
+      input.required = true;
+      input.className = "w-full border p-2 rounded";
+      inputContainer.appendChild(input);
+    }
+
+    const button = document.createElement("button");
+    button.textContent = currentStep === questions.length - 1 ? "See My Result" : "Next";
+    button.className = "bg-cerulean text-white px-6 py-2 rounded mt-6 hover:bg-emerald";
+    button.onclick = handleNext;
+
+    wrapper.appendChild(label);
+    wrapper.appendChild(inputContainer);
+    wrapper.appendChild(button);
+  }
+
+  function handleNext() {
+    const q = questions[currentStep];
+    let value;
+    if (q.type === "radio") {
+      const checked = document.querySelector(`input[name="${q.key}"]:checked`);
+      if (!checked) return alert("Please select an option");
+      value = checked.value;
+    } else {
+      const input = document.querySelector(`[name="${q.key}"]`);
+      if (!input.value) return alert("Please enter a value");
+      value = input.value;
+    }
+    state[q.key] = value;
+    currentStep++;
+    if (currentStep < questions.length) {
+      renderQuiz();
+    } else {
+      showResult();
+    }
+  }
+
+  function showResult() {
+    const result = document.getElementById("result");
+    const income = parseInt(state.income) || 0;
+    const deposit = parseInt(state.deposit) || 0;
+    const credit = state.credit;
+    let score = 0;
+    if (income > 40000) score += 2;
+    if (deposit > 15000) score += 2;
+    if (credit === "Good") score += 2;
+    if (state.debts === "No") score += 1;
+    if (state.firstTime === "Yes") score += 1;
+
+    let summary = "Your Kivo Score: ";
+    if (score >= 6) {
+      summary += "Excellent! You’re likely ready to speak to a lender.";
+    } else if (score >= 4) {
+      summary += "Good! You’re on track — a bit more saving or credit tuning could help.";
+    } else {
+      summary += "Some work needed — but we’ll help you get there!";
+    }
+
+    document.getElementById("quiz").remove();
+    result.textContent = summary;
+    result.classList.remove("hidden");
+  }
+
+  renderQuiz();
+  </script>
+ </body>
+</html>
