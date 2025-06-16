@@ -166,6 +166,29 @@
       font-size: 1.3rem;
       margin-bottom: 2rem;
     }
+
+    .scroll-prompt {
+      margin-top: 1rem;
+      color: white;
+      font-size: 1rem;
+      animation: fadein 1.5s ease-in-out;
+    }
+    .arrow {
+      font-size: 2rem;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+    @keyframes fadein {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .cta-button:hover, .nav-cta:hover {
+      transform: scale(1.05);
+      transition: 0.2s ease-in-out;
+    }
 </style>
 </head>
 <body>
@@ -178,15 +201,18 @@
 <a class="nav-cta" href="kivo-check.html">Kivo Score</a>
 </nav>
 </header>
-
 <section class="hero">
 <div class="hero-content">
 <h1>Welcome to Kivo 👋</h1>
 <p>Your friendly, jargon-free way to check mortgage readiness — no credit score required.</p>
-<button class="cta-button" onclick="location.href='kivo-check.html'">Get My Kivo Score</button>
+<button class="cta-button" onclick="location.href='kivo-check.html'">See My Score</button>
+<div class="scroll-prompt">
+<p>Takes 2 minutes. No credit checks.</p>
+<div class="arrow">↓</div>
+</div>
+
 </div>
 </section>
-
 <section class="stories">
 <div class="story">
 <img alt="Ellie" src="https://randomuser.me/api/portraits/women/44.jpg"/>
