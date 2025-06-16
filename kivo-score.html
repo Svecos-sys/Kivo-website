@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kivo Score – from your AI mortgage assistant</title>
-  <script src="https://cdn.tailwindcss.com">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kivo Score – from your AI mortgage assistant</title>
+<script src="https://cdn.tailwindcss.com">
   const breakdown = document.getElementById("scoreBreakdown");
   let badges = [];
 
@@ -28,7 +29,7 @@
   });
 
 </script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js">
   const breakdown = document.getElementById("scoreBreakdown");
   let badges = [];
 
@@ -52,44 +53,53 @@
   });
 
 </script>
+<meta content="Kivo is your AI-powered mortgage assistant helping you check affordability, understand your score, and prepare for your home buying journey." name="description"/>
+<style>
+@keyframes fadeSlide {
+  from {opacity: 0; transform: translateY(-10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+.kivoIntroBox {
+  animation: fadeSlide 0.6s ease-out;
+}
+</style>
 </head>
 <body class="bg-white text-gray-800 font-sans">
-
-<header class="sticky top-0 px-6 py-4 shadow bg-blue-50 flex justify-between items-center" id="mainHeader">
-  <a href="index.html" class="text-xl font-bold text-cerulean">kivo</a>
-  <nav class="flex items-center space-x-6 text-sm font-medium">
-    <a href="how-it-works.html" class="hover:text-cerulean">How it Works</a>
-    <a href="about.html" class="hover:text-cerulean">About</a>
-    <a href="faq.html" class="hover:text-cerulean">FAQs</a>
-    <a href="contact.html" class="hover:text-cerulean">Contact</a>
-    <a href="privacy.html" class="hover:text-cerulean">Privacy</a>
-  </nav>
+<header class="sticky top-0 px-6 py-4 shadow bg-blue-50 flex justify-between items-center text-sm" id="mainHeader">
+<a class="text-xl font-bold text-cerulean" href="index.html">kivo</a>
+<nav class="flex items-center space-x-6 text-sm font-medium">
+<a class="hover:text-cerulean" href="how-it-works.html">How it Works</a>
+<a class="hover:text-cerulean" href="about.html">About</a>
+<a class="hover:text-cerulean" href="faq.html">FAQs</a>
+<a class="hover:text-cerulean" href="contact.html">Contact</a>
+<a class="hover:text-cerulean" href="privacy.html">Privacy</a>
+</nav>
 </header>
-
 <section>
-  <div class="text-center py-6"><img src="https://placehold.co/400x200?text=Illustration" alt="Visual" class="mx-auto mb-4 rounded-md shadow"/></div>
+<div class="bg-blue-50 border border-blue-100 rounded-md p-4 text-sm text-gray-800 mb-6 flex items-start space-x-3 kivoIntroBox">
+<img alt="Kivo avatar" class="w-10 h-10 rounded-full shadow-sm" src="https://placehold.co/48x48?text=K"/>
+<div class="kivoIntroBox">
+<p class="font-semibold text-cerulean mb-1">Hi, I’m Kivo 👋</p>
+<p>I’ll guide you through everything you need to know. Whether you're checking your affordability or exploring mortgage options — I’ve got your back.</p>
+</div>
+</div>
 <section class="max-w-2xl mx-auto py-20 px-6 text-center">
-  <h1 class="text-3xl font-bold mb-4">🎉 Your Kivo Score is...</h1>
-  <div class="text-6xl font-extrabold text-cerulean" id="scoreReveal">0</div>
-  
-    <p class="mt-4 text-gray-600">Based on the info you shared, here’s how you did:</p>
-    <div id="scoreBreakdown" class="mt-6 space-y-2 text-left max-w-md mx-auto text-sm"></div>
-
-    <form id="emailForm" class="mt-8 max-w-md mx-auto space-y-4">
-      <label class="block font-medium">📬 Want your score emailed?</label>
-      <input type="email" required placeholder="you@example.com" class="w-full p-3 border rounded" />
-      <button type="submit" class="bg-cerulean text-white px-4 py-2 rounded hover:bg-emerald transition">Send My Score</button>
-      <p id="emailStatus" class="text-xs text-gray-500 pt-2 hidden">Sending...</p>
-    </form>
-    
-
-  <div class="mt-10">
-    <a href="index.html" class="inline-block bg-cerulean text-white px-6 py-3 rounded hover:bg-emerald transition">
+<h1 class="text-3xl font-bold mb-4">🎉 Your Kivo Score is...</h1>
+<div class="text-6xl font-extrabold text-cerulean" id="scoreReveal">0</div>
+<p class="mt-4 text-gray-600">Based on the info you shared, here’s how you did:</p>
+<div class="mt-6 space-y-2 text-left max-w-md mx-auto text-sm" id="scoreBreakdown"></div>
+<form class="mt-8 max-w-md mx-auto space-y-4" id="emailForm">
+<label class="block font-medium">📬 Want your score emailed?</label>
+<input class="w-full p-3 border rounded" placeholder="you@example.com" required="" type="email"/>
+<button class="bg-cerulean text-white px-4 py-2 rounded hover:bg-emerald transition" type="submit">Send My Score</button>
+<p class="text-xs text-gray-500 pt-2 hidden" id="emailStatus">Sending...</p>
+</form>
+<div class="mt-10">
+<a class="inline-block bg-cerulean text-white px-6 py-3 rounded hover:bg-emerald transition" href="index.html">
       Explore Mortgage Options →
     </a>
-  </div>
+</div>
 </section>
-
 <script>
   const scoreElement = document.getElementById("scoreReveal");
   const data = JSON.parse(localStorage.getItem("kivoFormData")) || {};
@@ -148,6 +158,15 @@
   });
 
 </script>
-
+</section>
+<!-- Floating Kivo Chat Bubble -->
+<div class="fixed bottom-6 right-6 bg-cerulean text-white px-4 py-3 rounded-full shadow-lg cursor-pointer hover:bg-emerald transition text-sm z-50" id="kivoChatBubble">
+  💬 Need help? Kivo’s here.
+</div>
+<script>
+  document.getElementById('kivoChatBubble').addEventListener('click', function () {
+    alert("Hi! I'm Kivo 👋 Ask me anything about mortgages. This is just a placeholder — full chat assistant coming soon.");
+  });
+</script>
 </body>
 </html>
