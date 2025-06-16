@@ -1,26 +1,81 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Thank You – Kivo</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
-          colors: { cerulean: '#007BA7', emerald: '#50C878' }
-        }
-      }
+  <title>Thankyou</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8fbff;
+      color: #333;
+      line-height: 1.6;
     }
-  </script>
+    header {
+      background-color: #1e88e5;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .nav-cta {
+      background-color: #ff7043;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    nav a:hover, .nav-cta:hover {
+      text-decoration: underline;
+      color: #ffd54f;
+    }
+    main {
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 2rem;
+      color: #1e88e5;
+    }
+    footer {
+      background: #1e88e5;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+  </style>
 </head>
-<body class="bg-white text-gray-800 font-sans">
-  <main class="h-screen flex flex-col justify-center items-center text-center px-6">
-    <h1 class="text-4xl font-bold text-cerulean mb-4">Thanks for signing up!</h1>
-    <p class="text-lg text-gray-600 mb-6">We’ll be in touch soon with early access. Stay tuned.</p>
-    <a href="index.html" class="bg-cerulean text-white px-6 py-3 rounded-lg hover:bg-emerald transition">Return to Home</a>
+<body>
+  <header>
+    <strong style="font-size: 1.5rem;">Kivo</strong>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-it-works.html">How it Works</a>
+      <a href="faq.html">FAQ</a>
+      <a href="kivo-check.html" class="nav-cta">Kivo Score</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Thankyou</h1>
+    <p>This is the Thankyou page. Content will be added here soon.</p>
   </main>
+
+  <footer>
+    &copy; 2025 Kivo Technologies Ltd. · Helping you move smarter.
+  </footer>
 </body>
 </html>

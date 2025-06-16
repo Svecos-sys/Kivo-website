@@ -1,250 +1,81 @@
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Kivo Check – Step-by-Step</title>
-<script src="https://cdn.tailwindcss.com">
-let touchStartX = null;
-
-document.addEventListener('touchstart', function(e) {
-  touchStartX = e.changedTouches[0].screenX;
-}, false);
-
-document.addEventListener('touchend', function(e) {
-  if (touchStartX === null) return;
-  let touchEndX = e.changedTouches[0].screenX;
-  let diff = touchStartX - touchEndX;
-  if (Math.abs(diff) > 50) {
-    if (diff > 0 && currentStep < steps.length - 1) {
-      nextBtn.click();
-    } else if (diff < 0 && currentStep > 0) {
-      backBtn.click();
+  <meta charset="UTF-8" />
+  <title>Kivo-Check</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8fbff;
+      color: #333;
+      line-height: 1.6;
     }
-  }
-  touchStartX = null;
-}, false);
-
-
-// Optional: animate a loader before redirection
-const loading = document.createElement("div");
-loading.className = "fixed inset-0 flex items-center justify-center bg-white bg-opacity-70 text-2xl font-semibold z-50 hidden";
-loading.id = "loadingOverlay";
-loading.innerHTML = "Calculating your Kivo Score...";
-document.body.appendChild(loading);
-
-function showLoader() {
-  document.getElementById("loadingOverlay").classList.remove("hidden");
-}
-
-nextBtn.addEventListener("click", () => {
-  if (currentStep === steps.length - 1) {
-    showLoader();
-  }
-});
-
-</script>
-<style>
-    .step { display: none; }
-    .step.active { display: block; animation: fade 0.5s ease-in-out; }
-    @keyframes fade {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    header {
+      background-color: #1e88e5;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .nav-cta {
+      background-color: #ff7043;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    nav a:hover, .nav-cta:hover {
+      text-decoration: underline;
+      color: #ffd54f;
+    }
+    main {
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 2rem;
+      color: #1e88e5;
+    }
+    footer {
+      background: #1e88e5;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 3rem;
     }
   </style>
-<meta content="Kivo is your AI-powered mortgage assistant helping you check affordability, understand your score, and prepare for your home buying journey." name="description"/>
-<style>
-@keyframes fadeSlide {
-  from {opacity: 0; transform: translateY(-10px);}
-  to {opacity: 1; transform: translateY(0);}
-}
-.kivoIntroBox {
-  animation: fadeSlide 0.6s ease-out;
-}
-</style>
-<style>
-  input[type=number]::-webkit-inner-spin-button,
-  input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  input[type=number] {
-    -moz-appearance: textfield;
-  }
-</style>
 </head>
-<body class="bg-white text-gray-800 font-sans">
-<header class="sticky top-0 px-6 py-4 shadow bg-blue-50 flex justify-between items-center text-sm" id="mainHeader">
-<a class="text-xl font-bold text-cerulean" href="index.html">kivo</a>
-<nav class="flex items-center space-x-6 text-sm font-medium">
-<a class="hover:text-cerulean" href="how-it-works.html">How it Works</a>
-<a class="hover:text-cerulean" href="about.html">About</a>
-<a class="hover:text-cerulean" href="faq.html">FAQs</a>
-<a class="hover:text-cerulean" href="contact.html">Contact</a>
-<a class="hover:text-cerulean" href="privacy.html">Privacy</a>
-</nav>
-</header>
-<section>
-<div class="bg-blue-50 border border-blue-100 rounded-md p-4 text-sm text-gray-800 mb-6 flex items-start space-x-3 kivoIntroBox">
-<img alt="Kivo avatar" class="w-10 h-10 rounded-full shadow-sm" src="https://placehold.co/48x48?text=K"/>
-<div class="kivoIntroBox">
-<p class="font-semibold text-cerulean mb-1">Hi, I’m Kivo 👋</p>
-<p>I’ll guide you through everything you need to know. Whether you're checking your affordability or exploring mortgage options — I’ve got your back.</p>
-</div>
-</div>
-<section class="max-w-xl mx-auto py-10 px-6">
-<h1 class="text-3xl font-bold text-center mb-4">Your Kivo Check</h1>
-<p class="text-center text-gray-600 mb-8">We’ll ask you a few short questions to personalise your Kivo Score.</p>
-<div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
-<div class="bg-gradient-to-r from-emerald to-cerulean h-2.5 rounded-full transition-all duration-500 ease-in-out shadow-inner" id="progressBar" style="width: 20%"></div>
-</div>
-<div class="space-y-6" id="steps">
-<div class="step active" data-step="0">
-<label class="block mb-2 font-medium">💼 What’s your annual income?</label>
-<input class="w-full p-3 border rounded" inputmode="numeric" name="income" pattern="[0-9]*" placeholder="e.g. £42,000" type="number"/>
-</div>
-<div class="step" data-step="1">
-<label class="block mb-2 font-medium">🏦 How much have you saved for a deposit?</label>
-<input class="w-full p-3 border rounded" inputmode="numeric" name="deposit" pattern="[0-9]*" placeholder="e.g. £10,000" type="number"/>
-</div>
-<div class="step" data-step="2">
-<label class="block mb-2 font-medium">🏠 What’s your current monthly rent?</label>
-<input class="w-full p-3 border rounded" inputmode="numeric" name="rent" pattern="[0-9]*" placeholder="e.g. £800" type="number"/>
-</div>
-<div class="step" data-step="3">
-<label class="block mb-2 font-medium">📉 Do you have any existing debt?</label>
-<select class="w-full p-3 border rounded" name="debt">
-<option value="">Select one</option>
-<option value="Yes">Yes</option>
-<option value="No">No</option>
-</select>
-</div>
-<div class="step" data-step="4">
-<label class="block mb-2 font-medium">💳 How’s your credit history?</label>
-<select class="w-full p-3 border rounded" name="credit">
-<option value="">Select one</option>
-<option value="Good">Good</option>
-<option value="Fair">Fair</option>
-<option value="Poor">Poor</option>
-</select>
-</div>
-</div>
-<div class="flex justify-between items-center mt-10">
-<button class="text-cerulean font-medium hover:underline hidden" id="backBtn">← Back</button>
-<button class="bg-cerulean text-white px-6 py-2 rounded hover:bg-emerald" id="nextBtn">Next</button>
-</div>
-<div class="text-center text-sm text-gray-500 mt-6" id="stepIndicator">Step 1 of 5</div>
-</section>
-<script>
-  const steps = document.querySelectorAll(".step");
-  const nextBtn = document.getElementById("nextBtn");
-  const backBtn = document.getElementById("backBtn");
-  const stepIndicator = document.getElementById("stepIndicator");
+<body>
+  <header>
+    <strong style="font-size: 1.5rem;">Kivo</strong>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-it-works.html">How it Works</a>
+      <a href="faq.html">FAQ</a>
+      <a href="kivo-check.html" class="nav-cta">Kivo Score</a>
+    </nav>
+  </header>
 
-  let currentStep = 0;
+  <main>
+    <h1>Kivo-Check</h1>
+    <p>This is the Kivo-Check page. Content will be added here soon.</p>
+  </main>
 
-  
-function showStep(index) {
-    const progress = ((index + 1) / steps.length) * 100;
-    document.getElementById("progressBar").style.width = progress + "%";
-
-    steps.forEach((step, i) => {
-      step.classList.toggle("active", i === index);
-    });
-    backBtn.style.display = index > 0 ? "inline-block" : "none";
-    nextBtn.textContent = index === steps.length - 1 ? "See My Score" : "Next";
-    stepIndicator.textContent = `Step ${index + 1} of ${steps.length}`;
-  }
-
-  nextBtn.addEventListener("click", () => {
-    const input = steps[currentStep].querySelector("input, select");
-    if (!input.value) {
-      input.classList.add("border-red-500");
-      return;
-    } else {
-      input.classList.remove("border-red-500");
-    }
-
-    if (currentStep < steps.length - 1) {
-      currentStep++;
-      showStep(currentStep);
-    } else {
-      // Gather data
-      const data = {};
-      document.querySelectorAll("input, select").forEach(input => {
-        data[input.name] = isNaN(input.value) ? input.value : Number(input.value);
-      });
-      localStorage.setItem("kivoFormData", JSON.stringify(data));
-      window.location.href = "kivo-score.html";
-    }
-  });
-
-  backBtn.addEventListener("click", () => {
-    if (currentStep > 0) {
-      currentStep--;
-      showStep(currentStep);
-    }
-  });
-
-  showStep(currentStep);
-
-let touchStartX = null;
-
-document.addEventListener('touchstart', function(e) {
-  touchStartX = e.changedTouches[0].screenX;
-}, false);
-
-document.addEventListener('touchend', function(e) {
-  if (touchStartX === null) return;
-  let touchEndX = e.changedTouches[0].screenX;
-  let diff = touchStartX - touchEndX;
-  if (Math.abs(diff) > 50) {
-    if (diff > 0 && currentStep < steps.length - 1) {
-      nextBtn.click();
-    } else if (diff < 0 && currentStep > 0) {
-      backBtn.click();
-    }
-  }
-  touchStartX = null;
-}, false);
-
-
-// Optional: animate a loader before redirection
-const loading = document.createElement("div");
-loading.className = "fixed inset-0 flex items-center justify-center bg-white bg-opacity-70 text-2xl font-semibold z-50 hidden";
-loading.id = "loadingOverlay";
-loading.innerHTML = "Calculating your Kivo Score...";
-document.body.appendChild(loading);
-
-function showLoader() {
-  document.getElementById("loadingOverlay").classList.remove("hidden");
-}
-
-nextBtn.addEventListener("click", () => {
-  if (currentStep === steps.length - 1) {
-    showLoader();
-  }
-});
-
-</script>
-</section>
-<!-- Floating Kivo Chat Bubble -->
-<div class="fixed bottom-6 right-6 bg-cerulean text-white px-4 py-3 rounded-full shadow-lg cursor-pointer hover:bg-emerald transition text-sm z-50" id="kivoChatBubble">
-  💬 Need help? Kivo’s here.
-</div>
-<script>
-  document.getElementById('kivoChatBubble').addEventListener('click', function () {
-    alert("Hi! I'm Kivo 👋 Ask me anything about mortgages. This is just a placeholder — full chat assistant coming soon.");
-  });
-</script>
-
-<!-- Chatbase Embed -->
-<script>
-  window.chatbaseConfig = {
-    chatbotId: "MKROuhZIGZvCb4iGcaepx"
-  };
-</script>
-<script defer="" id="chatbase-script" src="https://www.chatbase.co/embed.min.js"></script>
+  <footer>
+    &copy; 2025 Kivo Technologies Ltd. · Helping you move smarter.
+  </footer>
 </body>
 </html>
