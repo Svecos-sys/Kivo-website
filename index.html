@@ -1,11 +1,12 @@
 
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Kivo – Mortgage Clarity Made Simple</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
+<meta charset="utf-8"/>
+<title>Kivo – Mortgage Clarity Made Simple</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -15,20 +16,24 @@
     }
     header {
       background-color: #1e88e5;
-      padding: 1rem 2rem;
+      padding: 1.5rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       color: white;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
     nav a {
       color: white;
       text-decoration: none;
-      margin-left: 1rem;
-      font-weight: 500;
+      margin-left: 1.5rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      text-decoration: underline;
+      color: #ffd54f;
     }
     .hero {
       text-align: center;
@@ -36,10 +41,10 @@
       background: linear-gradient(135deg, #e3f2fd, #ffffff);
     }
     .hero h1 {
-      font-size: 2.8rem;
+      font-size: 3rem;
     }
     .hero p {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       max-width: 600px;
       margin: 1rem auto;
     }
@@ -47,7 +52,7 @@
       padding: 1rem 2rem;
       background-color: #ff7043;
       color: white;
-      font-size: 1rem;
+      font-size: 1.1rem;
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -55,18 +60,6 @@
     }
     .cta-button:hover {
       background-color: #f4511e;
-    }
-    .sticky-cta {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #ff7043;
-      color: white;
-      padding: 0.75rem 1.25rem;
-      border-radius: 8px;
-      font-weight: bold;
-      z-index: 999;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
     section {
       padding: 4rem 2rem;
@@ -78,7 +71,7 @@
       justify-content: center;
       gap: 2rem;
     }
-    .steps div, .feature-card, .story {
+    .story {
       background: white;
       border-radius: 12px;
       padding: 2rem;
@@ -86,30 +79,46 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
     .story img {
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
       margin-bottom: 1rem;
     }
-    .trust-logos {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
+    .comparison table {
+      margin: 2rem auto;
+      width: 100%;
+      max-width: 720px;
+      border-collapse: separate;
+      border-spacing: 0 1rem;
+    }
+    .comparison th {
+      background: #1e88e5;
+      color: white;
       padding: 1rem;
+      border-radius: 8px 8px 0 0;
     }
-    .trust-logos img {
-      height: 40px;
-      opacity: 0.9;
+    .comparison td {
+      background: white;
+      padding: 1rem;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
-    .score-preview .score-box {
-      font-size: 2rem;
-      background: #e1f5fe;
-      display: inline-block;
-      padding: 1rem 2rem;
-      border-radius: 12px;
-      margin: 1rem 0;
-      font-weight: bold;
+    .faq-teaser ul {
+      list-style: none;
+      padding: 0;
+    }
+    .faq-teaser li {
+      margin: 1rem auto;
+      max-width: 500px;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+      text-align: left;
+    }
+    .faq-teaser li strong {
+      display: block;
+      margin-bottom: 0.5rem;
     }
     footer {
       background: #1e88e5;
@@ -117,67 +126,69 @@
       padding: 2rem;
       text-align: center;
     }
-  </style>
+  
+    .nav-cta {
+      background-color: #ff7043;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    .nav-cta:hover {
+      background-color: #f4511e;
+      color: white;
+    }
+</style>
 </head>
 <body>
-  <header>
-    <strong>Kivo</strong>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="how-it-works.html">How it Works</a>
-      <a href="faq.html">FAQ</a>
-      <a href="kivo-check.html">Kivo Score</a>
-    </nav>
-  </header>
-
-  <section class="hero">
-    <h1>Welcome to Kivo 👋</h1>
-    <p>Your friendly, jargon-free way to check mortgage readiness — no credit score required.</p>
-    <button class="cta-button" onclick="location.href='kivo-check.html'">Get My Kivo Score</button>
-  </section>
-
-  <section class="score-preview">
-    <h2>Here’s What You’ll See 👀</h2>
-    <div class="score-box">Kivo Score: 82 / 100 – Great shape!</div>
-    <p>This is your personalised guide to what’s possible — and how to improve it.</p>
-  </section>
-
-  <section class="features">
-    <div class="feature-card"><h3>🎯 Personalised</h3><p>We only show what matters for your journey.</p></div>
-    <div class="feature-card"><h3>💬 Clear & Friendly</h3><p>No financial gobbledygook. Just good advice.</p></div>
-    <div class="feature-card"><h3>🔒 Secure</h3><p>Your data is encrypted and never sold. Ever.</p></div>
-  </section>
-
-  <section class="stories">
-    <div class="story">
-      <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ellie photo">
-      <p>“Kivo helped me understand my finances without fear.”<br><strong>– Ellie, First-time buyer</strong></p>
-    </div>
-    <div class="story">
-      <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Aaron photo">
-      <p>“Honestly, I didn’t think a mortgage tool could feel human. But this one does.”<br><strong>– Aaron, Freelancer</strong></p>
-    </div>
-  </section>
-
-  <section>
-    <h2>Trusted & Secure 🔐</h2>
-    <div class="trust-logos">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/UK_Government_logo.svg/2560px-UK_Government_logo.svg.png" alt="UK Gov" />
-      <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/GDPR_logo.svg" alt="GDPR" />
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Made_in_UK_logo.png" alt="Made in UK" />
-    </div>
-    <p style="margin-top: 1rem;">Fully GDPR-compliant · Encrypted · UK-based</p>
-  </section>
-
-  <section>
-    <h2>Still browsing? Don’t forget to check your score.</h2>
-    <button class="cta-button" onclick="location.href='kivo-check.html'">Get My Kivo Score</button>
-  </section>
-
-  <footer>
-    &copy; 2025 Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.
+<header>
+<strong style="font-size: 1.5rem;">Kivo</strong>
+<nav>
+<a href="index.html">Home</a>
+<a href="how-it-works.html">How it Works</a>
+<a href="faq.html">FAQ</a>
+<a class="nav-cta" href="kivo-check.html">Kivo Score</a>
+</nav>
+</header>
+<section class="hero">
+<h1>Welcome to Kivo 👋</h1>
+<p>Your friendly, jargon-free way to check mortgage readiness — no credit score required.</p>
+<button class="cta-button" onclick="location.href='kivo-check.html'">Get My Kivo Score</button>
+</section>
+<section class="stories">
+<div class="story">
+<img alt="Ellie" src="https://randomuser.me/api/portraits/women/44.jpg"/>
+<p>“Kivo helped me understand my finances without fear.”<br/><strong>– Ellie, First-time buyer</strong></p>
+</div>
+<div class="story">
+<img alt="Aaron" src="https://randomuser.me/api/portraits/men/22.jpg"/>
+<p>“Honestly, I didn’t think a mortgage tool could feel human. But this one does.”<br/><strong>– Aaron, Freelancer</strong></p>
+</div>
+</section>
+<section class="comparison">
+<h2>How Does Kivo Compare?</h2>
+<table>
+<tr><th>Feature</th><th>Kivo</th><th>Traditional</th></tr>
+<tr><td>Takes 2 minutes</td><td>✅</td><td>❌</td></tr>
+<tr><td>No credit impact</td><td>✅</td><td>❌</td></tr>
+<tr><td>Instant feedback</td><td>✅</td><td>❌</td></tr>
+<tr><td>Friendly interface</td><td>✅</td><td>❌</td></tr>
+</table>
+</section>
+<section class="faq-teaser">
+<h2>Common Questions</h2>
+<ul>
+<li><strong>Is the Kivo Score a credit check?</strong>Nope! It’s based on your answers only — no credit footprint.</li>
+<li><strong>Does it cost anything?</strong>Not a penny. Kivo is totally free to use.</li>
+<li><strong>Can I speak to a human?</strong>Yes! We’re just a click away if you need real support.</li>
+</ul>
+<p><a href="faq.html">See all FAQs →</a></p>
+</section>
+<section>
+<h2>Ready to see your Kivo Score?</h2>
+<button class="cta-button" onclick="location.href='kivo-check.html'">Let's Do It</button>
+</section>
+<footer>
+    © 2025 Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.
   </footer>
-
-  <div class="sticky-cta" onclick="location.href='kivo-check.html'">🎯 Check Your Kivo Score</div>
 </body>
 </html>
