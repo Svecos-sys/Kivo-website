@@ -1,33 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kivo Tools & Calculators</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-white text-graphite font-sans">
-  <header id="mainHeader" class="fixed top-0 w-full transition duration-300 z-50 bg-white bg-opacity-90 backdrop-blur text-white">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <a class="text-xl font-bold text-cyan-500" href="index.html">Kivo</a>
-      <nav class="flex items-center gap-6 md:gap-8 lg:gap-10 text-sm font-medium">
-        <a class="text-graphite hover:text-cyan-500" href="how-it-works.html">How it Works</a>
-        <a class="text-graphite hover:text-cyan-500" href="about.html">About</a>
-        <a class="text-graphite hover:text-cyan-500" href="faq.html">FAQs</a>
-        <a class="text-graphite hover:text-cyan-500" href="contact.html">Contact</a>
-        <a class="text-graphite hover:text-cyan-500" href="privacy.html">Privacy</a>
-        <a class="bg-emerald text-white px-5 py-2.5 rounded-full shadow-md hover:shadow-lg hover:bg-cyan-700 transition-all duration-300" href="kivo-check.html">Check Your Score</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="pt-32 px-6 text-center max-w-3xl mx-auto">
-    <h1 class="text-3xl font-bold mb-4">Explore Our Tools 🔧</h1>
-    <p class="text-lg text-gray-700">Use our free tools to estimate what you can afford, plan your deposit, and understand monthly costs.</p>
-  </main>
-
-  <footer class="bg-white border-t text-center text-sm text-gray-600 py-10 mt-24">
-    <p>© 2025 Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.</p>
-  </footer>
-</body>
-</html>
+<html><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Kivo Tools &amp; Calculators</title><script src="https://cdn.tailwindcss.com"></script><style>
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+</style><script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cyan: {
+              50: '#ECFEFF',
+              500: '#0EA5E9',
+              700: '#0369A1'
+            },
+            emerald: '#10B981',
+            graphite: '#1F2937'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script></head><body><header class="fixed top-0 w-full transition duration-300 z-50 bg-white bg-opacity-90 backdrop-blur" id="mainHeader">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<a class="text-2xl font-extrabold text-cyan-500" href="index.html">Kivo</a>
+<nav class="flex items-center gap-6 md:gap-8 lg:gap-10 text-lg font-medium">
+<div class="relative group">
+<button class="text-graphite hover:text-cyan-500">Company</button>
+<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50 animate-fadeIn">
+<a class="block px-4 py-2 hover:bg-cyan-50" href="about.html">About</a>
+<a class="block px-4 py-2 hover:bg-cyan-50" href="security.html">Security</a>
+<a class="block px-4 py-2 hover:bg-cyan-50" href="partners.html">Partners</a>
+<a class="block px-4 py-2 hover:bg-cyan-50" href="for-advisors.html">Advisors</a>
+<a class="block px-4 py-2 hover:bg-cyan-50" href="privacy.html">Privacy</a>
+</div>
+</div>
+<div class="relative group">
+<button class="text-graphite hover:text-cyan-500">Resources</button>
+<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50">
+<a class="block px-4 py-2 hover:bg-cyan-50" href="tools.html">Tools</a>
+<a class="block px-4 py-2 hover:bg-cyan-50" href="learn.html">Learn</a>
+<a class="block px-4 py-2 hover:bg-cyan-50" href="stories.html">Stories</a>
+</div>
+</div>
+<a class="text-graphite hover:text-cyan-500" href="how-it-works.html">How it Works</a>
+<a class="text-graphite hover:text-cyan-500" href="faq.html">FAQs</a>
+<a class="text-graphite hover:text-cyan-500" href="contact.html">Contact</a>
+<a class="bg-emerald text-white px-5 py-2.5 rounded-full shadow-md hover:shadow-lg hover:bg-cyan-700 transition-all duration-300" href="kivo-check.html">Check Your Score</a>
+</nav>
+</div>
+</header>
+<main class="pt-32 px-6 text-center max-w-3xl mx-auto">
+<h1 class="text-3xl font-bold mb-4">Explore Our Tools 🔧</h1>
+<p class="text-lg text-gray-700">Use our free tools to estimate what you can afford, plan your deposit, and understand monthly costs.</p>
+</main>
+<footer class="bg-white border-t text-center text-sm text-gray-600 py-10">
+<p>© 2025 Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.</p>
+</footer><div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity duration-300 opacity-0 animate-fadeIn" id="cookiePreferencesOverlay">
+<div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
+<h2 class="text-lg font-semibold mb-4">Cookie Preferences</h2>
+<p class="text-sm text-gray-700 mb-4">We use cookies to enhance your experience. You can manage your preferences below. Read our <a class="text-cyan-700 underline hover:text-cyan-900" href="privacy.html">cookie policy</a>.</p>
+<form class="space-y-3">
+<label class="flex items-center gap-2 justify-start">
+<input checked="" class="accent-cyan-500" disabled="" type="checkbox"/>
+<span>Essential cookies (always on)</span>
+</label>
+<label class="flex items-center gap-2 justify-start">
+<input class="accent-cyan-500" id="overlayAnalytics" type="checkbox"/>
+<span>Analytics cookies</span>
+</label>
+<label class="flex items-center gap-2 justify-start">
+<input class="accent-cyan-500" id="overlayMarketing" type="checkbox"/>
+<span>Marketing cookies</span>
+</label>
+<div class="flex justify-center gap-2 pt-4">
+<button class="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="savePreferences()" type="button">Accept choices</button>
+<button class="bg-emerald text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="acceptAllCookies()" type="button">Accept all</button>
+<button class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" onclick="rejectAllCookies()" type="button">Reject all</button>
+</div>
+</form>
+</div>
+</div>
+<script>
+  function enableAnalytics() {
+    console.log("✅ Analytics cookies enabled");
+  }
+  function enableMarketing() {
+    console.log("✅ Marketing cookies enabled");
+  }
+  function savePreferences() {
+    const analytics = document.getElementById('overlayAnalytics').checked;
+    const marketing = document.getElementById('overlayMarketing').checked;
+    localStorage.setItem('cookieConsent', JSON.stringify({ analytics, marketing }));
+    if (analytics) enableAnalytics();
+    if (marketing) enableMarketing();
+    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
+  }
+  function acceptAllCookies() {
+    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: true, marketing: true }));
+    enableAnalytics();
+    enableMarketing();
+    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
+  }
+  function rejectAllCookies() {
+    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: false, marketing: false }));
+    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
+  }
+  window.onload = function () {
+  const consent = localStorage.getItem('cookieConsent');
+  if (consent) {
+    const parsed = JSON.parse(consent);
+    if (parsed.analytics) enableAnalytics();
+    if (parsed.marketing) enableMarketing();
+  } else {
+    document.getElementById('cookiePreferencesOverlay').classList.remove('hidden');
+  }
+};
+</script>
+<script>
+  window.addEventListener('scroll', () => {
+    const header = document.getElementById('mainHeader');
+    if (window.scrollY > 10) {
+      header.classList.add('bg-white', 'shadow');
+    } else {
+      header.classList.remove('bg-white', 'shadow');
+    }
+  });
+</script></body></html>
