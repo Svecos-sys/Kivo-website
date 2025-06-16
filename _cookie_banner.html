@@ -1,81 +1,44 @@
-
-<!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title> Cookie Banner</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #f8fbff;
-      color: #333;
-      line-height: 1.6;
-    }
-    header {
-      background-color: #1e88e5;
-      padding: 1.5rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: white;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 1.5rem;
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-    .nav-cta {
-      background-color: #ff7043;
-      padding: 0.6rem 1.2rem;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-    nav a:hover, .nav-cta:hover {
-      text-decoration: underline;
-      color: #ffd54f;
-    }
-    main {
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
-    }
-    h1 {
-      font-size: 2rem;
-      color: #1e88e5;
-    }
-    footer {
-      background: #1e88e5;
-      color: white;
-      padding: 2rem;
-      text-align: center;
-      margin-top: 3rem;
-    }
-  </style>
+<meta content="Kivo is your AI-powered guide to mortgage affordability. Get personalised insights, improve your Kivo Score, and take the next step with clarity." name="description"/>
+<meta content="mortgage, affordability, UK mortgage, AI advisor, first-time buyer, Kivo" name="keywords"/>
+<meta content="Kivo Technologies Ltd" name="author"/>
+<meta content="Kivo – Smarter Mortgage Advice" property="og:title"/>
+<meta content="Get mortgage-ready with AI. Kivo helps you understand your affordability and improve your Kivo Score in minutes." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://getkivo.co.uk" property="og:url"/>
+<meta content="https://getkivo.co.uk/og-image.jpg" property="og:image"/>
+
+<style>
+@keyframes fadeSlide {
+  from {opacity: 0; transform: translateY(-10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+.kivoIntroBox {
+  animation: fadeSlide 0.6s ease-out;
+}
+</style>
+
+<style>
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+</style>
+
 </head>
-<body>
-  <header>
-    <strong style="font-size: 1.5rem;">Kivo</strong>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="how-it-works.html">How it Works</a>
-      <a href="faq.html">FAQ</a>
-      <a href="kivo-check.html" class="nav-cta">Kivo Score</a>
-    </nav>
-  </header>
-
-  <main>
-    <h1> Cookie Banner</h1>
-    <p>This is the  Cookie Banner page. Content will be added here soon.</p>
-  </main>
-
-  <footer>
-    &copy; 2025 Kivo Technologies Ltd. · Helping you move smarter.
-  </footer>
-</body>
-</html>
+<div class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white text-sm p-4 flex justify-between items-center z-50" id="cookie-banner">
+<span>
+  This site uses cookies to improve your experience. See our
+  <a class="underline text-blue-300" href="privacy.html">
+   Privacy Policy
+  </a>
+  .
+ </span>
+<button class="ml-4 bg-cerulean px-4 py-1 rounded text-black font-semibold" onclick="document.getElementById('cookie-banner').style.display='none'">
+  Got it
+ </button>
+</div>

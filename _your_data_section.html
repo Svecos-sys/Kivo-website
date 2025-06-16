@@ -1,81 +1,63 @@
-
-<!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title> Your Data Section</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #f8fbff;
-      color: #333;
-      line-height: 1.6;
-    }
-    header {
-      background-color: #1e88e5;
-      padding: 1.5rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: white;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 1.5rem;
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-    .nav-cta {
-      background-color: #ff7043;
-      padding: 0.6rem 1.2rem;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-    nav a:hover, .nav-cta:hover {
-      text-decoration: underline;
-      color: #ffd54f;
-    }
-    main {
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
-    }
-    h1 {
-      font-size: 2rem;
-      color: #1e88e5;
-    }
-    footer {
-      background: #1e88e5;
-      color: white;
-      padding: 2rem;
-      text-align: center;
-      margin-top: 3rem;
-    }
-  </style>
+<meta content="Kivo is your AI-powered guide to mortgage affordability. Get personalised insights, improve your Kivo Score, and take the next step with clarity." name="description"/>
+<meta content="mortgage, affordability, UK mortgage, AI advisor, first-time buyer, Kivo" name="keywords"/>
+<meta content="Kivo Technologies Ltd" name="author"/>
+<meta content="Kivo – Smarter Mortgage Advice" property="og:title"/>
+<meta content="Get mortgage-ready with AI. Kivo helps you understand your affordability and improve your Kivo Score in minutes." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://getkivo.co.uk" property="og:url"/>
+<meta content="https://getkivo.co.uk/og-image.jpg" property="og:image"/>
+
+<style>
+@keyframes fadeSlide {
+  from {opacity: 0; transform: translateY(-10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+.kivoIntroBox {
+  animation: fadeSlide 0.6s ease-out;
+}
+</style>
+
+<style>
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+</style>
+
 </head>
-<body>
-  <header>
-    <strong style="font-size: 1.5rem;">Kivo</strong>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="how-it-works.html">How it Works</a>
-      <a href="faq.html">FAQ</a>
-      <a href="kivo-check.html" class="nav-cta">Kivo Score</a>
-    </nav>
-  </header>
-
-  <main>
-    <h1> Your Data Section</h1>
-    <p>This is the  Your Data Section page. Content will be added here soon.</p>
-  </main>
-
-  <footer>
-    &copy; 2025 Kivo Technologies Ltd. · Helping you move smarter.
-  </footer>
-</body>
-</html>
+<section>
+<div class="bg-blue-50 border border-blue-100 rounded-md p-4 text-sm text-gray-800 mb-6 flex items-start space-x-3 kivoIntroBox">
+<img alt="Kivo avatar" class="w-10 h-10 rounded-full shadow-sm" src="https://placehold.co/48x48?text=K"/>
+<div class="kivoIntroBox">
+<p class="font-semibold text-cerulean mb-1">Hi, I’m Kivo 👋</p>
+<p>I’ll guide you through everything you need to know. Whether you're checking your affordability or exploring mortgage options — I’ve got your back.</p>
+</div>
+</div>
+<section class="bg-blue-50 text-gray-800 py-16 px-6 text-center">
+<h2 class="text-3xl font-bold mb-4">
+  Your Data, Protected
+ </h2>
+<p class="max-w-2xl mx-auto text-lg mb-6">
+  Kivo is registered with the UK Information Commissioner’s Office (ICO) and fully complies with UK GDPR standards.
+ </p>
+<p class="max-w-2xl mx-auto text-lg mb-2">
+  We never share your data without your explicit consent. You can request a copy or deletion of your data at any time.
+ </p>
+<div class="flex justify-center mt-6 space-x-4">
+<span class="inline-block bg-white border px-4 py-2 rounded text-sm shadow">
+   ICO Registered
+  </span>
+<span class="inline-block bg-white border px-4 py-2 rounded text-sm shadow">
+   GDPR Compliant
+  </span>
+<span class="inline-block bg-white border px-4 py-2 rounded text-sm shadow">
+   Open Banking Secured
+  </span>
+</div>
+</section>
+</section>
