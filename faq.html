@@ -1,197 +1,159 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>
-   Kivo – FAQs
-  </title><script src="https://cdn.tailwindcss.com"></script><style>
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .animate-fadeIn {
-    animation: fadeIn 0.4s ease-out forwards;
-  }
-</style><script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            cyan: {
-              50: '#ECFEFF',
-              500: '#0EA5E9',
-              700: '#0369A1'
-            },
-            emerald: '#10B981',
-            graphite: '#1F2937'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script></head><body><header class="fixed top-0 w-full transition duration-300 z-50 bg-white bg-opacity-90 backdrop-blur" id="mainHeader">
-<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-<a class="text-2xl font-extrabold text-cyan-500" href="index.html">Kivo</a>
-<nav class="flex items-center gap-6 md:gap-8 lg:gap-10 text-lg font-medium">
-<div class="relative group">
-<button class="text-graphite hover:text-cyan-500">Company</button>
-<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50 animate-fadeIn">
-<a class="block px-4 py-2 hover:bg-cyan-50" href="about.html">About</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="security.html">Security</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="partners.html">Partners</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="for-advisors.html">Advisors</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="privacy.html">Privacy</a>
-</div>
-</div>
-<div class="relative group">
-<button class="text-graphite hover:text-cyan-500">Resources</button>
-<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50">
-<a class="block px-4 py-2 hover:bg-cyan-50" href="tools.html">Tools</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="learn.html">Learn</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="stories.html">Stories</a>
-</div>
-</div>
-<a class="text-graphite hover:text-cyan-500" href="how-it-works.html">How it Works</a>
-<a class="text-graphite hover:text-cyan-500" href="faq.html">FAQs</a>
-<a class="text-graphite hover:text-cyan-500" href="contact.html">Contact</a>
-<a class="bg-emerald text-white px-5 py-2.5 rounded-full shadow-md hover:shadow-lg hover:bg-cyan-700 transition-all duration-300" href="kivo-check.html">Check Your Score</a>
-</nav>
-</div>
-</header>
-<section>
-<div class="bg-cyan-50 border border-cyan-100 rounded-md p-4 text-sm text-gray-800 mb-6 flex items-start space-x-3 kivoIntroBox">
-<img alt="Kivo avatar" class="w-10 h-10 rounded-full shadow-sm" src="https://placehold.co/48x48?text=K"/>
-<div class="kivoIntroBox">
-<p class="font-semibold text-cyan-500 mb-1">Hi, I’m Kivo 👋</p>
-<p>I’ll guide you through everything you need to know. Whether you're checking your affordability or exploring mortgage options — I’ve got your back.</p>
-</div>
-</div>
-<section class="max-w-3xl mx-auto px-6 py-20">
-<h1 class="text-4xl font-bold text-center mb-12">
-    Frequently Asked Questions
-   </h1>
-<div class="space-y-6 text-left">
-<details class="bg-gray-50 p-4 rounded shadow">
-<summary class="cursor-pointer font-semibold">
-      Is using Kivo free?
-     </summary>
-<p class="mt-2 text-gray-600">
-      Yes — it's completely free. We may earn a commission from lenders if you apply through us, but you always see the best options regardless.
-     </p>
-</details>
-<details class="bg-gray-50 p-4 rounded shadow">
-<summary class="cursor-pointer font-semibold">
-      Does Kivo affect my credit score?
-     </summary>
-<p class="mt-2 text-gray-600">
-      Nope. We don’t run any credit checks — everything is based on your input and optional Open Banking data.
-     </p>
-</details>
-<details class="bg-gray-50 p-4 rounded shadow">
-<summary class="cursor-pointer font-semibold">
-      Is Open Banking safe?
-     </summary>
-<p class="mt-2 text-gray-600">
-      Yes — it’s regulated and secure. You’re always in control, and we never see your login details.
-     </p>
-</details>
-<details class="bg-gray-50 p-4 rounded shadow">
-<summary class="cursor-pointer font-semibold">
-      Can I talk to a real person?
-     </summary>
-<p class="mt-2 text-gray-600">
-      Yes — we offer live support and partner with trusted mortgage advisers for more complex cases.
-     </p>
-</details>
-<details class="bg-gray-50 p-4 rounded shadow">
-<summary class="cursor-pointer font-semibold">
-      What is a Kivo Score?
-     </summary>
-<p class="mt-2 text-gray-600">
-      It’s our way of helping you understand how close you are to mortgage readiness, using your financial profile and goals.
-     </p>
-</details>
-</div>
-</section>
-</section>
- Floating Kivo Chat Bubble 
-<div class="fixed bottom-6 right-6 bg-cyan-500 text-white px-4 py-3 rounded-full shadow-lg cursor-pointer hover:bg-cyan-700 transition text-sm z-50" id="kivoChatBubble">
-  💬 Need help? Kivo’s here.
-</div>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQs – Your Kivo Questions, Answered</title>
+  <meta name="description" content="Everything you need to know about Kivo, the Kivo Score, Open Banking, and what it all means for your mortgage application.">
+  <link rel="stylesheet" href="kivo.css">
+  <style>
+    .faq-hero{padding-top:68px;background:linear-gradient(160deg,var(--mist) 0%,#fff 60%)}
+    .faq-hero__inner{padding:72px 0 56px}
+    .faq-layout{display:grid;grid-template-columns:240px 1fr;gap:56px;align-items:start}
+    .faq-sidebar{position:sticky;top:96px}
+    .faq-cats{display:flex;flex-direction:column;gap:2px}
+    .faq-cat{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--r-md);font-size:.9rem;font-weight:500;color:var(--slate);cursor:pointer;transition:all var(--ease)}
+    .faq-cat:hover,.faq-cat.active{background:var(--coral-lt);color:var(--coral-dk);font-weight:600}
+    .faq-cat__dot{width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0;transition:background var(--ease)}
+    .faq-cat.active .faq-cat__dot{background:var(--coral)}
+    .faq-group{margin-bottom:48px}
+    .faq-group__title{font-family:var(--font-display);font-weight:700;font-size:1.0625rem;color:var(--navy);margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--coral-lt)}
+    .faq-item{border-bottom:1px solid var(--border)}
+    .faq-item:last-child{border-bottom:none}
+    .faq-q{width:100%;text-align:left;padding:18px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;font-size:.9375rem;font-weight:600;color:var(--navy);cursor:pointer;transition:color var(--ease)}
+    .faq-q:hover{color:var(--coral)}
+    .faq-chevron{width:20px;height:20px;flex-shrink:0;transition:transform .25s ease;color:var(--slate-lt);margin-top:2px}
+    .faq-item.open .faq-chevron{transform:rotate(180deg)}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .25s ease}
+    .faq-item.open .faq-a{max-height:600px;padding-bottom:20px}
+    .faq-a p{font-size:.9375rem;color:var(--slate);line-height:1.7}
+    .faq-a a{color:var(--coral);font-weight:500}
+    .faq-a ul{margin:12px 0 0 16px;display:flex;flex-direction:column;gap:6px}
+    .faq-a ul li{font-size:.9375rem;color:var(--slate);list-style:disc;line-height:1.6}
+    .faq-search-wrap{position:relative;margin-bottom:40px}
+    .faq-search{width:100%;padding:14px 16px 14px 44px;border:1.5px solid var(--border);border-radius:var(--r-md);font-size:1rem;color:var(--navy);background:var(--white);transition:border-color var(--ease);outline:none}
+    .faq-search:focus{border-color:var(--coral)}
+    .faq-search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--slate-lt);pointer-events:none}
+    .still-stuck{background:var(--mist);border:1px solid var(--border);border-radius:var(--r-xl);padding:40px;text-align:center;margin-top:48px}
+    @media(max-width:768px){.faq-layout{grid-template-columns:1fr}.faq-sidebar{display:none}}
+  </style>
+</head>
+<body>
+<header class="header" id="header"><div class="container"><div class="header__inner">
+  <a href="index.html" class="logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
+  <nav class="nav"><div class="nav__item"><a href="how-it-works.html" class="nav__link">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a><a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a></div></div><div class="nav__item"><a href="learn.html" class="nav__link active">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a><a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a><a href="stories.html"><span class="dd-icon" style="background:#F0FFF4">💬</span>Stories</a><a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a></div></div><a href="for-advisors.html" class="nav__link nav__link--teal">For Advisors</a></nav>
+  <div class="header__actions"><a href="kivo-check.html" class="btn btn--primary btn--sm">Check Your Score</a><button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
+</div></div></header>
+<div class="mobile-menu" id="mobile-menu"><div class="mobile-menu__section"><div class="mobile-menu__label">Features</div><a href="how-it-works.html">🏠 How it Works</a><a href="kivo-score.html">📊 Kivo Score</a><a href="kivo-check.html">✅ Kivo Check</a></div><div class="mobile-menu__section"><div class="mobile-menu__label">Resources</div><a href="learn.html">📖 Learn</a><a href="tools.html">🧮 Tools</a><a href="stories.html">💬 Stories</a><a href="faq.html">❓ FAQs</a></div><div class="mobile-menu__cta"><a href="kivo-check.html" class="btn btn--primary btn--full">Check My Score — Free</a></div></div>
+
+<section class="faq-hero"><div class="container"><div class="faq-hero__inner">
+  <div class="section-label fade-up"><div class="section-label__line"></div><span>FAQs</span></div>
+  <h1 class="t-display-xl fade-up fade-up-d1" style="margin-bottom:16px">Your questions, answered</h1>
+  <p class="t-body-lg tc-slate fade-up fade-up-d2" style="max-width:560px">Everything you need to know about Kivo, the Kivo Score, and how it all works.</p>
+</div></div></section>
+
+<section class="section section--sm" style="background:var(--white)"><div class="container">
+  <div class="faq-layout">
+    <div class="faq-sidebar">
+      <p class="t-label tc-slate" style="margin-bottom:12px">Jump to section</p>
+      <div class="faq-cats">
+        <div class="faq-cat active" onclick="scrollToGroup('general')"><div class="faq-cat__dot"></div>Getting started</div>
+        <div class="faq-cat" onclick="scrollToGroup('score')"><div class="faq-cat__dot"></div>Your Kivo Score</div>
+        <div class="faq-cat" onclick="scrollToGroup('openbanking')"><div class="faq-cat__dot"></div>Open Banking</div>
+        <div class="faq-cat" onclick="scrollToGroup('privacy')"><div class="faq-cat__dot"></div>Privacy &amp; data</div>
+        <div class="faq-cat" onclick="scrollToGroup('advisors')"><div class="faq-cat__dot"></div>Working with advisors</div>
+        <div class="faq-cat" onclick="scrollToGroup('improve')"><div class="faq-cat__dot"></div>Improving your score</div>
+      </div>
+    </div>
+    <div>
+      <div class="faq-search-wrap">
+        <span class="faq-search-icon">🔍</span>
+        <input class="faq-search" type="text" id="faqSearch" placeholder="Search questions...">
+      </div>
+
+      <div class="faq-group" id="group-general">
+        <div class="faq-group__title">🚀 Getting started</div>
+        <div class="faq-item"><button class="faq-q">What is Kivo and who is it for?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Kivo is a free, AI-powered tool that gives UK home buyers a personalised mortgage readiness score. It's designed for first-time buyers, people moving home, and anyone who wants to understand their financial position before approaching a mortgage lender or broker. It's completely free for consumers — we charge mortgage advisors and brokers a flat monthly fee to use the platform with their clients.</p></div></div>
+        <div class="faq-item"><button class="faq-q">How long does it take?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>The basic Kivo Check takes about 2 minutes. If you choose to connect your bank account via Open Banking for a more accurate score, add another 1–2 minutes for that step. Your score is generated instantly once you've completed the form.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Is Kivo really free?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Yes, completely free for home buyers. There are no subscription fees, no hidden costs, and no premium tiers for consumers. We make money by charging mortgage advisors and brokers a flat monthly fee — not by charging you or by taking referral commissions.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Do I need to create an account?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>No. You can complete the Kivo Check and see your score without creating an account. We do ask for your email address so we can send you your results and track your progress over time — but creating a full account is optional.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Is Kivo a mortgage broker?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>No. Kivo is not a mortgage broker and we do not provide regulated financial advice. The Kivo Score is an indicative tool to help you understand your mortgage readiness — it is not a guarantee of a mortgage offer or a formal assessment of your eligibility. You should always speak to a qualified, FCA-regulated mortgage adviser before making any financial decisions.</p></div></div>
+      </div>
+
+      <div class="faq-group" id="group-score">
+        <div class="faq-group__title">📊 Your Kivo Score</div>
+        <div class="faq-item"><button class="faq-q">How is my Kivo Score calculated?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Your Kivo Score (1–100) is built on four pillars that reflect what mortgage lenders actually look for:</p><ul><li><strong>Income &amp; Affordability (25%)</strong> — your income relative to the loan size you need</li><li><strong>Deposit Strength (25%)</strong> — the size of your deposit as a % of the property value</li><li><strong>Credit Profile (30%)</strong> — your credit history, payment record, and any defaults</li><li><strong>Spending Behaviour (20%)</strong> — your financial habits and recurring commitments</li></ul><p style="margin-top:12px">We weight these based on their real impact on mortgage eligibility, using criteria aligned with mainstream UK lender guidelines.</p></div></div>
+        <div class="faq-item"><button class="faq-q">What does each score band mean?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>1–30: Not ready yet — significant barriers to a mortgage right now, but we'll give you a clear improvement plan.<br><br>31–60: Getting there — you're on the right track. A few targeted changes could improve your position quickly.<br><br>61–79: Good — you're in a solid position and may qualify for a range of mortgage products right now.<br><br>80–100: Excellent — you're likely to qualify for a wide range of products, including the best rates available.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Is the Kivo Score the same as a credit score?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>No. Your credit score (from Experian, Equifax, or TransUnion) is just one input into the Kivo Score. The Kivo Score is broader — it considers your income, deposit, and spending behaviour alongside your credit history. A great credit score doesn't guarantee a strong Kivo Score, and vice versa.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Will getting a Kivo Score affect my credit rating?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>No. Kivo does not perform a credit check (hard or soft) to generate your score. We only use the information you provide directly and, optionally, data from Open Banking. Your credit file is not accessed and your credit rating is not affected.</p></div></div>
+      </div>
+
+      <div class="faq-group" id="group-openbanking">
+        <div class="faq-group__title">🏦 Open Banking</div>
+        <div class="faq-item"><button class="faq-q">What is Open Banking and is it safe?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Open Banking is a UK-regulated technology that lets you securely share your financial data with approved services. It's used by Monzo, Starling, HMRC, and hundreds of other trusted providers. It is regulated by the FCA and is widely considered one of the most secure ways to share financial data — far safer than emailing bank statements, for example. Our Open Banking provider is authorised and regulated by the FCA.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Can Kivo see my bank login details?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Never. When you connect your bank, you authenticate directly with your bank in a secure window — Kivo never sees your username, password, or any login credentials. This is a core part of how Open Banking is designed.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Can Kivo move money or make changes to my account?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>No. Kivo has read-only access to your account data. We can see your transaction history and account balances, but we cannot initiate payments, transfer funds, or make any changes whatsoever. This is technically enforced — not just a policy.</p></div></div>
+        <div class="faq-item"><button class="faq-q">How do I revoke Open Banking access?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>You can revoke access at any time, either from your Kivo account settings or directly from your banking app (all UK banks are required to show you a list of connected Open Banking services and let you disconnect them). Revoking access stops any new data from being pulled — we'll retain your existing data in line with our privacy policy, but you can request deletion at any time.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Do I have to use Open Banking?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>No. Open Banking is entirely optional. You can get a Kivo Score using just the answers you provide in the form. However, connecting your bank makes your score significantly more accurate — and often improves it — because we get a real picture of your finances rather than relying on estimates.</p></div></div>
+      </div>
+
+      <div class="faq-group" id="group-privacy">
+        <div class="faq-group__title">🔒 Privacy &amp; data</div>
+        <div class="faq-item"><button class="faq-q">Does Kivo sell my data?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Never. We do not sell your personal data to any third parties. Our business model is a flat monthly subscription fee from mortgage advisors — we have no financial incentive to monetise your data.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Who can see my score and financial data?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Only you. If you're connected to a mortgage advisor through Kivo, your data can only be shared with that advisor if you explicitly consent — you'll be asked to confirm this during the process. We never share your data with advisors or any third party without your informed, explicit consent.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Can I delete my data?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Yes, at any time. You can request deletion of all your personal data by contacting us at <a href="mailto:privacy@getkivo.co.uk">privacy@getkivo.co.uk</a>. We'll action your request within 30 days in line with GDPR requirements. See our <a href="privacy.html">Privacy Policy</a> for full details.</p></div></div>
+      </div>
+
+      <div class="faq-group" id="group-advisors">
+        <div class="faq-group__title">🤝 Working with advisors</div>
+        <div class="faq-item"><button class="faq-q">How do I connect with a mortgage advisor through Kivo?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Once you have your Kivo Score, you'll see the option to connect with a vetted, FCA-regulated mortgage advisor. If you choose to proceed, you give your explicit consent for your Kivo data to be shared with them. Your first conversation will be far more focused because they already have the full picture of your finances — no starting from scratch.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Do I have to use a Kivo-recommended advisor?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Absolutely not. You can use Kivo purely as a self-serve tool and work with any advisor you choose — or no advisor at all. The advisor connection is entirely optional.</p></div></div>
+      </div>
+
+      <div class="faq-group" id="group-improve">
+        <div class="faq-group__title">📈 Improving your score</div>
+        <div class="faq-item"><button class="faq-q">How quickly can I improve my Kivo Score?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>It depends on what's holding your score down. Quick wins (like registering to vote, cutting subscriptions) can improve your score within days. Bigger changes (saving more deposit, paying down debts) take weeks to months. Our improvement plan will tell you the fastest path given your specific situation.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Does my score update automatically?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>If you've connected your bank via Open Banking, your score can update as your financial picture changes. You can also re-run the Kivo Check at any time — it only takes 2 minutes — to get an updated score based on your latest situation.</p></div></div>
+        <div class="faq-item"><button class="faq-q">I have bad credit. Can Kivo still help me?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Yes — and this is actually one of the most valuable things Kivo can do. If your credit history is poor, we'll show you exactly what the issues are and give you specific, prioritised steps to address them. Many credit issues can be resolved or significantly improved over 12–24 months with the right plan.</p></div></div>
+      </div>
+
+      <div class="still-stuck fade-up">
+        <div style="font-size:2rem;margin-bottom:12px">🙋</div>
+        <h3 class="t-display-sm" style="margin-bottom:8px">Still have questions?</h3>
+        <p class="t-body-sm tc-slate" style="margin-bottom:20px">Our team is happy to help. Drop us a message and we'll get back to you within one business day.</p>
+        <a href="contact.html" class="btn btn--primary">Get in touch</a>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<footer class="footer"><div class="container"><div class="footer__grid"><div><a href="index.html" class="logo footer__logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a><p class="footer__tagline">Your friendly AI-powered guide to getting mortgage-ready.</p></div><div><div class="footer__col-title">Product</div><div class="footer__links"><a href="how-it-works.html">How it Works</a><a href="kivo-score.html">Kivo Score</a><a href="kivo-check.html">Kivo Check</a><a href="for-advisors.html">For Advisors</a></div></div><div><div class="footer__col-title">Resources</div><div class="footer__links"><a href="learn.html">Learn</a><a href="tools.html">Tools</a><a href="stories.html">Stories</a><a href="faq.html">FAQs</a></div></div><div><div class="footer__col-title">Company</div><div class="footer__links"><a href="about.html">About</a><a href="security.html">Security</a><a href="partners.html">Partners</a><a href="contact.html">Contact</a></div></div></div><div class="footer__reg"><strong>Important:</strong> Kivo is not a mortgage broker and does not provide regulated financial advice. Kivo Technologies Ltd is registered in England &amp; Wales.</div><div class="footer__bottom"><div class="footer__copy">© 2025 Kivo Technologies Ltd.</div><div class="footer__legal"><a href="privacy.html">Privacy Policy</a><a href="security.html">Security</a></div></div></div></footer>
+<div class="cookie-banner hidden" id="cookieBanner"><div class="cookie-banner__text">🍪 We use cookies. <a href="privacy.html">Learn more</a>.</div><div class="cookie-banner__actions"><button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button><button class="btn btn--primary btn--sm" id="cookieAccept">Accept</button></div></div>
+<script src="kivo.js"></script>
 <script>
-  document.getElementById('kivoChatBubble').addEventListener('click', function () {
-    alert("Hi! I'm Kivo 👋 Ask me anything about mortgages. This is just a placeholder — full chat assistant coming soon.");
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
   });
-</script>
-<footer class="bg-white border-t text-center text-sm text-gray-600 py-10">
-<p>© 2025 Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.</p>
-</footer><div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity duration-300 opacity-0 animate-fadeIn" id="cookiePreferencesOverlay">
-<div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
-<h2 class="text-lg font-semibold mb-4">Cookie Preferences</h2>
-<p class="text-sm text-gray-700 mb-4">We use cookies to enhance your experience. You can manage your preferences below. Read our <a class="text-cyan-700 underline hover:text-cyan-900" href="privacy.html">cookie policy</a>.</p>
-<form class="space-y-3">
-<label class="flex items-center gap-2 justify-start">
-<input checked="" class="accent-cyan-500" disabled="" type="checkbox"/>
-<span>Essential cookies (always on)</span>
-</label>
-<label class="flex items-center gap-2 justify-start">
-<input class="accent-cyan-500" id="overlayAnalytics" type="checkbox"/>
-<span>Analytics cookies</span>
-</label>
-<label class="flex items-center gap-2 justify-start">
-<input class="accent-cyan-500" id="overlayMarketing" type="checkbox"/>
-<span>Marketing cookies</span>
-</label>
-<div class="flex justify-center gap-2 pt-4">
-<button class="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="savePreferences()" type="button">Accept choices</button>
-<button class="bg-emerald text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="acceptAllCookies()" type="button">Accept all</button>
-<button class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" onclick="rejectAllCookies()" type="button">Reject all</button>
-</div>
-</form>
-</div>
-</div>
-<script>
-  function enableAnalytics() {
-    console.log("✅ Analytics cookies enabled");
-  }
-  function enableMarketing() {
-    console.log("✅ Marketing cookies enabled");
-  }
-  function savePreferences() {
-    const analytics = document.getElementById('overlayAnalytics').checked;
-    const marketing = document.getElementById('overlayMarketing').checked;
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics, marketing }));
-    if (analytics) enableAnalytics();
-    if (marketing) enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  function acceptAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: true, marketing: true }));
-    enableAnalytics();
-    enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  function rejectAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: false, marketing: false }));
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  window.onload = function () {
-  const consent = localStorage.getItem('cookieConsent');
-  if (consent) {
-    const parsed = JSON.parse(consent);
-    if (parsed.analytics) enableAnalytics();
-    if (parsed.marketing) enableMarketing();
-  } else {
-    document.getElementById('cookiePreferencesOverlay').classList.remove('hidden');
-  }
-};
-</script>
-<script>
-  window.addEventListener('scroll', () => {
-    const header = document.getElementById('mainHeader');
-    if (window.scrollY > 10) {
-      header.classList.add('bg-white', 'shadow');
-    } else {
-      header.classList.remove('bg-white', 'shadow');
-    }
+  // Search
+  document.getElementById('faqSearch').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const text = item.textContent.toLowerCase();
+      item.style.display = text.includes(q) ? '' : 'none';
+    });
   });
-</script></body></html>
+  // Sidebar scroll
+  function scrollToGroup(id) {
+    const el = document.getElementById('group-' + id);
+    if (el) { const top = el.getBoundingClientRect().top + window.pageYOffset - 96; window.scrollTo({top, behavior:'smooth'}); }
+    document.querySelectorAll('.faq-cat').forEach(c => c.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+  }
+</script>
+</body>
+</html>

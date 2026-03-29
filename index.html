@@ -3,221 +3,370 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kivo – Smarter Mortgage Advice</title>
-  <meta name="description" content="Kivo is your AI-powered guide to mortgage affordability. Get personalised insights, improve your Kivo Score, and take the next step with clarity.">
-  <script src="https://cdn.tailwindcss.com"></script>
-<style>
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .animate-fadeIn {
-    animation: fadeIn 0.4s ease-out forwards;
-  }
-</style>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            cyan: {
-              50: '#ECFEFF',
-              500: '#0EA5E9',
-              700: '#0369A1'
-            },
-            emerald: '#10B981',
-            graphite: '#1F2937'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif']
-          }
-        }
-      }
+  <title>Kivo – Know Your Mortgage Readiness Before You Apply</title>
+  <meta name="description" content="Kivo gives you a personalised mortgage readiness score in 2 minutes. Understand exactly where you stand, what lenders see, and how to improve — before you ever speak to a broker.">
+  <link rel="stylesheet" href="kivo.css">
+  <style>
+    /* ── Hero ─────────────────────────────────────────────── */
+    .hero {
+      padding-top: 68px;
+      background: linear-gradient(160deg, #fff 0%, var(--mist) 100%);
+      position: relative; overflow: hidden; min-height: 100svh;
+      display: flex; align-items: center;
     }
-  </script>
+    .hero__inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 72px; align-items: center; padding: 80px 0;
+    }
+    .hero__eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .hero__title   { margin-bottom: 24px; }
+    .hero__sub     { color: var(--slate); margin-bottom: 36px; }
+    .hero__actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
+    .hero__chips   { display: flex; flex-wrap: wrap; gap: 8px; }
+    .hero__chip    { display: flex; align-items: center; gap: 7px; padding: 8px 14px; background: var(--white); border: 1px solid var(--border); border-radius: var(--r-md); font-size: .8125rem; color: var(--slate); box-shadow: var(--shadow-sm); }
+
+    /* Score card mockup */
+    .score-card-mockup {
+      background: var(--white); border-radius: var(--r-xl);
+      box-shadow: var(--shadow-xl); padding: 36px;
+      position: relative; z-index: 1;
+    }
+    .score-card-mockup__header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .score-card-mockup__name { font-size: .9rem; font-weight: 600; color: var(--navy); }
+    .score-ring-wrap { display: flex; justify-content: center; margin-bottom: 24px; position: relative; }
+    .score-ring-wrap svg { transform: rotate(-90deg); }
+    .ring-track { fill: none; stroke: var(--border); stroke-width: 12; }
+    .ring-fill  { fill: none; stroke: var(--teal); stroke-width: 12; stroke-linecap: round; stroke-dasharray: 503; stroke-dashoffset: 503; transition: stroke-dashoffset 2s cubic-bezier(0.34,1.56,0.64,1); }
+    .ring-label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .ring-label__num { font-family: var(--font-display); font-weight: 800; font-size: 3rem; color: var(--navy); line-height: 1; }
+    .ring-label__sub { font-size: .75rem; color: var(--slate); }
+    .score-band { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #F0FFF4; border-radius: var(--r-pill); font-size: .875rem; font-weight: 600; color: #166534; margin-bottom: 24px; width: 100%; justify-content: center; }
+    .pillar-list { display: flex; flex-direction: column; gap: 12px; }
+    .pillar-item { display: flex; align-items: center; gap: 10px; }
+    .pillar-item__label { font-size: .8125rem; color: var(--slate); flex: 1; }
+    .pillar-item__track { flex: 2; height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    .pillar-item__fill  { height: 100%; border-radius: 99px; transform: scaleX(0); transform-origin: left; transition: transform 1.2s cubic-bezier(0.34,1.56,0.64,1); }
+    .pillar-item__val   { font-size: .8125rem; font-weight: 700; width: 24px; text-align: right; }
+    .score-cta-mini { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); font-size: .875rem; color: var(--slate); text-align: center; }
+    .score-cta-mini a { color: var(--coral); font-weight: 600; }
+
+    /* Floating badges */
+    .float-badge {
+      position: absolute; background: var(--white); border-radius: var(--r-md);
+      box-shadow: var(--shadow-lg); padding: 10px 14px;
+      display: flex; align-items: center; gap: 8px;
+      font-size: .8125rem; font-weight: 600; color: var(--navy);
+      animation: float 6s ease-in-out infinite;
+    }
+    .float-badge--1 { top: 12%; right: -5%; animation-delay: 0s; }
+    .float-badge--2 { bottom: 18%; left: -8%; animation-delay: 2s; }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+    /* ── Problem section ─────────────────────────────────── */
+    .problem-section { background: var(--navy); position: relative; overflow: hidden; }
+    .problem-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: rgba(255,255,255,.06); border-radius: var(--r-lg); overflow: hidden; margin-top: 56px; }
+    .problem-item { padding: 32px 28px; background: var(--navy-mid); }
+    .problem-item__q { font-size: 1.0625rem; font-weight: 600; color: var(--white); margin-bottom: 10px; line-height: 1.4; }
+    .problem-item__a { font-size: .9rem; color: rgba(255,255,255,.55); line-height: 1.6; }
+
+    /* ── Features ─────────────────────────────────────────── */
+    .feature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; padding: 72px 0; border-bottom: 1px solid var(--border); }
+    .feature-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .feature-row--reverse .feature-row__visual { order: -1; }
+    .feature-visual { background: var(--mist); border-radius: var(--r-xl); padding: 36px; border: 1px solid var(--border); }
+
+    /* ── Comparison ───────────────────────────────────────── */
+    .comparison-section { background: var(--mist); }
+    .comparison-table { width: 100%; margin-top: 48px; border-collapse: separate; border-spacing: 0; border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-md); }
+    .comparison-table th { padding: 20px 24px; font-family: var(--font-display); font-size: .9375rem; font-weight: 700; }
+    .comparison-table th:first-child { background: var(--white); color: var(--slate); font-weight: 500; }
+    .comparison-table th.th-kivo { background: var(--coral); color: var(--white); }
+    .comparison-table th.th-other { background: var(--navy); color: rgba(255,255,255,.6); }
+    .comparison-table td { padding: 16px 24px; background: var(--white); border-top: 1px solid var(--border); font-size: .9rem; }
+    .comparison-table td:first-child { color: var(--navy); font-weight: 500; }
+    .comparison-table td.td-kivo  { text-align: center; }
+    .comparison-table td.td-other { text-align: center; color: var(--slate); }
+    .tick   { color: var(--teal); font-weight: 700; font-size: 1.125rem; }
+    .cross  { color: #CBD5E1; font-size: 1.125rem; }
+
+    /* ── Social proof ──────────────────────────────────────── */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 56px; }
+
+    /* ── Advisors teaser ──────────────────────────────────── */
+    .advisors-section { background: var(--navy); position: relative; overflow: hidden; }
+    .advisors-stats   { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 40px; }
+    .adv-stat { padding: 24px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); border-radius: var(--r-lg); text-align: center; }
+    .adv-stat__num { font-family: var(--font-display); font-weight: 800; font-size: 2rem; color: var(--teal); margin-bottom: 4px; }
+    .adv-stat__label { font-size: .875rem; color: rgba(255,255,255,.6); }
+
+    @media(max-width:1024px) { .hero__inner { grid-template-columns: 1fr; gap: 40px; } .float-badge { display: none; } .problem-grid { grid-template-columns: 1fr; } .feature-row { grid-template-columns: 1fr; gap: 32px; } .feature-row--reverse .feature-row__visual { order: 0; } .testimonials-grid { grid-template-columns: 1fr 1fr; } .advisors-stats { grid-template-columns: 1fr 1fr; } }
+    @media(max-width:768px) { .testimonials-grid { grid-template-columns: 1fr; } .advisors-stats { grid-template-columns: 1fr; } }
+  </style>
 </head>
-<body class="bg-white text-graphite font-sans">
-  <header id="mainHeader" class="fixed top-0 w-full transition duration-300 z-50 bg-white bg-opacity-90 backdrop-blur">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-    <a class="text-2xl font-extrabold text-cyan-500" href="index.html">Kivo</a>
-    <nav class="flex items-center gap-6 md:gap-8 lg:gap-10 text-lg font-medium">
-      <div class="relative group">
-        <button class="text-graphite hover:text-cyan-500">Company</button>
-        <div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50 animate-fadeIn">
-          <a href="about.html" class="block px-4 py-2 hover:bg-cyan-50">About</a>
-          <a href="security.html" class="block px-4 py-2 hover:bg-cyan-50">Security</a>
-          <a href="partners.html" class="block px-4 py-2 hover:bg-cyan-50">Partners</a>
-          <a href="for-advisors.html" class="block px-4 py-2 hover:bg-cyan-50">Advisors</a>
-          <a href="privacy.html" class="block px-4 py-2 hover:bg-cyan-50">Privacy</a>
-        </div>
-      </div>
-      <div class="relative group">
-        <button class="text-graphite hover:text-cyan-500">Resources</button>
-        <div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50">
-          <a href="tools.html" class="block px-4 py-2 hover:bg-cyan-50">Tools</a>
-          <a href="learn.html" class="block px-4 py-2 hover:bg-cyan-50">Learn</a>
-          <a href="stories.html" class="block px-4 py-2 hover:bg-cyan-50">Stories</a>
-        </div>
-      </div>
-      <a class="text-graphite hover:text-cyan-500" href="how-it-works.html">How it Works</a>
-      <a class="text-graphite hover:text-cyan-500" href="faq.html">FAQs</a>
-      <a class="text-graphite hover:text-cyan-500" href="contact.html">Contact</a>
-      <a class="bg-emerald text-white px-5 py-2.5 rounded-full shadow-md hover:shadow-lg hover:bg-cyan-700 transition-all duration-300" href="kivo-check.html">Check Your Score</a>
-    </nav>
-  </div>
-    </header>
+<body>
 
-  <section class="bg-cover bg-center text-white py-24 px-6 relative" style="background-image: url('https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1200');">
-    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-    <div class="relative max-w-3xl mx-auto text-center z-10">
-      <h1 class="text-4xl font-bold mb-4">Welcome to Kivo 👋</h1>
-      <p class="text-xl mb-6">Your friendly, jargon-free way to check mortgage readiness — no credit score required.</p>
-      <a href="kivo-check.html" class="bg-emerald text-white px-6 py-3 rounded font-semibold hover:bg-cyan-700">See My Score</a>
-      <p class="mt-4 text-white">Takes 2 minutes. No credit checks.</p>
-    </div>
-  </section>
+<header class="header" id="header"><div class="container"><div class="header__inner">
+  <a href="index.html" class="logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
+  <nav class="nav" role="navigation">
+    <div class="nav__item"><a href="how-it-works.html" class="nav__link">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a><a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a></div></div>
+    <div class="nav__item"><a href="learn.html" class="nav__link">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a><a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a><a href="stories.html"><span class="dd-icon" style="background:#F0FFF4">💬</span>Stories</a><a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a></div></div>
+    <div class="nav__item"><a href="about.html" class="nav__link">Company <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="about.html"><span class="dd-icon" style="background:#F0F4FF">👋</span>About</a><a href="security.html"><span class="dd-icon" style="background:#F0FFF4">🔒</span>Security</a><a href="partners.html"><span class="dd-icon" style="background:#FFF0EC">🤝</span>Partners</a><a href="contact.html"><span class="dd-icon" style="background:#E6FAF8">✉️</span>Contact</a></div></div>
+    <a href="for-advisors.html" class="nav__link nav__link--teal">For Advisors</a>
+  </nav>
+  <div class="header__actions"><a href="for-advisors.html" class="btn btn--secondary btn--sm hide-mobile">For Advisors</a><a href="kivo-check.html" class="btn btn--primary btn--sm">Check Your Score <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a><button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
+</div></div></header>
 
-  <section class="bg-white py-16 px-4">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-2xl font-bold mb-10">Why People Choose Kivo</h2>
-      <div class="grid gap-6 sm:grid-cols-2">
-        <div class="bg-gray-50 p-6 rounded shadow text-left">
-          <h3 class="font-semibold mb-2">No Credit Checks</h3>
-          <p>We assess your situation without impacting your credit score.</p>
-        </div>
-        <div class="bg-gray-50 p-6 rounded shadow text-left">
-          <h3 class="font-semibold mb-2">Takes Just 2 Minutes</h3>
-          <p>Answer a few simple questions and get your score instantly.</p>
-        </div>
-        <div class="bg-gray-50 p-6 rounded shadow text-left">
-          <h3 class="font-semibold mb-2">100% Free</h3>
-          <p>Kivo is totally free for users – no hidden costs or upsells.</p>
-        </div>
-        <div class="bg-gray-50 p-6 rounded shadow text-left">
-          <h3 class="font-semibold mb-2">Built for First-Time Buyers</h3>
-          <p>We speak your language – not the bank’s.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-16 px-6 bg-cyan-50">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-2xl font-bold mb-10">How Does Kivo Compare?</h2>
-      <div class="overflow-x-auto">
-        <table class="w-full max-w-3xl mx-auto border-separate border-spacing-y-4">
-          <thead>
-            <tr class="bg-cyan-500 text-white">
-              <th class="py-3 px-4 rounded-tl-md">Feature</th>
-              <th class="py-3 px-4">Kivo</th>
-              <th class="py-3 px-4 rounded-tr-md">Traditional</th>
-            </tr>
-          </thead>
-          <tbody class="text-sm text-graphite">
-            <tr class="bg-white shadow rounded">
-              <td class="py-3 px-4">Takes 2 minutes</td>
-              <td class="py-3 px-4">✅</td>
-              <td class="py-3 px-4">❌</td>
-            </tr>
-            <tr class="bg-white shadow rounded">
-              <td class="py-3 px-4">No credit impact</td>
-              <td class="py-3 px-4">✅</td>
-              <td class="py-3 px-4">❌</td>
-            </tr>
-            <tr class="bg-white shadow rounded">
-              <td class="py-3 px-4">Instant feedback</td>
-              <td class="py-3 px-4">✅</td>
-              <td class="py-3 px-4">❌</td>
-            </tr>
-            <tr class="bg-white shadow rounded">
-              <td class="py-3 px-4">Friendly interface</td>
-              <td class="py-3 px-4">✅</td>
-              <td class="py-3 px-4">❌</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-16 px-6 bg-white text-center">
-    <h2 class="text-2xl font-bold mb-6">See Your Score. Start Planning.</h2>
-    <a href="kivo-check.html" class="bg-emerald text-white px-6 py-3 rounded font-semibold hover:bg-cyan-700">Start Now</a>
-  </section>
-
-  <footer class="bg-white border-t text-center text-sm text-gray-600 py-10">
-    <p>© 2025 Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.</p>
-  </footer>
-<div id="cookiePreferencesOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity duration-300 opacity-0 animate-fadeIn">
-  <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
-    <h2 class="text-lg font-semibold mb-4">Cookie Preferences</h2>
-    <p class="text-sm text-gray-700 mb-4">We use cookies to enhance your experience. You can manage your preferences below. Read our <a href='privacy.html' class='text-cyan-700 underline hover:text-cyan-900'>cookie policy</a>.</p>
-    <form class="space-y-3">
-      <label class="flex items-center gap-2 justify-start">
-        <input type="checkbox" checked disabled class="accent-cyan-500">
-        <span>Essential cookies (always on)</span>
-      </label>
-      <label class="flex items-center gap-2 justify-start">
-        <input type="checkbox" id="overlayAnalytics" class="accent-cyan-500">
-        <span>Analytics cookies</span>
-      </label>
-      <label class="flex items-center gap-2 justify-start">
-        <input type="checkbox" id="overlayMarketing" class="accent-cyan-500">
-        <span>Marketing cookies</span>
-      </label>
-      <div class="flex justify-center gap-2 pt-4">
-  <button type="button" onclick="savePreferences()" class="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-700">Accept choices</button>
-  <button type="button" onclick="acceptAllCookies()" class="bg-emerald text-white px-4 py-2 rounded hover:bg-cyan-700">Accept all</button>
-  <button type="button" onclick="rejectAllCookies()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">Reject all</button>
-</div>
-    </form>
-  </div>
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu__section"><div class="mobile-menu__label">Features</div><a href="how-it-works.html">🏠 How it Works</a><a href="kivo-score.html">📊 Kivo Score</a><a href="kivo-check.html">✅ Kivo Check</a></div>
+  <div class="mobile-menu__section"><div class="mobile-menu__label">Resources</div><a href="learn.html">📖 Learn</a><a href="tools.html">🧮 Tools</a><a href="stories.html">💬 Stories</a><a href="faq.html">❓ FAQs</a></div>
+  <div class="mobile-menu__section"><div class="mobile-menu__label">Company</div><a href="about.html">👋 About Kivo</a><a href="security.html">🔒 Security</a><a href="partners.html">🤝 Partners</a><a href="contact.html">✉️ Contact</a></div>
+  <div class="mobile-menu__section"><a href="for-advisors.html" style="color:var(--teal-dk);font-weight:600;">🏦 For Advisors &amp; Brokers</a></div>
+  <div class="mobile-menu__cta"><a href="kivo-check.html" class="btn btn--primary btn--full">Check My Kivo Score — Free</a><a href="for-advisors.html" class="btn btn--secondary btn--full">I'm an Advisor</a></div>
 </div>
 
+<!-- ── HERO ───────────────────────────────────────────────── -->
+<section class="hero blob-bg">
+  <div class="blob blob--coral-tr"></div>
+  <div class="blob blob--teal-bl"></div>
+  <div class="container"><div class="hero__inner">
+    <div>
+      <div class="hero__eyebrow">
+        <span class="badge badge--coral">New</span>
+        <span style="font-size:.875rem;color:var(--slate)">AI-powered mortgage readiness</span>
+      </div>
+      <h1 class="t-display-xl hero__title fade-up">
+        Know exactly how<br>mortgage-ready you are
+      </h1>
+      <p class="t-body-lg hero__sub fade-up fade-up-d1">
+        Get a personalised score in 2 minutes. Understand what lenders actually see, where you need to improve, and the fastest path to your first home — before you ever speak to a broker.
+      </p>
+      <div class="hero__actions fade-up fade-up-d2">
+        <a href="kivo-check.html" class="btn btn--primary btn--lg">
+          Check My Score — Free
+          <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="how-it-works.html" class="btn btn--secondary btn--lg">How it works</a>
+      </div>
+      <div class="hero__chips fade-up fade-up-d3">
+        <div class="hero__chip">⚡ Takes 2 minutes</div>
+        <div class="hero__chip">🔒 No credit check</div>
+        <div class="hero__chip">📋 No paperwork</div>
+        <div class="hero__chip">🆓 Completely free</div>
+      </div>
+    </div>
+    <div style="position:relative;" class="fade-up fade-up-d1">
+      <div class="score-card-mockup">
+        <div class="score-card-mockup__header">
+          <div class="score-card-mockup__name">Sophie's Kivo Score</div>
+          <span class="badge badge--teal">Updated today</span>
+        </div>
+        <div class="score-ring-wrap">
+          <svg width="180" height="180" viewBox="0 0 180 180">
+            <circle class="ring-track" cx="90" cy="90" r="80"/>
+            <circle class="ring-fill" id="heroRingFill" cx="90" cy="90" r="80"/>
+          </svg>
+          <div class="ring-label">
+            <div class="ring-label__num" id="heroScoreNum">0</div>
+            <div class="ring-label__sub">out of 100</div>
+          </div>
+        </div>
+        <div class="score-band">🟢 Good — Mortgage Ready</div>
+        <div class="pillar-list">
+          <div class="pillar-item">
+            <div class="pillar-item__label">💼 Income</div>
+            <div class="pillar-item__track"><div class="pillar-item__fill" id="p1" style="width:85%;background:var(--teal)"></div></div>
+            <div class="pillar-item__val" style="color:var(--teal)">85</div>
+          </div>
+          <div class="pillar-item">
+            <div class="pillar-item__label">🏦 Deposit</div>
+            <div class="pillar-item__track"><div class="pillar-item__fill" id="p2" style="width:62%;background:#F59E0B"></div></div>
+            <div class="pillar-item__val" style="color:#F59E0B">62</div>
+          </div>
+          <div class="pillar-item">
+            <div class="pillar-item__label">💳 Credit</div>
+            <div class="pillar-item__track"><div class="pillar-item__fill" id="p3" style="width:88%;background:var(--teal)"></div></div>
+            <div class="pillar-item__val" style="color:var(--teal)">88</div>
+          </div>
+          <div class="pillar-item">
+            <div class="pillar-item__label">💸 Spending</div>
+            <div class="pillar-item__track"><div class="pillar-item__fill" id="p4" style="width:70%;background:#F59E0B"></div></div>
+            <div class="pillar-item__val" style="color:#F59E0B">70</div>
+          </div>
+        </div>
+        <div class="score-cta-mini">💡 <a href="kivo-score.html">2 improvements</a> could raise your score by up to 14 points</div>
+      </div>
+      <div class="float-badge float-badge--1">✅ No credit check needed</div>
+      <div class="float-badge float-badge--2">🏠 £210k borrowing potential</div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ── PROBLEM ─────────────────────────────────────────────── -->
+<section class="problem-section section">
+  <div class="blob blob--coral-dk-tr"></div>
+  <div class="container">
+    <div class="section-label section-label--white fade-up"><div class="section-label__line"></div><span>Sound familiar?</span></div>
+    <h2 class="t-display-lg tc-white section-title fade-up fade-up-d1">The mortgage process is confusing by design. We're fixing that.</h2>
+    <div class="problem-grid">
+      <div class="problem-item fade-up"><div class="problem-item__q">"I don't know if I can even afford a mortgage yet."</div><div class="problem-item__a">Kivo gives you a clear picture of what you can likely borrow and what you need to change to borrow more.</div></div>
+      <div class="problem-item fade-up fade-up-d1"><div class="problem-item__q">"I was rejected and nobody told me why."</div><div class="problem-item__a">We show you exactly what lenders look at and where your profile is strong or weak — before you apply.</div></div>
+      <div class="problem-item fade-up fade-up-d2"><div class="problem-item__q">"I don't want to speak to a broker until I'm ready."</div><div class="problem-item__a">Use Kivo to get ready on your own terms, then connect with an advisor when the time is right for you.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ────────────────────────────────────────── -->
+<section class="section" style="background:var(--white)">
+  <div class="container">
+    <div class="section-label fade-up"><div class="section-label__line"></div><span>How Kivo works</span></div>
+    <h2 class="t-display-lg section-title fade-up fade-up-d1">From zero to mortgage-ready in four steps</h2>
+    <p class="t-body-lg tc-slate section-sub fade-up fade-up-d2">No jargon, no paperwork. Just clarity and a concrete action plan.</p>
+    <div class="grid-4" style="margin-top:56px">
+      <div class="card card--accent fade-up">
+        <div class="card__icon card__icon--coral">1</div>
+        <div class="card__title">Tell us about you</div>
+        <div class="card__text">A few quick questions about your income, deposit, and situation. Takes under 2 minutes.</div>
+      </div>
+      <div class="card card--accent fade-up fade-up-d1">
+        <div class="card__icon card__icon--teal">2</div>
+        <div class="card__title">Connect your bank</div>
+        <div class="card__text">Optional but recommended. Open Banking shows us what lenders actually see — safely and securely.</div>
+      </div>
+      <div class="card card--accent fade-up fade-up-d2">
+        <div class="card__icon card__icon--coral">3</div>
+        <div class="card__title">Get your score</div>
+        <div class="card__text">Receive a personalised score out of 100, with a breakdown of exactly where you stand across four key pillars.</div>
+      </div>
+      <div class="card card--accent fade-up fade-up-d3">
+        <div class="card__icon card__icon--teal">4</div>
+        <div class="card__title">Take action</div>
+        <div class="card__text">Follow your personalised improvement plan, track your progress, and connect with a broker when ready.</div>
+      </div>
+    </div>
+    <div class="text-center mt-48 fade-up fade-up-d4">
+      <a href="how-it-works.html" class="btn btn--secondary btn--lg">See the full walkthrough</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPARISON ─────────────────────────────────────────── -->
+<section class="comparison-section section">
+  <div class="container">
+    <div class="section-label fade-up"><div class="section-label__line"></div><span>Why Kivo</span></div>
+    <h2 class="t-display-lg section-title fade-up fade-up-d1">Not just another mortgage calculator</h2>
+    <p class="t-body-lg tc-slate section-sub fade-up fade-up-d2">Kivo is the only tool that gives you a full, personalised readiness picture — not just a number.</p>
+    <div style="overflow-x:auto" class="fade-up fade-up-d2">
+      <table class="comparison-table">
+        <thead><tr>
+          <th style="background:var(--white);text-align:left;color:var(--slate);font-weight:500">Feature</th>
+          <th class="th-kivo">✨ Kivo</th>
+          <th class="th-other">Generic Calculators</th>
+          <th class="th-other">Going Straight to a Broker</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>Personalised readiness score</td><td class="td-kivo"><span class="tick">✓</span></td><td class="td-other"><span class="cross">–</span></td><td class="td-other"><span class="cross">–</span></td></tr>
+          <tr><td>Breakdown across 4 lender criteria</td><td class="td-kivo"><span class="tick">✓</span></td><td class="td-other"><span class="cross">–</span></td><td class="td-other">Partial</td></tr>
+          <tr><td>Actionable improvement plan</td><td class="td-kivo"><span class="tick">✓</span></td><td class="td-other"><span class="cross">–</span></td><td class="td-other"><span class="cross">–</span></td></tr>
+          <tr><td>Open Banking integration</td><td class="td-kivo"><span class="tick">✓</span></td><td class="td-other"><span class="cross">–</span></td><td class="td-other">Sometimes</td></tr>
+          <tr><td>No credit check required</td><td class="td-kivo"><span class="tick">✓</span></td><td class="td-other"><span class="tick">✓</span></td><td class="td-other"><span class="cross">–</span></td></tr>
+          <tr><td>Completely free for consumers</td><td class="td-kivo"><span class="tick">✓</span></td><td class="td-other"><span class="tick">✓</span></td><td class="td-other">Usually free</td></tr>
+          <tr><td>Works before you're ready to apply</td><td class="td-kivo"><span class="tick">✓</span></td><td class="td-other">Partial</td><td class="td-other"><span class="cross">–</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ───────────────────────────────────────── -->
+<section class="section" style="background:var(--white)">
+  <div class="container">
+    <div class="section-label fade-up"><div class="section-label__line"></div><span>Real people, real results</span></div>
+    <h2 class="t-display-lg section-title fade-up fade-up-d1">What our users say</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial fade-up">
+        <div class="testimonial__stars">★★★★★</div>
+        <div class="testimonial__text">"I'd been putting off speaking to a broker for 6 months because I was embarrassed I didn't know enough. Kivo gave me the confidence and the knowledge to finally take the next step."</div>
+        <div class="testimonial__author"><div class="testimonial__avatar" style="background:var(--coral)">SL</div><div><div class="testimonial__name">Sophie L.</div><div class="testimonial__detail">First-time buyer, Manchester · Score: 82</div></div></div>
+      </div>
+      <div class="testimonial fade-up fade-up-d1">
+        <div class="testimonial__stars">★★★★★</div>
+        <div class="testimonial__text">"The advice was incredibly specific. It told me exactly how much to pay off my credit card and why. Three months later my score went from 51 to 74 and I got my mortgage approved."</div>
+        <div class="testimonial__author"><div class="testimonial__avatar" style="background:var(--teal-dk)">MK</div><div><div class="testimonial__name">Marcus K.</div><div class="testimonial__detail">First-time buyer, Birmingham · Score improved +23</div></div></div>
+      </div>
+      <div class="testimonial fade-up fade-up-d2">
+        <div class="testimonial__stars">★★★★★</div>
+        <div class="testimonial__text">"I'm self-employed and the mortgage process felt impossible. Kivo explained exactly what lenders need from a sole trader and helped me prepare the right documents before approaching anyone."</div>
+        <div class="testimonial__author"><div class="testimonial__avatar" style="background:#8B5CF6">PN</div><div><div class="testimonial__name">Priya N.</div><div class="testimonial__detail">Self-employed buyer, London · Score: 76</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ADVISORS TEASER ─────────────────────────────────────── -->
+<section class="advisors-section section">
+  <div class="blob blob--teal-dk-br"></div>
+  <div class="container">
+    <div class="grid-2--split">
+      <div>
+        <div class="section-label section-label--white fade-up"><div class="section-label__line"></div><span>For mortgage advisors</span></div>
+        <h2 class="t-display-lg tc-white fade-up fade-up-d1" style="margin-bottom:20px">Your clients arrive prepared. You close more deals.</h2>
+        <p class="t-body-lg fade-up fade-up-d2" style="color:rgba(255,255,255,.7);margin-bottom:32px">Give your clients a white-labelled Kivo link. They arrive at your first meeting already knowing their score, their strengths, and their plan — so you spend your time on the deal, not the basics.</p>
+        <a href="for-advisors.html" class="btn btn--teal btn--lg fade-up fade-up-d3">Learn about Kivo for Advisors <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="advisors-stats fade-up fade-up-d2">
+        <div class="adv-stat"><div class="adv-stat__num">40%</div><div class="adv-stat__label">Less time on initial fact-finds</div></div>
+        <div class="adv-stat"><div class="adv-stat__num">3×</div><div class="adv-stat__label">More qualified client conversations</div></div>
+        <div class="adv-stat"><div class="adv-stat__num">£0</div><div class="adv-stat__label">Per referral — flat monthly fee only</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────── -->
+<section class="cta-band section--sm">
+  <div class="container cta-band__inner">
+    <h2 class="cta-band__title fade-up">Your home is waiting. Let's see where you stand.</h2>
+    <p class="cta-band__sub fade-up fade-up-d1">Free, instant, and completely judgement-free. Takes 2 minutes.</p>
+    <div class="cta-band__actions fade-up fade-up-d2">
+      <a href="kivo-check.html" class="btn btn--white btn--xl">Check My Kivo Score — Free <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <p class="cta-band__note fade-up fade-up-d3">No account needed · No credit check · Delete your data anytime</p>
+  </div>
+</section>
+
+<footer class="footer"><div class="container"><div class="footer__grid"><div><a href="index.html" class="logo footer__logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a><p class="footer__tagline">Your friendly AI-powered guide to getting mortgage-ready. No jargon, no pressure — just clarity and a clear next step.</p><div class="footer__social"><a href="#" aria-label="Twitter">𝕏</a><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="Instagram">📷</a></div></div><div><div class="footer__col-title">Product</div><div class="footer__links"><a href="how-it-works.html">How it Works</a><a href="kivo-score.html">Kivo Score</a><a href="kivo-check.html">Kivo Check</a><a href="for-advisors.html">For Advisors</a></div></div><div><div class="footer__col-title">Resources</div><div class="footer__links"><a href="learn.html">Learn</a><a href="tools.html">Tools</a><a href="stories.html">Stories</a><a href="faq.html">FAQs</a></div></div><div><div class="footer__col-title">Company</div><div class="footer__links"><a href="about.html">About</a><a href="security.html">Security</a><a href="partners.html">Partners</a><a href="contact.html">Contact</a><a href="mailto:hello@getkivo.co.uk">hello@getkivo.co.uk</a></div></div></div><div class="footer__reg"><strong>Important:</strong> Kivo is not a mortgage broker and does not provide regulated financial advice. The Kivo Score is an indicative tool — it is not a guarantee of a mortgage offer. Always speak to a qualified, FCA-regulated mortgage adviser before making any financial decisions. Kivo Technologies Ltd is registered in England &amp; Wales.</div><div class="footer__bottom"><div class="footer__copy">© 2025 Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.</div><div class="footer__legal"><a href="privacy.html">Privacy Policy</a><a href="security.html">Security</a><a href="privacy.html">Cookie Policy</a></div></div></div></footer>
+<div class="cookie-banner hidden" id="cookieBanner"><div class="cookie-banner__text">🍪 We use cookies to improve your experience. <a href="privacy.html">Learn more</a>.</div><div class="cookie-banner__actions"><button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button><button class="btn btn--primary btn--sm" id="cookieAccept">Accept</button></div></div>
+
+<script src="kivo.js"></script>
 <script>
-  function enableAnalytics() {
-    console.log("✅ Analytics cookies enabled");
-  }
-  function enableMarketing() {
-    console.log("✅ Marketing cookies enabled");
-  }
-  function savePreferences() {
-    const analytics = document.getElementById('overlayAnalytics').checked;
-    const marketing = document.getElementById('overlayMarketing').checked;
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics, marketing }));
-    if (analytics) enableAnalytics();
-    if (marketing) enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  function acceptAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: true, marketing: true }));
-    enableAnalytics();
-    enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  function rejectAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: false, marketing: false }));
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  window.onload = function () {
-  const consent = localStorage.getItem('cookieConsent');
-  if (consent) {
-    const parsed = JSON.parse(consent);
-    if (parsed.analytics) enableAnalytics();
-    if (parsed.marketing) enableMarketing();
-  } else {
-    document.getElementById('cookiePreferencesOverlay').classList.remove('hidden');
-  }
-};
-</script>
-<script>
-  window.addEventListener('scroll', () => {
-    const header = document.getElementById('mainHeader');
-    if (window.scrollY > 10) {
-      header.classList.add('bg-white', 'shadow');
-    } else {
-      header.classList.remove('bg-white', 'shadow');
-    }
+  // Hero score animation on load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const target = 78;
+      const numEl  = document.getElementById('heroScoreNum');
+      const fillEl = document.getElementById('heroRingFill');
+      const circ   = 503;
+      // Count up
+      let start = null;
+      function count(ts) {
+        if (!start) start = ts;
+        const p = Math.min((ts - start) / 1600, 1);
+        const e = 1 - Math.pow(1 - p, 3);
+        numEl.textContent = Math.round(e * target);
+        if (p < 1) requestAnimationFrame(count); else numEl.textContent = target;
+      }
+      requestAnimationFrame(count);
+      // Ring
+      fillEl.style.strokeDashoffset = circ - (circ * target / 100);
+      // Bars
+      ['p1','p2','p3','p4'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.transform = 'scaleX(1)';
+      });
+    }, 600);
   });
 </script>
 </body>

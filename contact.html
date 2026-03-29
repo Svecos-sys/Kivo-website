@@ -1,166 +1,94 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>
-   Kivo – Contact Us
-  </title><script src="https://cdn.tailwindcss.com"></script><style>
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .animate-fadeIn {
-    animation: fadeIn 0.4s ease-out forwards;
-  }
-</style><script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            cyan: {
-              50: '#ECFEFF',
-              500: '#0EA5E9',
-              700: '#0369A1'
-            },
-            emerald: '#10B981',
-            graphite: '#1F2937'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script></head><body><header class="fixed top-0 w-full transition duration-300 z-50 bg-white bg-opacity-90 backdrop-blur" id="mainHeader">
-<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-<a class="text-2xl font-extrabold text-cyan-500" href="index.html">Kivo</a>
-<nav class="flex items-center gap-6 md:gap-8 lg:gap-10 text-lg font-medium">
-<div class="relative group">
-<button class="text-graphite hover:text-cyan-500">Company</button>
-<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50 animate-fadeIn">
-<a class="block px-4 py-2 hover:bg-cyan-50" href="about.html">About</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="security.html">Security</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="partners.html">Partners</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="for-advisors.html">Advisors</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="privacy.html">Privacy</a>
-</div>
-</div>
-<div class="relative group">
-<button class="text-graphite hover:text-cyan-500">Resources</button>
-<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50">
-<a class="block px-4 py-2 hover:bg-cyan-50" href="tools.html">Tools</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="learn.html">Learn</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="stories.html">Stories</a>
-</div>
-</div>
-<a class="text-graphite hover:text-cyan-500" href="how-it-works.html">How it Works</a>
-<a class="text-graphite hover:text-cyan-500" href="faq.html">FAQs</a>
-<a class="text-graphite hover:text-cyan-500" href="contact.html">Contact</a>
-<a class="bg-emerald text-white px-5 py-2.5 rounded-full shadow-md hover:shadow-lg hover:bg-cyan-700 transition-all duration-300" href="kivo-check.html">Check Your Score</a>
-</nav>
-</div>
-</header>
-<section>
-<div class="bg-cyan-50 border border-cyan-100 rounded-md p-4 text-sm text-gray-800 mb-6 flex items-start space-x-3 kivoIntroBox">
-<img alt="Kivo avatar" class="w-10 h-10 rounded-full shadow-sm" src="https://placehold.co/48x48?text=K"/>
-<div class="kivoIntroBox">
-<p class="font-semibold text-cyan-500 mb-1">Hi, I’m Kivo 👋</p>
-<p>I’ll guide you through everything you need to know. Whether you're checking your affordability or exploring mortgage options — I’ve got your back.</p>
-</div>
-</div>
-<section class="max-w-xl mx-auto px-6 py-20">
-<h1 class="text-4xl font-bold text-center mb-12">
-    Contact Us
-   </h1>
-<p class="text-lg text-gray-700 text-center mb-8">
-    Need help, have feedback, or want to say hello? Drop us a message.
-   </p>
-<form action="https://formspree.io/f/your-form-id" class="space-y-6" method="POST">
-<input class="w-full px-4 py-3 border rounded focus:outline-none focus:ring-2 ring-emerald" name="name" placeholder="Your Name" required="" type="text"/>
-<input class="w-full px-4 py-3 border rounded focus:outline-none focus:ring-2 ring-emerald" name="email" placeholder="Your Email" required="" type="email"/>
-<textarea class="w-full px-4 py-3 border rounded focus:outline-none focus:ring-2 ring-emerald" name="message" placeholder="Your Message" required="" rows="5"></textarea>
-<button class="w-full bg-cyan-500 text-white py-3 rounded hover:bg-cyan-700" type="submit">
-     Send Message
-    </button>
-</form>
-</section>
-</section>
- Floating Kivo Chat Bubble 
-<div class="fixed bottom-6 right-6 bg-cyan-500 text-white px-4 py-3 rounded-full shadow-lg cursor-pointer hover:bg-cyan-700 transition text-sm z-50" id="kivoChatBubble">
-  💬 Need help? Kivo’s here.
-</div>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Kivo – Get in Touch</title>
+  <meta name="description" content="Have a question about Kivo? We'd love to hear from you. Get in touch with our team.">
+  <link rel="stylesheet" href="kivo.css">
+  <style>
+    .contact-hero{padding-top:68px;background:linear-gradient(160deg,var(--coral-lt) 0%,#fff 60%)}
+    .contact-hero__inner{padding:72px 0 56px}
+    .contact-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:72px;align-items:start}
+    .contact-info{}
+    .contact-method{display:flex;align-items:flex-start;gap:16px;padding:20px;background:var(--mist);border-radius:var(--r-lg);border:1px solid var(--border);margin-bottom:16px}
+    .contact-method__icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.125rem;flex-shrink:0}
+    .contact-method__label{font-size:.8125rem;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+    .contact-method__value{font-size:.9375rem;font-weight:600;color:var(--navy)}
+    .contact-method__sub{font-size:.8125rem;color:var(--slate);margin-top:2px}
+    .contact-form-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-xl);padding:40px;box-shadow:var(--shadow-md)}
+    .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:1024px){.contact-layout{grid-template-columns:1fr;gap:40px}}
+    @media(max-width:640px){.form-row-2{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header class="header" id="header"><div class="container"><div class="header__inner">
+  <a href="index.html" class="logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
+  <nav class="nav"><div class="nav__item"><a href="how-it-works.html" class="nav__link">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a><a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a></div></div><div class="nav__item"><a href="about.html" class="nav__link active">Company <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="about.html"><span class="dd-icon" style="background:#F0F4FF">👋</span>About</a><a href="security.html"><span class="dd-icon" style="background:#F0FFF4">🔒</span>Security</a><a href="partners.html"><span class="dd-icon" style="background:#FFF0EC">🤝</span>Partners</a><a href="contact.html"><span class="dd-icon" style="background:#E6FAF8">✉️</span>Contact</a></div></div><a href="for-advisors.html" class="nav__link nav__link--teal">For Advisors</a></nav>
+  <div class="header__actions"><a href="kivo-check.html" class="btn btn--primary btn--sm">Check Your Score</a><button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
+</div></div></header>
+<div class="mobile-menu" id="mobile-menu"><div class="mobile-menu__section"><div class="mobile-menu__label">Features</div><a href="how-it-works.html">🏠 How it Works</a><a href="kivo-score.html">📊 Kivo Score</a><a href="kivo-check.html">✅ Kivo Check</a></div><div class="mobile-menu__section"><div class="mobile-menu__label">Company</div><a href="about.html">👋 About</a><a href="security.html">🔒 Security</a><a href="contact.html">✉️ Contact</a></div><div class="mobile-menu__cta"><a href="kivo-check.html" class="btn btn--primary btn--full">Check My Score — Free</a></div></div>
+
+<section class="contact-hero"><div class="container"><div class="contact-hero__inner">
+  <div class="section-label fade-up"><div class="section-label__line"></div><span>Contact</span></div>
+  <h1 class="t-display-xl fade-up fade-up-d1" style="margin-bottom:16px">We'd love to hear from you</h1>
+  <p class="t-body-lg tc-slate fade-up fade-up-d2" style="max-width:480px">Whether you have a question, feedback, or you're interested in using Kivo for your firm — drop us a message.</p>
+</div></div></section>
+
+<section class="section section--sm" style="background:var(--white)"><div class="container">
+  <div class="contact-layout">
+    <div class="contact-info fade-up">
+      <div class="contact-method">
+        <div class="contact-method__icon" style="background:var(--coral-lt)">✉️</div>
+        <div><div class="contact-method__label">Email us</div><div class="contact-method__value"><a href="mailto:hello@getkivo.co.uk" style="color:var(--coral)">hello@getkivo.co.uk</a></div><div class="contact-method__sub">We reply within one business day</div></div>
+      </div>
+      <div class="contact-method">
+        <div class="contact-method__icon" style="background:var(--teal-lt)">🏦</div>
+        <div><div class="contact-method__label">Advisors &amp; partnerships</div><div class="contact-method__value"><a href="mailto:advisors@getkivo.co.uk" style="color:var(--teal-dk)">advisors@getkivo.co.uk</a></div><div class="contact-method__sub">For broker enquiries, demos, and partnerships</div></div>
+      </div>
+      <div class="contact-method">
+        <div class="contact-method__icon" style="background:#F0F4FF">🔒</div>
+        <div><div class="contact-method__label">Privacy &amp; data requests</div><div class="contact-method__value"><a href="mailto:privacy@getkivo.co.uk" style="color:var(--navy)">privacy@getkivo.co.uk</a></div><div class="contact-method__sub">Data deletion requests, GDPR, and privacy matters</div></div>
+      </div>
+      <div class="alert alert--info mt-24">
+        <span>💡</span>
+        <span>Looking for answers to common questions? <a href="faq.html">Check our FAQ first</a> — you might find what you need instantly.</span>
+      </div>
+      <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border)">
+        <p class="t-label tc-slate" style="margin-bottom:8px">Registered address</p>
+        <p class="t-body-sm tc-slate">Kivo Technologies Ltd<br>Registered in England &amp; Wales<br>Company number: [XXXXXXXX]</p>
+      </div>
+    </div>
+    <div class="contact-form-card fade-up fade-up-d1">
+      <h2 class="t-display-sm" style="margin-bottom:6px">Send us a message</h2>
+      <p class="t-body-sm tc-slate" style="margin-bottom:28px">We read every message and reply to all of them.</p>
+      <form id="contactForm" action="#" method="POST">
+        <div class="form-row-2">
+          <div class="form-group"><label class="form-label" for="cFirstName">First name</label><input class="form-input" type="text" id="cFirstName" name="firstName" placeholder="Jane" required></div>
+          <div class="form-group"><label class="form-label" for="cLastName">Last name</label><input class="form-input" type="text" id="cLastName" name="lastName" placeholder="Smith" required></div>
+        </div>
+        <div class="form-group mt-16"><label class="form-label" for="cEmail">Email address</label><input class="form-input" type="email" id="cEmail" name="email" placeholder="jane@example.com" required></div>
+        <div class="form-group mt-16"><label class="form-label" for="cTopic">What's this about?</label><select class="form-select" id="cTopic" name="topic" required><option value="">Select a topic...</option><option value="general">General question</option><option value="score">My Kivo Score</option><option value="openbanking">Open Banking</option><option value="advisor">I'm a mortgage advisor</option><option value="partnership">Partnership enquiry</option><option value="privacy">Privacy or data request</option><option value="bug">Something isn't working</option><option value="other">Something else</option></select></div>
+        <div class="form-group mt-16"><label class="form-label" for="cMessage">Your message</label><textarea class="form-textarea" id="cMessage" name="message" placeholder="Tell us what's on your mind..." required style="min-height:140px"></textarea></div>
+        <button type="submit" class="btn btn--primary btn--full btn--lg mt-24" id="contactSubmit">Send Message <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <p class="t-caption text-center mt-16">We'll never share your details with third parties.</p>
+      </form>
+    </div>
+  </div>
+</div></section>
+
+<footer class="footer"><div class="container"><div class="footer__grid"><div><a href="index.html" class="logo footer__logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a><p class="footer__tagline">Your friendly AI-powered guide to getting mortgage-ready.</p></div><div><div class="footer__col-title">Product</div><div class="footer__links"><a href="how-it-works.html">How it Works</a><a href="kivo-score.html">Kivo Score</a><a href="kivo-check.html">Kivo Check</a><a href="for-advisors.html">For Advisors</a></div></div><div><div class="footer__col-title">Resources</div><div class="footer__links"><a href="learn.html">Learn</a><a href="tools.html">Tools</a><a href="faq.html">FAQs</a></div></div><div><div class="footer__col-title">Company</div><div class="footer__links"><a href="about.html">About</a><a href="security.html">Security</a><a href="partners.html">Partners</a><a href="contact.html">Contact</a></div></div></div><div class="footer__reg"><strong>Important:</strong> Kivo is not a mortgage broker. Kivo Technologies Ltd is registered in England &amp; Wales.</div><div class="footer__bottom"><div class="footer__copy">© 2025 Kivo Technologies Ltd.</div><div class="footer__legal"><a href="privacy.html">Privacy Policy</a><a href="security.html">Security</a></div></div></div></footer>
+<div class="cookie-banner hidden" id="cookieBanner"><div class="cookie-banner__text">🍪 We use cookies. <a href="privacy.html">Learn more</a>.</div><div class="cookie-banner__actions"><button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button><button class="btn btn--primary btn--sm" id="cookieAccept">Accept</button></div></div>
+<script src="kivo.js"></script>
 <script>
-  document.getElementById('kivoChatBubble').addEventListener('click', function () {
-    alert("Hi! I'm Kivo 👋 Ask me anything about mortgages. This is just a placeholder — full chat assistant coming soon.");
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('contactSubmit');
+    btn.textContent = '✓ Message sent! We\'ll be in touch soon.';
+    btn.disabled = true;
+    btn.style.background = 'var(--teal)';
+    // Wire to your backend: fetch('/api/contact', { method:'POST', body: new FormData(this) })
   });
 </script>
-<footer class="bg-white border-t text-center text-sm text-gray-600 py-10">
-<p>© 2025 Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.</p>
-</footer><div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity duration-300 opacity-0 animate-fadeIn" id="cookiePreferencesOverlay">
-<div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
-<h2 class="text-lg font-semibold mb-4">Cookie Preferences</h2>
-<p class="text-sm text-gray-700 mb-4">We use cookies to enhance your experience. You can manage your preferences below. Read our <a class="text-cyan-700 underline hover:text-cyan-900" href="privacy.html">cookie policy</a>.</p>
-<form class="space-y-3">
-<label class="flex items-center gap-2 justify-start">
-<input checked="" class="accent-cyan-500" disabled="" type="checkbox"/>
-<span>Essential cookies (always on)</span>
-</label>
-<label class="flex items-center gap-2 justify-start">
-<input class="accent-cyan-500" id="overlayAnalytics" type="checkbox"/>
-<span>Analytics cookies</span>
-</label>
-<label class="flex items-center gap-2 justify-start">
-<input class="accent-cyan-500" id="overlayMarketing" type="checkbox"/>
-<span>Marketing cookies</span>
-</label>
-<div class="flex justify-center gap-2 pt-4">
-<button class="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="savePreferences()" type="button">Accept choices</button>
-<button class="bg-emerald text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="acceptAllCookies()" type="button">Accept all</button>
-<button class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" onclick="rejectAllCookies()" type="button">Reject all</button>
-</div>
-</form>
-</div>
-</div>
-<script>
-  function enableAnalytics() {
-    console.log("✅ Analytics cookies enabled");
-  }
-  function enableMarketing() {
-    console.log("✅ Marketing cookies enabled");
-  }
-  function savePreferences() {
-    const analytics = document.getElementById('overlayAnalytics').checked;
-    const marketing = document.getElementById('overlayMarketing').checked;
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics, marketing }));
-    if (analytics) enableAnalytics();
-    if (marketing) enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  function acceptAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: true, marketing: true }));
-    enableAnalytics();
-    enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  function rejectAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: false, marketing: false }));
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  window.onload = function () {
-  const consent = localStorage.getItem('cookieConsent');
-  if (consent) {
-    const parsed = JSON.parse(consent);
-    if (parsed.analytics) enableAnalytics();
-    if (parsed.marketing) enableMarketing();
-  } else {
-    document.getElementById('cookiePreferencesOverlay').classList.remove('hidden');
-  }
-};
-</script>
-<script>
-  window.addEventListener('scroll', () => {
-    const header = document.getElementById('mainHeader');
-    if (window.scrollY > 10) {
-      header.classList.add('bg-white', 'shadow');
-    } else {
-      header.classList.remove('bg-white', 'shadow');
-    }
-  });
-</script></body></html>
+</body>
+</html>

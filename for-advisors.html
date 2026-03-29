@@ -1,134 +1,628 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>For Mortgage Advisors</title><script src="https://cdn.tailwindcss.com"></script><style>
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .animate-fadeIn {
-    animation: fadeIn 0.4s ease-out forwards;
-  }
-</style><script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            cyan: {
-              50: '#ECFEFF',
-              500: '#0EA5E9',
-              700: '#0369A1'
-            },
-            emerald: '#10B981',
-            graphite: '#1F2937'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif']
-          }
-        }
-      }
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kivo for Advisors – Better-Prepared Clients. More Completions.</title>
+  <meta name="description" content="Kivo helps mortgage advisors and brokers work with better-prepared clients, spend less time on fact-finds, and convert more enquiries into completions.">
+  <link rel="stylesheet" href="kivo.css">
+  <style>
+    .adv-hero {
+      padding-top: 68px;
+      background: linear-gradient(150deg, var(--navy) 0%, var(--navy-mid) 100%);
+      position: relative; overflow: hidden;
     }
-  </script></head><body><header class="fixed top-0 w-full transition duration-300 z-50 bg-white bg-opacity-90 backdrop-blur" id="mainHeader">
-<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-<a class="text-2xl font-extrabold text-cyan-500" href="index.html">Kivo</a>
-<nav class="flex items-center gap-6 md:gap-8 lg:gap-10 text-lg font-medium">
-<div class="relative group">
-<button class="text-graphite hover:text-cyan-500">Company</button>
-<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50 animate-fadeIn">
-<a class="block px-4 py-2 hover:bg-cyan-50" href="about.html">About</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="security.html">Security</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="partners.html">Partners</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="for-advisors.html">Advisors</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="privacy.html">Privacy</a>
-</div>
-</div>
-<div class="relative group">
-<button class="text-graphite hover:text-cyan-500">Resources</button>
-<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50">
-<a class="block px-4 py-2 hover:bg-cyan-50" href="tools.html">Tools</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="learn.html">Learn</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="stories.html">Stories</a>
-</div>
-</div>
-<a class="text-graphite hover:text-cyan-500" href="how-it-works.html">How it Works</a>
-<a class="text-graphite hover:text-cyan-500" href="faq.html">FAQs</a>
-<a class="text-graphite hover:text-cyan-500" href="contact.html">Contact</a>
-<a class="bg-emerald text-white px-5 py-2.5 rounded-full shadow-md hover:shadow-lg hover:bg-cyan-700 transition-all duration-300" href="kivo-check.html">Check Your Score</a>
-</nav>
-</div>
+    .adv-hero__inner { padding: 96px 0 88px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .adv-hero__label { color: var(--teal); margin-bottom: 16px; }
+    .adv-hero__title { color: var(--white); margin-bottom: 20px; }
+    .adv-hero__sub   { color: rgba(255,255,255,.7); margin-bottom: 36px; }
+    .adv-hero__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+    .adv-hero__social-proof {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 20px; background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12); border-radius: var(--r-md);
+    }
+    .adv-hero__sp-num { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; color: var(--teal); }
+    .adv-hero__sp-text { font-size: .875rem; color: rgba(255,255,255,.65); }
+
+    /* Dashboard mockup */
+    .adv-dashboard {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--r-xl); padding: 24px; overflow: hidden;
+    }
+    .adv-dash-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px; padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .adv-dash-title { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--white); }
+    .adv-client-row {
+      display: flex; align-items: center; gap: 12px; padding: 12px;
+      background: rgba(255,255,255,.05); border-radius: var(--r-md);
+      margin-bottom: 8px; transition: background var(--ease);
+    }
+    .adv-client-row:hover { background: rgba(255,255,255,.09); }
+    .adv-client-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: .8125rem; color: var(--white); flex-shrink: 0;
+    }
+    .adv-client-name { font-weight: 600; font-size: .875rem; color: var(--white); }
+    .adv-client-sub  { font-size: .75rem; color: rgba(255,255,255,.5); }
+    .adv-client-score {
+      margin-left: auto; text-align: right; flex-shrink: 0;
+    }
+    .adv-client-score__num { font-family: var(--font-display); font-weight: 800; font-size: 1rem; }
+    .adv-client-score__label { font-size: .6875rem; color: rgba(255,255,255,.5); }
+
+    /* Stats */
+    .stats-section { background: var(--coral); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; margin-top: 48px; }
+    .stat-item {
+      text-align: center; padding: 32px 20px;
+      border-right: 1px solid rgba(255,255,255,.2);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item__num { font-family: var(--font-display); font-weight: 800; font-size: 2.5rem; color: var(--white); line-height: 1; margin-bottom: 8px; }
+    .stat-item__label { font-size: .9rem; color: rgba(255,255,255,.8); }
+
+    /* Features grid */
+    .adv-features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 56px; }
+    .adv-feature {
+      padding: 28px; background: var(--mist);
+      border: 1px solid var(--border); border-radius: var(--r-lg);
+      transition: transform var(--ease), box-shadow var(--ease);
+    }
+    .adv-feature:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+    .adv-feature__icon { font-size: 1.5rem; margin-bottom: 16px; }
+    .adv-feature__title { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; color: var(--navy); margin-bottom: 8px; }
+    .adv-feature__text  { font-size: .9rem; color: var(--slate); line-height: 1.65; }
+
+    /* Pricing */
+    .pricing-section { background: var(--mist); }
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 56px; }
+    .pricing-card {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--r-xl); padding: 36px 32px;
+      display: flex; flex-direction: column;
+      transition: transform var(--ease), box-shadow var(--ease), border-color var(--ease);
+    }
+    .pricing-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .pricing-card--featured {
+      border-color: var(--coral); position: relative;
+      box-shadow: 0 8px 32px rgba(255,107,74,.15);
+    }
+    .pricing-card__badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--coral); color: var(--white);
+      padding: 5px 16px; border-radius: var(--r-pill);
+      font-size: .8125rem; font-weight: 700; white-space: nowrap;
+    }
+    .pricing-card__name { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; color: var(--navy); margin-bottom: 8px; }
+    .pricing-card__desc { font-size: .875rem; color: var(--slate); margin-bottom: 24px; }
+    .pricing-card__price { margin-bottom: 4px; }
+    .pricing-card__amount { font-family: var(--font-display); font-weight: 800; font-size: 2.25rem; color: var(--navy); }
+    .pricing-card__period { font-size: .9rem; color: var(--slate); margin-left: 4px; }
+    .pricing-card__note  { font-size: .8125rem; color: var(--slate-lt); margin-bottom: 28px; }
+    .pricing-card__divider { height: 1px; background: var(--border); margin: 24px 0; }
+    .pricing-card__features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; flex: 1; }
+    .pricing-feature {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: .9rem; color: var(--slate);
+    }
+    .pricing-feature__check { color: var(--teal); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .pricing-feature--muted { color: #CBD5E1; }
+    .pricing-feature--muted .pricing-feature__check { color: #CBD5E1; }
+
+    /* Testimonials from advisors */
+    .adv-testimonials { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 56px; }
+
+    /* Process */
+    .process-steps {
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
+      margin-top: 56px; position: relative;
+    }
+    .process-steps::before {
+      content: ''; position: absolute; top: 28px; left: 10%; right: 10%;
+      height: 2px; background: var(--border); z-index: 0;
+    }
+    .process-step { text-align: center; padding: 0 16px; position: relative; z-index: 1; }
+    .process-step__num {
+      width: 56px; height: 56px; border-radius: 16px;
+      background: var(--white); border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-weight: 800; font-size: 1rem;
+      color: var(--navy); margin: 0 auto 16px;
+      transition: all var(--ease);
+    }
+    .process-step:hover .process-step__num { background: var(--coral); border-color: var(--coral); color: var(--white); }
+    .process-step__title { font-weight: 700; font-size: .9375rem; color: var(--navy); margin-bottom: 6px; }
+    .process-step__text  { font-size: .8125rem; color: var(--slate); line-height: 1.55; }
+
+    /* Form */
+    .contact-form {
+      max-width: 600px; margin: 0 auto;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--r-xl); padding: 40px; box-shadow: var(--shadow-lg);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    @media (max-width: 1024px) {
+      .adv-hero__inner { grid-template-columns: 1fr; gap: 48px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stat-item:nth-child(2) { border-right: none; }
+      .adv-features-grid { grid-template-columns: 1fr 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+      .adv-testimonials { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .process-steps::before { display: none; }
+    }
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .adv-features-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container">
+    <div class="header__inner">
+      <a href="index.html" class="logo">
+        <div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <span class="logo__wordmark">kiv<span>o</span></span>
+      </a>
+      <nav class="nav" role="navigation">
+        <div class="nav__item">
+          <a href="how-it-works.html" class="nav__link">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="nav__dropdown">
+            <a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a>
+            <a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a>
+            <a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a>
+          </div>
+        </div>
+        <div class="nav__item">
+          <a href="learn.html" class="nav__link">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="nav__dropdown">
+            <a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a>
+            <a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a>
+            <a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a>
+          </div>
+        </div>
+        <div class="nav__item">
+          <a href="about.html" class="nav__link">Company <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="nav__dropdown">
+            <a href="about.html"><span class="dd-icon" style="background:#F0F4FF">👋</span>About</a>
+            <a href="security.html"><span class="dd-icon" style="background:#F0FFF4">🔒</span>Security</a>
+            <a href="contact.html"><span class="dd-icon" style="background:#E6FAF8">✉️</span>Contact</a>
+          </div>
+        </div>
+        <a href="for-advisors.html" class="nav__link nav__link--teal active">For Advisors</a>
+      </nav>
+      <div class="header__actions">
+        <a href="#get-started" class="btn btn--primary btn--sm">Request a Demo <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
 </header>
-<main class="pt-32 px-6 text-center max-w-3xl mx-auto">
-<h1 class="text-3xl font-bold mb-4">Empowering Advisors ✅</h1>
-<p class="text-lg text-gray-700">Find out how Kivo-prepared clients are easier to serve and how you can partner with us.</p>
-</main>
-<footer class="bg-white border-t text-center text-sm text-gray-600 py-10">
-<p>© 2025 Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.</p>
-</footer><div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity duration-300 opacity-0 animate-fadeIn" id="cookiePreferencesOverlay">
-<div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
-<h2 class="text-lg font-semibold mb-4">Cookie Preferences</h2>
-<p class="text-sm text-gray-700 mb-4">We use cookies to enhance your experience. You can manage your preferences below. Read our <a class="text-cyan-700 underline hover:text-cyan-900" href="privacy.html">cookie policy</a>.</p>
-<form class="space-y-3">
-<label class="flex items-center gap-2 justify-start">
-<input checked="" class="accent-cyan-500" disabled="" type="checkbox"/>
-<span>Essential cookies (always on)</span>
-</label>
-<label class="flex items-center gap-2 justify-start">
-<input class="accent-cyan-500" id="overlayAnalytics" type="checkbox"/>
-<span>Analytics cookies</span>
-</label>
-<label class="flex items-center gap-2 justify-start">
-<input class="accent-cyan-500" id="overlayMarketing" type="checkbox"/>
-<span>Marketing cookies</span>
-</label>
-<div class="flex justify-center gap-2 pt-4">
-<button class="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="savePreferences()" type="button">Accept choices</button>
-<button class="bg-emerald text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="acceptAllCookies()" type="button">Accept all</button>
-<button class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" onclick="rejectAllCookies()" type="button">Reject all</button>
+
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu__section">
+    <div class="mobile-menu__label">Features</div>
+    <a href="how-it-works.html">🏠 How it Works</a>
+    <a href="kivo-score.html">📊 Kivo Score</a>
+    <a href="kivo-check.html">✅ Kivo Check</a>
+  </div>
+  <div class="mobile-menu__section">
+    <div class="mobile-menu__label">Company</div>
+    <a href="about.html">👋 About Kivo</a>
+    <a href="security.html">🔒 Security</a>
+    <a href="contact.html">✉️ Contact</a>
+  </div>
+  <div class="mobile-menu__cta">
+    <a href="#get-started" class="btn btn--primary btn--full">Request a Demo</a>
+    <a href="kivo-check.html" class="btn btn--secondary btn--full">Try it as a buyer</a>
+  </div>
 </div>
-</form>
+
+
+<!-- HERO -->
+<section class="adv-hero blob-bg">
+  <div class="blob blob--coral-dk-tr"></div>
+  <div class="blob blob--teal-dk-br"></div>
+  <div class="container">
+    <div class="adv-hero__inner">
+      <div>
+        <div class="label adv-hero__label fade-up">For Mortgage Advisors &amp; Brokers</div>
+        <h1 class="t-display-xl adv-hero__title fade-up fade-up-d1">
+          Your clients arrive prepared.<br>You close more.
+        </h1>
+        <p class="t-body-lg adv-hero__sub fade-up fade-up-d2">
+          Kivo pre-qualifies your clients before they ever pick up the phone. They arrive with a readiness score, a financial profile, and a clear understanding of where they stand — so you spend zero time on the basics and more time on the deal.
+        </p>
+        <div class="adv-hero__actions fade-up fade-up-d3">
+          <a href="#get-started" class="btn btn--teal btn--lg">
+            Request a Demo
+            <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#pricing" class="btn btn--outline-white btn--lg">See Pricing</a>
+        </div>
+        <div class="adv-hero__social-proof fade-up fade-up-d4">
+          <div>
+            <div class="adv-hero__sp-num">40%</div>
+            <div class="adv-hero__sp-text">Less time on initial fact-finds</div>
+          </div>
+          <div style="width:1px;height:40px;background:rgba(255,255,255,.15)"></div>
+          <div>
+            <div class="adv-hero__sp-num">3×</div>
+            <div class="adv-hero__sp-text">More qualified conversations</div>
+          </div>
+          <div style="width:1px;height:40px;background:rgba(255,255,255,.15)"></div>
+          <div>
+            <div class="adv-hero__sp-num">£0</div>
+            <div class="adv-hero__sp-text">Per referral — flat fee only</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Advisor dashboard mockup -->
+      <div class="adv-dashboard fade-up fade-up-d2">
+        <div class="adv-dash-header">
+          <div class="adv-dash-title">Client Pipeline</div>
+          <span class="badge badge--teal">4 ready to progress</span>
+        </div>
+        <div class="adv-client-row">
+          <div class="adv-client-avatar" style="background:var(--coral)">SL</div>
+          <div>
+            <div class="adv-client-name">Sophie Lewis</div>
+            <div class="adv-client-sub">First-time buyer · Manchester</div>
+          </div>
+          <div class="adv-client-score">
+            <div class="adv-client-score__num" style="color:var(--teal)">82</div>
+            <div class="adv-client-score__label">Excellent</div>
+          </div>
+        </div>
+        <div class="adv-client-row">
+          <div class="adv-client-avatar" style="background:#8B5CF6">MK</div>
+          <div>
+            <div class="adv-client-name">Marcus &amp; Kim Park</div>
+            <div class="adv-client-sub">Remortgage · Birmingham</div>
+          </div>
+          <div class="adv-client-score">
+            <div class="adv-client-score__num" style="color:#F59E0B">67</div>
+            <div class="adv-client-score__label">Good</div>
+          </div>
+        </div>
+        <div class="adv-client-row">
+          <div class="adv-client-avatar" style="background:var(--teal-dk)">PN</div>
+          <div>
+            <div class="adv-client-name">Priya Nair</div>
+            <div class="adv-client-sub">Self-employed · London</div>
+          </div>
+          <div class="adv-client-score">
+            <div class="adv-client-score__num" style="color:var(--teal)">78</div>
+            <div class="adv-client-score__label">Good</div>
+          </div>
+        </div>
+        <div class="adv-client-row">
+          <div class="adv-client-avatar" style="background:#EC4899">JT</div>
+          <div>
+            <div class="adv-client-name">James Thompson</div>
+            <div class="adv-client-sub">Moving home · Leeds</div>
+          </div>
+          <div class="adv-client-score">
+            <div class="adv-client-score__num" style="color:#EF4444">44</div>
+            <div class="adv-client-score__label">Improving</div>
+          </div>
+        </div>
+        <p style="font-size:.75rem;color:rgba(255,255,255,.4);margin-top:14px;text-align:center">All clients have consented to share their data</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- STATS -->
+<section class="stats-section section--sm">
+  <div class="container">
+    <div class="section-label fade-up" style="justify-content:center">
+      <div class="section-label__line" style="background:rgba(255,255,255,.5)"></div>
+      <span style="color:rgba(255,255,255,.8)">The impact</span>
+    </div>
+    <h2 class="t-display-lg text-center fade-up fade-up-d1" style="color:var(--white);margin-bottom:0">Results advisors see with Kivo</h2>
+    <div class="stats-grid">
+      <div class="stat-item fade-up"><div class="stat-item__num">40%</div><div class="stat-item__label">Reduction in time spent on initial fact-finds</div></div>
+      <div class="stat-item fade-up fade-up-d1"><div class="stat-item__num">3×</div><div class="stat-item__label">More qualified enquiries per week</div></div>
+      <div class="stat-item fade-up fade-up-d2"><div class="stat-item__num">2.5×</div><div class="stat-item__label">Higher conversion from enquiry to application</div></div>
+      <div class="stat-item fade-up fade-up-d3"><div class="stat-item__num">£0</div><div class="stat-item__label">Cost per referral — just a simple monthly flat fee</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FEATURES -->
+<section class="section" style="background:var(--white)">
+  <div class="container">
+    <div class="section-label fade-up"><div class="section-label__line"></div><span>What you get</span></div>
+    <h2 class="t-display-lg section-title fade-up fade-up-d1">Everything you need to work smarter</h2>
+    <p class="t-body-lg tc-slate section-sub fade-up fade-up-d2">Kivo gives your firm a powerful set of tools — all under your brand.</p>
+
+    <div class="adv-features-grid">
+      <div class="adv-feature fade-up">
+        <div class="adv-feature__icon">📋</div>
+        <div class="adv-feature__title">Pre-qualified Client Profiles</div>
+        <div class="adv-feature__text">Every client arrives with a full financial profile — income, spending, deposit, credit summary — already assembled. Your first call is productive from minute one.</div>
+      </div>
+      <div class="adv-feature fade-up fade-up-d1">
+        <div class="adv-feature__icon">🏷️</div>
+        <div class="adv-feature__title">White-Label Platform</div>
+        <div class="adv-feature__text">Add your firm's name, logo, and colours. Clients interact with "your" tool — powered by Kivo behind the scenes. Strengthen your brand, not ours.</div>
+      </div>
+      <div class="adv-feature fade-up fade-up-d2">
+        <div class="adv-feature__icon">📊</div>
+        <div class="adv-feature__title">Advisor Dashboard</div>
+        <div class="adv-feature__text">See all your clients in one place — their scores, readiness status, and progress over time. Prioritise who to follow up with and spot opportunities early.</div>
+      </div>
+      <div class="adv-feature fade-up fade-up-d3">
+        <div class="adv-feature__icon">🔔</div>
+        <div class="adv-feature__title">Smart Alerts</div>
+        <div class="adv-feature__text">Get notified when a client's score crosses a key threshold, or when their financial picture changes significantly. Reach out at exactly the right moment.</div>
+      </div>
+      <div class="adv-feature fade-up">
+        <div class="adv-feature__icon">🤝</div>
+        <div class="adv-feature__title">Consent-First Data Sharing</div>
+        <div class="adv-feature__text">Every client explicitly consents to sharing their Kivo data with you. GDPR-compliant data handling built in — no extra paperwork for your compliance team.</div>
+      </div>
+      <div class="adv-feature fade-up fade-up-d1">
+        <div class="adv-feature__icon">⚡</div>
+        <div class="adv-feature__title">API Integration</div>
+        <div class="adv-feature__text">Connect Kivo to your existing CRM via our API. Client data flows directly into your workflow — no double-entry, no copy-pasting between systems.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- HOW IT WORKS FOR ADVISORS -->
+<section class="section" style="background:var(--mist)">
+  <div class="container">
+    <div class="section-label fade-up"><div class="section-label__line"></div><span>How it works</span></div>
+    <h2 class="t-display-lg section-title fade-up fade-up-d1">Up and running in a day</h2>
+    <p class="t-body-lg tc-slate section-sub fade-up fade-up-d2">No lengthy onboarding. No IT department needed. You can be live within 24 hours.</p>
+
+    <div class="process-steps fade-up fade-up-d2">
+      <div class="process-step">
+        <div class="process-step__num">1</div>
+        <div class="process-step__title">Sign up &amp; brand it</div>
+        <div class="process-step__text">Create your account and add your firm's logo, colours, and contact details. Takes 15 minutes.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__num">2</div>
+        <div class="process-step__title">Share your link</div>
+        <div class="process-step__text">Send new and existing clients your branded Kivo link via email, WhatsApp, or embed it on your website.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__num">3</div>
+        <div class="process-step__title">Clients complete their check</div>
+        <div class="process-step__text">Clients do their Kivo Check and optionally connect their bank. Takes them 2–5 minutes.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__num">4</div>
+        <div class="process-step__title">You get a full profile</div>
+        <div class="process-step__text">Their score, financial summary, and readiness report lands in your dashboard. Start the real conversation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ADVISOR TESTIMONIALS -->
+<section class="section" style="background:var(--white)">
+  <div class="container">
+    <div class="section-label fade-up"><div class="section-label__line"></div><span>What advisors say</span></div>
+    <h2 class="t-display-lg section-title fade-up fade-up-d1">Trusted by brokers across the UK</h2>
+
+    <div class="adv-testimonials">
+      <div class="testimonial fade-up">
+        <div class="testimonial__stars">★★★★★</div>
+        <div class="testimonial__text">"Before Kivo, I'd spend the first 30 minutes of every client call just finding out if they could even qualify. Now they arrive knowing their score, their strengths, and what to work on. It's transformed how I work."</div>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar" style="background:var(--navy)">RT</div>
+          <div>
+            <div class="testimonial__name">Rachel Thompson</div>
+            <div class="testimonial__detail">Independent Mortgage Advisor, London</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial fade-up fade-up-d1">
+        <div class="testimonial__stars">★★★★★</div>
+        <div class="testimonial__text">"The white-label feature is genuinely excellent. My clients think it's our own tool. It's helped us look more professional and tech-forward, and the quality of the leads has improved noticeably."</div>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar" style="background:var(--teal-dk)">DW</div>
+          <div>
+            <div class="testimonial__name">David Walsh</div>
+            <div class="testimonial__detail">Director, Walsh Mortgage Services, Manchester</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PRICING -->
+<section class="pricing-section section" id="pricing">
+  <div class="container">
+    <div class="section-label fade-up" style="justify-content:center"><div class="section-label__line"></div><span>Pricing</span></div>
+    <h2 class="t-display-lg section-title text-center fade-up fade-up-d1">Simple, transparent pricing</h2>
+    <p class="t-body-lg tc-slate text-center fade-up fade-up-d2" style="max-width:480px;margin:0 auto 0">Flat monthly fee. Unlimited clients. No referral commissions, no hidden costs.</p>
+
+    <div class="pricing-grid">
+      <div class="pricing-card fade-up">
+        <div class="pricing-card__name">Starter</div>
+        <div class="pricing-card__desc">For sole traders and new advisors just getting started.</div>
+        <div class="pricing-card__price">
+          <span class="pricing-card__amount">£49</span>
+          <span class="pricing-card__period">/ month</span>
+        </div>
+        <div class="pricing-card__note">+ VAT · Cancel anytime</div>
+        <div class="pricing-card__divider"></div>
+        <div class="pricing-card__features">
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>Up to 25 active clients</div>
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>Branded client link</div>
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>Full client profiles &amp; scores</div>
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>Email alerts</div>
+          <div class="pricing-feature pricing-feature--muted"><span class="pricing-feature__check">–</span>White-label branding</div>
+          <div class="pricing-feature pricing-feature--muted"><span class="pricing-feature__check">–</span>API access</div>
+          <div class="pricing-feature pricing-feature--muted"><span class="pricing-feature__check">–</span>Priority support</div>
+        </div>
+        <a href="#get-started" class="btn btn--secondary btn--full">Get Started</a>
+      </div>
+
+      <div class="pricing-card pricing-card--featured fade-up fade-up-d1">
+        <div class="pricing-card__badge">Most Popular</div>
+        <div class="pricing-card__name">Professional</div>
+        <div class="pricing-card__desc">For established advisors and growing brokerages.</div>
+        <div class="pricing-card__price">
+          <span class="pricing-card__amount">£129</span>
+          <span class="pricing-card__period">/ month</span>
+        </div>
+        <div class="pricing-card__note">+ VAT · Cancel anytime</div>
+        <div class="pricing-card__divider"></div>
+        <div class="pricing-card__features">
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>Unlimited clients</div>
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>Full white-label branding</div>
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>Advisor dashboard</div>
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>Smart alerts &amp; notifications</div>
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>Priority email &amp; phone support</div>
+          <div class="pricing-feature pricing-feature--muted"><span class="pricing-feature__check">–</span>API / CRM integration</div>
+          <div class="pricing-feature pricing-feature--muted"><span class="pricing-feature__check">–</span>Multi-advisor seats</div>
+        </div>
+        <a href="#get-started" class="btn btn--primary btn--full">Get Started</a>
+      </div>
+
+      <div class="pricing-card fade-up fade-up-d2">
+        <div class="pricing-card__name">Firm</div>
+        <div class="pricing-card__desc">For larger brokerages and networks with multiple advisors.</div>
+        <div class="pricing-card__price">
+          <span class="pricing-card__amount">£299</span>
+          <span class="pricing-card__period">/ month</span>
+        </div>
+        <div class="pricing-card__note">+ VAT · Annual billing available</div>
+        <div class="pricing-card__divider"></div>
+        <div class="pricing-card__features">
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>Everything in Professional</div>
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>Full API &amp; CRM integration</div>
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>Multi-advisor seats (up to 10)</div>
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>Firm-level reporting &amp; analytics</div>
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>Dedicated account manager</div>
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>Custom onboarding support</div>
+          <div class="pricing-feature"><span class="pricing-feature__check">✓</span>SLA &amp; enterprise support</div>
+        </div>
+        <a href="#get-started" class="btn btn--secondary btn--full">Contact Us</a>
+      </div>
+    </div>
+
+    <p class="text-center t-body-sm tc-slate mt-24 fade-up">All plans include a <strong>14-day free trial</strong>. No credit card required to start.</p>
+  </div>
+</section>
+
+
+<!-- GET STARTED FORM -->
+<section class="section" id="get-started" style="background:var(--white)">
+  <div class="container">
+    <div class="section-label fade-up" style="justify-content:center"><div class="section-label__line"></div><span>Get started</span></div>
+    <h2 class="t-display-lg section-title text-center fade-up fade-up-d1">Book a free demo</h2>
+    <p class="t-body-lg tc-slate text-center fade-up fade-up-d2" style="max-width:480px;margin:0 auto 40px">We'll walk you through the platform, answer your questions, and set you up with a free trial. No obligation.</p>
+
+    <form class="contact-form fade-up fade-up-d2" id="advisorForm" action="#" method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="firstName">First name</label>
+          <input class="form-input" type="text" id="firstName" name="firstName" placeholder="Jane" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="lastName">Last name</label>
+          <input class="form-input" type="text" id="lastName" name="lastName" placeholder="Smith" required>
+        </div>
+      </div>
+      <div class="form-group mt-16">
+        <label class="form-label" for="email">Work email</label>
+        <input class="form-input" type="email" id="email" name="email" placeholder="jane@yourbrokerage.co.uk" required>
+      </div>
+      <div class="form-group mt-16">
+        <label class="form-label" for="firmName">Firm / company name</label>
+        <input class="form-input" type="text" id="firmName" name="firmName" placeholder="Smith Mortgage Services" required>
+      </div>
+      <div class="form-group mt-16">
+        <label class="form-label" for="advisorCount">How many advisors in your firm?</label>
+        <select class="form-select" id="advisorCount" name="advisorCount">
+          <option value="">Select...</option>
+          <option value="1">Just me</option>
+          <option value="2-5">2–5</option>
+          <option value="6-20">6–20</option>
+          <option value="21+">21+</option>
+        </select>
+      </div>
+      <div class="form-group mt-16">
+        <label class="form-label" for="message">Anything else you'd like us to know? <span class="optional">(optional)</span></label>
+        <textarea class="form-textarea" id="message" name="message" placeholder="Tell us about your firm, what you're hoping to solve, or any questions you have..."></textarea>
+      </div>
+      <button type="submit" class="btn btn--primary btn--full btn--lg mt-24">
+        Request My Free Demo
+        <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <p class="t-caption text-center mt-16">We typically respond within one business day. No spam, ever.</p>
+    </form>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a href="index.html" class="logo footer__logo">
+          <div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="logo__wordmark">kiv<span>o</span></span>
+        </a>
+        <p class="footer__tagline">Your friendly AI-powered guide to getting mortgage-ready.</p>
+        <div class="footer__social"><a href="#" aria-label="Twitter">𝕏</a><a href="#" aria-label="LinkedIn">in</a></div>
+      </div>
+      <div><div class="footer__col-title">Product</div><div class="footer__links"><a href="how-it-works.html">How it Works</a><a href="kivo-score.html">Kivo Score</a><a href="kivo-check.html">Kivo Check</a><a href="for-advisors.html">For Advisors</a></div></div>
+      <div><div class="footer__col-title">Resources</div><div class="footer__links"><a href="learn.html">Learn</a><a href="tools.html">Tools</a><a href="faq.html">FAQs</a></div></div>
+      <div><div class="footer__col-title">Company</div><div class="footer__links"><a href="about.html">About</a><a href="security.html">Security</a><a href="contact.html">Contact</a><a href="mailto:hello@getkivo.co.uk">hello@getkivo.co.uk</a></div></div>
+    </div>
+    <div class="footer__reg"><strong>Important:</strong> Kivo is not a mortgage broker and does not provide regulated financial advice. Kivo Technologies Ltd is registered in England &amp; Wales.</div>
+    <div class="footer__bottom">
+      <div class="footer__copy">© 2025 Kivo Technologies Ltd.</div>
+      <div class="footer__legal"><a href="privacy.html">Privacy Policy</a><a href="security.html">Security</a></div>
+    </div>
+  </div>
+</footer>
+
+<div class="cookie-banner hidden" id="cookieBanner">
+  <div class="cookie-banner__text">🍪 We use cookies to improve your experience. <a href="privacy.html">Learn more</a>.</div>
+  <div class="cookie-banner__actions">
+    <button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button>
+    <button class="btn btn--primary btn--sm" id="cookieAccept">Accept</button>
+  </div>
 </div>
-</div>
+
+<script src="kivo.js"></script>
 <script>
-  function enableAnalytics() {
-    console.log("✅ Analytics cookies enabled");
-  }
-  function enableMarketing() {
-    console.log("✅ Marketing cookies enabled");
-  }
-  function savePreferences() {
-    const analytics = document.getElementById('overlayAnalytics').checked;
-    const marketing = document.getElementById('overlayMarketing').checked;
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics, marketing }));
-    if (analytics) enableAnalytics();
-    if (marketing) enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  function acceptAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: true, marketing: true }));
-    enableAnalytics();
-    enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  function rejectAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: false, marketing: false }));
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  window.onload = function () {
-  const consent = localStorage.getItem('cookieConsent');
-  if (consent) {
-    const parsed = JSON.parse(consent);
-    if (parsed.analytics) enableAnalytics();
-    if (parsed.marketing) enableMarketing();
-  } else {
-    document.getElementById('cookiePreferencesOverlay').classList.remove('hidden');
-  }
-};
-</script>
-<script>
-  window.addEventListener('scroll', () => {
-    const header = document.getElementById('mainHeader');
-    if (window.scrollY > 10) {
-      header.classList.add('bg-white', 'shadow');
-    } else {
-      header.classList.remove('bg-white', 'shadow');
-    }
+  // Form submission handler
+  document.getElementById('advisorForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('button[type="submit"]');
+    btn.textContent = '✓ Request received — we\'ll be in touch soon!';
+    btn.disabled = true;
+    btn.style.background = 'var(--teal)';
+    // Wire to your backend here
   });
-</script></body></html>
+</script>
+</body>
+</html>

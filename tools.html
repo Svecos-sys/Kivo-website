@@ -1,134 +1,188 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Kivo Tools &amp; Calculators</title><script src="https://cdn.tailwindcss.com"></script><style>
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .animate-fadeIn {
-    animation: fadeIn 0.4s ease-out forwards;
-  }
-</style><script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            cyan: {
-              50: '#ECFEFF',
-              500: '#0EA5E9',
-              700: '#0369A1'
-            },
-            emerald: '#10B981',
-            graphite: '#1F2937'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script></head><body><header class="fixed top-0 w-full transition duration-300 z-50 bg-white bg-opacity-90 backdrop-blur" id="mainHeader">
-<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-<a class="text-2xl font-extrabold text-cyan-500" href="index.html">Kivo</a>
-<nav class="flex items-center gap-6 md:gap-8 lg:gap-10 text-lg font-medium">
-<div class="relative group">
-<button class="text-graphite hover:text-cyan-500">Company</button>
-<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50 animate-fadeIn">
-<a class="block px-4 py-2 hover:bg-cyan-50" href="about.html">About</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="security.html">Security</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="partners.html">Partners</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="for-advisors.html">Advisors</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="privacy.html">Privacy</a>
-</div>
-</div>
-<div class="relative group">
-<button class="text-graphite hover:text-cyan-500">Resources</button>
-<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50">
-<a class="block px-4 py-2 hover:bg-cyan-50" href="tools.html">Tools</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="learn.html">Learn</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="stories.html">Stories</a>
-</div>
-</div>
-<a class="text-graphite hover:text-cyan-500" href="how-it-works.html">How it Works</a>
-<a class="text-graphite hover:text-cyan-500" href="faq.html">FAQs</a>
-<a class="text-graphite hover:text-cyan-500" href="contact.html">Contact</a>
-<a class="bg-emerald text-white px-5 py-2.5 rounded-full shadow-md hover:shadow-lg hover:bg-cyan-700 transition-all duration-300" href="kivo-check.html">Check Your Score</a>
-</nav>
-</div>
-</header>
-<main class="pt-32 px-6 text-center max-w-3xl mx-auto">
-<h1 class="text-3xl font-bold mb-4">Explore Our Tools 🔧</h1>
-<p class="text-lg text-gray-700">Use our free tools to estimate what you can afford, plan your deposit, and understand monthly costs.</p>
-</main>
-<footer class="bg-white border-t text-center text-sm text-gray-600 py-10">
-<p>© 2025 Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.</p>
-</footer><div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity duration-300 opacity-0 animate-fadeIn" id="cookiePreferencesOverlay">
-<div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
-<h2 class="text-lg font-semibold mb-4">Cookie Preferences</h2>
-<p class="text-sm text-gray-700 mb-4">We use cookies to enhance your experience. You can manage your preferences below. Read our <a class="text-cyan-700 underline hover:text-cyan-900" href="privacy.html">cookie policy</a>.</p>
-<form class="space-y-3">
-<label class="flex items-center gap-2 justify-start">
-<input checked="" class="accent-cyan-500" disabled="" type="checkbox"/>
-<span>Essential cookies (always on)</span>
-</label>
-<label class="flex items-center gap-2 justify-start">
-<input class="accent-cyan-500" id="overlayAnalytics" type="checkbox"/>
-<span>Analytics cookies</span>
-</label>
-<label class="flex items-center gap-2 justify-start">
-<input class="accent-cyan-500" id="overlayMarketing" type="checkbox"/>
-<span>Marketing cookies</span>
-</label>
-<div class="flex justify-center gap-2 pt-4">
-<button class="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="savePreferences()" type="button">Accept choices</button>
-<button class="bg-emerald text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="acceptAllCookies()" type="button">Accept all</button>
-<button class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" onclick="rejectAllCookies()" type="button">Reject all</button>
-</div>
-</form>
-</div>
-</div>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mortgage Tools & Calculators | Kivo</title>
+  <meta name="description" content="Free mortgage calculators for UK home buyers. Work out how much you can borrow, estimate monthly repayments, and calculate your LTV.">
+  <link rel="stylesheet" href="kivo.css">
+  <style>
+    .tools-hero{padding-top:68px;background:linear-gradient(160deg,var(--teal-lt) 0%,#fff 60%)}
+    .tools-hero__inner{padding:72px 0 56px}
+    .tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:48px}
+    .tool-card{background:var(--white);border-radius:var(--r-xl);border:1px solid var(--border);box-shadow:var(--shadow-sm);overflow:hidden;transition:transform var(--ease),box-shadow var(--ease)}
+    .tool-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+    .tool-card__header{padding:28px;display:flex;align-items:flex-start;gap:14px}
+    .tool-card__icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.375rem;flex-shrink:0}
+    .tool-card__title{font-family:var(--font-display);font-weight:700;font-size:1.0625rem;color:var(--navy);margin-bottom:4px}
+    .tool-card__desc{font-size:.875rem;color:var(--slate);line-height:1.55}
+    .tool-card__body{padding:0 28px 28px;border-top:1px solid var(--border);padding-top:24px}
+    /* Live calculator */
+    .calc-card{background:var(--white);border-radius:var(--r-xl);border:1px solid var(--border);box-shadow:var(--shadow-lg);padding:40px;margin-bottom:32px}
+    .calc-result{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:var(--r-lg);padding:28px;text-align:center;margin-top:24px}
+    .calc-result__label{font-size:.875rem;color:rgba(255,255,255,.6);margin-bottom:8px}
+    .calc-result__value{font-family:var(--font-display);font-weight:800;font-size:2.5rem;color:var(--white);margin-bottom:4px}
+    .calc-result__range{font-size:.875rem;color:rgba(255,255,255,.6)}
+    @media(max-width:1024px){.tools-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:768px){.tools-grid{grid-template-columns:1fr}.calc-card{padding:24px}}
+  </style>
+</head>
+<body>
+<header class="header" id="header"><div class="container"><div class="header__inner">
+  <a href="index.html" class="logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
+  <nav class="nav"><div class="nav__item"><a href="how-it-works.html" class="nav__link">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a><a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a></div></div><div class="nav__item"><a href="learn.html" class="nav__link active">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a><a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a><a href="stories.html"><span class="dd-icon" style="background:#F0FFF4">💬</span>Stories</a><a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a></div></div><a href="for-advisors.html" class="nav__link nav__link--teal">For Advisors</a></nav>
+  <div class="header__actions"><a href="kivo-check.html" class="btn btn--primary btn--sm">Check Your Score</a><button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
+</div></div></header>
+<div class="mobile-menu" id="mobile-menu"><div class="mobile-menu__section"><div class="mobile-menu__label">Features</div><a href="how-it-works.html">🏠 How it Works</a><a href="kivo-score.html">📊 Kivo Score</a><a href="kivo-check.html">✅ Kivo Check</a></div><div class="mobile-menu__section"><div class="mobile-menu__label">Resources</div><a href="learn.html">📖 Learn</a><a href="tools.html">🧮 Tools</a><a href="stories.html">💬 Stories</a><a href="faq.html">❓ FAQs</a></div><div class="mobile-menu__cta"><a href="kivo-check.html" class="btn btn--primary btn--full">Check My Score</a></div></div>
+
+<section class="tools-hero"><div class="container"><div class="tools-hero__inner">
+  <div class="section-label fade-up"><div class="section-label__line"></div><span>Tools</span></div>
+  <h1 class="t-display-xl fade-up fade-up-d1" style="margin-bottom:16px">Free mortgage calculators</h1>
+  <p class="t-body-lg tc-slate fade-up fade-up-d2" style="max-width:520px">Quick tools to help you understand the numbers. All estimates only — for a personalised picture, get your Kivo Score.</p>
+</div></div></section>
+
+<section class="section section--sm" style="background:var(--white)"><div class="container">
+
+  <!-- Main calculator - Borrowing Power -->
+  <h2 class="t-display-md fade-up" style="margin-bottom:8px">🧮 How much could you borrow?</h2>
+  <p class="t-body-sm tc-slate fade-up fade-up-d1" style="margin-bottom:28px">Enter your details to get an indicative borrowing range. This is an estimate based on standard income multiples.</p>
+
+  <div class="calc-card fade-up fade-up-d1" style="max-width:640px">
+    <div class="form-group">
+      <label class="form-label">Your annual income (before tax)</label>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span class="t-body-sm tc-slate">Drag to adjust</span><span class="slider-value-display" id="incDisp">£35,000</span></div>
+      <input class="range-slider" type="range" min="15000" max="200000" step="1000" value="35000" data-display="incDisp" data-prefix="£" id="incSlider">
+    </div>
+    <div class="form-group mt-20" id="partnerRow">
+      <label class="form-label">Partner's annual income <span class="optional">(leave at £0 if buying alone)</span></label>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span class="t-body-sm tc-slate">Drag to adjust</span><span class="slider-value-display" id="partDisp">£0</span></div>
+      <input class="range-slider" type="range" min="0" max="150000" step="1000" value="0" data-display="partDisp" data-prefix="£" id="partSlider">
+    </div>
+    <div class="calc-result" id="calcResult">
+      <div class="calc-result__label">Estimated borrowing range</div>
+      <div class="calc-result__value" id="calcValue">£140,000 – £157,500</div>
+      <div class="calc-result__range" id="calcNote">Based on 4× – 4.5× combined income · This is an estimate only</div>
+    </div>
+    <div class="alert alert--info mt-20"><span>ℹ️</span><span>Actual amounts vary based on your debts, credit history, deposit, and the lender. <a href="kivo-check.html" style="color:var(--coral)">Get your full Kivo Score</a> for a more accurate picture.</span></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 class="t-display-md fade-up" style="margin-bottom:24px">More tools</h2>
+  <div class="tools-grid">
+    <div class="tool-card fade-up">
+      <div class="tool-card__header"><div class="tool-card__icon" style="background:var(--coral-lt)">📐</div><div><div class="tool-card__title">LTV Calculator</div><div class="tool-card__desc">See your loan-to-value ratio and understand how it affects your mortgage rate options.</div></div></div>
+      <div class="tool-card__body">
+        <div class="form-group"><label class="form-label">Property value</label><input class="form-input" type="text" id="propVal" placeholder="£250,000" data-format="currency" value="£250,000"></div>
+        <div class="form-group mt-12"><label class="form-label">Your deposit</label><input class="form-input" type="text" id="depVal" placeholder="£25,000" data-format="currency" value="£25,000"></div>
+        <div style="margin-top:16px;padding:14px;background:var(--mist);border-radius:var(--r-md);text-align:center">
+          <div style="font-size:.8125rem;color:var(--slate);margin-bottom:4px">Your LTV</div>
+          <div style="font-family:var(--font-display);font-weight:800;font-size:1.75rem;color:var(--navy)" id="ltvResult">90%</div>
+          <div style="font-size:.8125rem;color:var(--coral);margin-top:4px" id="ltvNote">Getting to 85% LTV opens up better rates</div>
+        </div>
+      </div>
+    </div>
+    <div class="tool-card fade-up fade-up-d1">
+      <div class="tool-card__header"><div class="tool-card__icon" style="background:var(--teal-lt)">💷</div><div><div class="tool-card__title">Monthly Repayment Estimator</div><div class="tool-card__desc">Get a rough idea of your monthly repayments based on loan size and interest rate.</div></div></div>
+      <div class="tool-card__body">
+        <div class="form-group"><label class="form-label">Loan amount</label><input class="form-input" type="text" id="loanAmt" placeholder="£200,000" data-format="currency" value="£200,000"></div>
+        <div class="form-group mt-12"><label class="form-label">Interest rate (%)</label><input class="form-input" type="number" id="intRate" placeholder="4.5" value="4.5" step="0.1" min="0.5" max="10"></div>
+        <div style="margin-top:16px;padding:14px;background:var(--mist);border-radius:var(--r-md);text-align:center">
+          <div style="font-size:.8125rem;color:var(--slate);margin-bottom:4px">Estimated monthly repayment</div>
+          <div style="font-family:var(--font-display);font-weight:800;font-size:1.75rem;color:var(--navy)" id="repayResult">~£1,013</div>
+          <div style="font-size:.8125rem;color:var(--slate-lt);margin-top:4px">25-year repayment mortgage</div>
+        </div>
+      </div>
+    </div>
+    <div class="tool-card fade-up fade-up-d2">
+      <div class="tool-card__header"><div class="tool-card__icon" style="background:#FFF9E6">💰</div><div><div class="tool-card__title">Stamp Duty Calculator</div><div class="tool-card__desc">Work out how much stamp duty (SDLT) you'll pay as a first-time buyer or home mover.</div></div></div>
+      <div class="tool-card__body">
+        <div class="form-group"><label class="form-label">Property purchase price</label><input class="form-input" type="text" id="sdltPrice" placeholder="£300,000" data-format="currency" value="£300,000"></div>
+        <div class="form-group mt-12"><label class="form-label">Buyer type</label><select class="form-select" id="sdltType"><option value="ftb">First-time buyer</option><option value="mover">Home mover</option><option value="additional">Additional property</option></select></div>
+        <div style="margin-top:16px;padding:14px;background:var(--mist);border-radius:var(--r-md);text-align:center">
+          <div style="font-size:.8125rem;color:var(--slate);margin-bottom:4px">Stamp duty owed</div>
+          <div style="font-family:var(--font-display);font-weight:800;font-size:1.75rem;color:var(--navy)" id="sdltResult">£5,000</div>
+          <div style="font-size:.8125rem;color:var(--teal-dk);margin-top:4px" id="sdltNote">First-time buyer relief applied</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert--warning fade-up"><span>⚠️</span><span><strong>Remember:</strong> These calculators provide rough estimates only. Your actual mortgage offer will depend on a full lender assessment. Always consult a qualified, FCA-regulated mortgage adviser before making financial decisions.</span></div>
+</div></section>
+
+<section class="cta-band section--sm"><div class="container cta-band__inner">
+  <h2 class="cta-band__title fade-up">Tools are useful. Your actual score is better.</h2>
+  <p class="cta-band__sub fade-up fade-up-d1">Get a personalised assessment that goes way beyond these calculators.</p>
+  <div class="cta-band__actions fade-up fade-up-d2"><a href="kivo-check.html" class="btn btn--white btn--lg">Check My Kivo Score — Free <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+</div></section>
+
+<footer class="footer"><div class="container"><div class="footer__grid"><div><a href="index.html" class="logo footer__logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a><p class="footer__tagline">Your friendly AI-powered guide to getting mortgage-ready.</p></div><div><div class="footer__col-title">Product</div><div class="footer__links"><a href="how-it-works.html">How it Works</a><a href="kivo-score.html">Kivo Score</a><a href="kivo-check.html">Kivo Check</a><a href="for-advisors.html">For Advisors</a></div></div><div><div class="footer__col-title">Resources</div><div class="footer__links"><a href="learn.html">Learn</a><a href="tools.html">Tools</a><a href="stories.html">Stories</a><a href="faq.html">FAQs</a></div></div><div><div class="footer__col-title">Company</div><div class="footer__links"><a href="about.html">About</a><a href="security.html">Security</a><a href="contact.html">Contact</a></div></div></div><div class="footer__reg"><strong>Important:</strong> All calculators are estimates only and do not constitute financial advice. Kivo Technologies Ltd is registered in England &amp; Wales.</div><div class="footer__bottom"><div class="footer__copy">© 2025 Kivo Technologies Ltd.</div><div class="footer__legal"><a href="privacy.html">Privacy Policy</a><a href="security.html">Security</a></div></div></div></footer>
+<div class="cookie-banner hidden" id="cookieBanner"><div class="cookie-banner__text">🍪 We use cookies. <a href="privacy.html">Learn more</a>.</div><div class="cookie-banner__actions"><button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button><button class="btn btn--primary btn--sm" id="cookieAccept">Accept</button></div></div>
+<script src="kivo.js"></script>
 <script>
-  function enableAnalytics() {
-    console.log("✅ Analytics cookies enabled");
+  // Borrowing power calculator
+  function updateCalc() {
+    const inc  = parseInt(document.getElementById('incSlider').value) || 0;
+    const part = parseInt(document.getElementById('partSlider').value) || 0;
+    const total = inc + part;
+    const lo = Math.round(total * 4 / 1000) * 1000;
+    const hi = Math.round(total * 4.5 / 1000) * 1000;
+    document.getElementById('calcValue').textContent = '£' + lo.toLocaleString('en-GB') + ' – £' + hi.toLocaleString('en-GB');
   }
-  function enableMarketing() {
-    console.log("✅ Marketing cookies enabled");
+  document.getElementById('incSlider').addEventListener('input', updateCalc);
+  document.getElementById('partSlider').addEventListener('input', updateCalc);
+
+  // LTV calculator
+  function updateLTV() {
+    const propStr = (document.getElementById('propVal').value || '').replace(/[^0-9]/g,'');
+    const depStr  = (document.getElementById('depVal').value || '').replace(/[^0-9]/g,'');
+    const prop = parseFloat(propStr) || 250000;
+    const dep  = parseFloat(depStr)  || 25000;
+    if (prop <= 0) return;
+    const ltv = Math.round(((prop - dep) / prop) * 100);
+    document.getElementById('ltvResult').textContent = ltv + '%';
+    const noteEl = document.getElementById('ltvNote');
+    if (ltv <= 75)      { noteEl.textContent = 'Excellent — best rates available to you'; noteEl.style.color = 'var(--teal-dk)'; }
+    else if (ltv <= 85) { noteEl.textContent = 'Good — solid range of products available'; noteEl.style.color = 'var(--teal-dk)'; }
+    else if (ltv <= 90) { noteEl.textContent = 'Getting to 85% LTV opens up better rates'; noteEl.style.color = 'var(--coral)'; }
+    else                { noteEl.textContent = 'A larger deposit will improve your options'; noteEl.style.color = 'var(--coral)'; }
   }
-  function savePreferences() {
-    const analytics = document.getElementById('overlayAnalytics').checked;
-    const marketing = document.getElementById('overlayMarketing').checked;
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics, marketing }));
-    if (analytics) enableAnalytics();
-    if (marketing) enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
+  ['propVal','depVal'].forEach(id => document.getElementById(id).addEventListener('input', updateLTV));
+
+  // Monthly repayment
+  function updateRepay() {
+    const loanStr = (document.getElementById('loanAmt').value || '').replace(/[^0-9]/g,'');
+    const loan = parseFloat(loanStr) || 200000;
+    const rate = parseFloat(document.getElementById('intRate').value) || 4.5;
+    const r = (rate / 100) / 12;
+    const n = 25 * 12;
+    const monthly = loan * (r * Math.pow(1+r,n)) / (Math.pow(1+r,n) - 1);
+    document.getElementById('repayResult').textContent = '~£' + Math.round(monthly).toLocaleString('en-GB');
   }
-  function acceptAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: true, marketing: true }));
-    enableAnalytics();
-    enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  function rejectAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: false, marketing: false }));
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  window.onload = function () {
-  const consent = localStorage.getItem('cookieConsent');
-  if (consent) {
-    const parsed = JSON.parse(consent);
-    if (parsed.analytics) enableAnalytics();
-    if (parsed.marketing) enableMarketing();
-  } else {
-    document.getElementById('cookiePreferencesOverlay').classList.remove('hidden');
-  }
-};
-</script>
-<script>
-  window.addEventListener('scroll', () => {
-    const header = document.getElementById('mainHeader');
-    if (window.scrollY > 10) {
-      header.classList.add('bg-white', 'shadow');
+  ['loanAmt','intRate'].forEach(id => document.getElementById(id).addEventListener('input', updateRepay));
+
+  // Stamp duty
+  function updateSDLT() {
+    const priceStr = (document.getElementById('sdltPrice').value || '').replace(/[^0-9]/g,'');
+    const price = parseFloat(priceStr) || 300000;
+    const type = document.getElementById('sdltType').value;
+    let duty = 0;
+    const noteEl = document.getElementById('sdltNote');
+    if (type === 'ftb') {
+      if (price <= 425000) { duty = 0; noteEl.textContent = 'First-time buyer relief: no stamp duty up to £425,000'; }
+      else { duty = (price - 425000) * 0.05; noteEl.textContent = 'First-time buyer relief applied up to £425,000'; }
+    } else if (type === 'mover') {
+      if (price <= 250000) duty = 0;
+      else if (price <= 925000) duty = (price - 250000) * 0.05;
+      else duty = 337500 + (price - 925000) * 0.1;
+      noteEl.textContent = 'Standard rates apply';
     } else {
-      header.classList.remove('bg-white', 'shadow');
+      duty = price * 0.03 + Math.max(0, (price - 250000) * 0.02);
+      noteEl.textContent = '3% additional property surcharge applies';
     }
-  });
-</script></body></html>
+    document.getElementById('sdltResult').textContent = duty === 0 ? '£0' : '£' + Math.round(duty).toLocaleString('en-GB');
+  }
+  ['sdltPrice','sdltType'].forEach(id => document.getElementById(id).addEventListener('input', updateSDLT));
+</script>
+</body>
+</html>

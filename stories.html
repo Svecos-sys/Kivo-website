@@ -1,134 +1,58 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Real Buyer Stories</title><script src="https://cdn.tailwindcss.com"></script><style>
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .animate-fadeIn {
-    animation: fadeIn 0.4s ease-out forwards;
-  }
-</style><script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            cyan: {
-              50: '#ECFEFF',
-              500: '#0EA5E9',
-              700: '#0369A1'
-            },
-            emerald: '#10B981',
-            graphite: '#1F2937'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script></head><body><header class="fixed top-0 w-full transition duration-300 z-50 bg-white bg-opacity-90 backdrop-blur" id="mainHeader">
-<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-<a class="text-2xl font-extrabold text-cyan-500" href="index.html">Kivo</a>
-<nav class="flex items-center gap-6 md:gap-8 lg:gap-10 text-lg font-medium">
-<div class="relative group">
-<button class="text-graphite hover:text-cyan-500">Company</button>
-<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50 animate-fadeIn">
-<a class="block px-4 py-2 hover:bg-cyan-50" href="about.html">About</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="security.html">Security</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="partners.html">Partners</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="for-advisors.html">Advisors</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="privacy.html">Privacy</a>
-</div>
-</div>
-<div class="relative group">
-<button class="text-graphite hover:text-cyan-500">Resources</button>
-<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50">
-<a class="block px-4 py-2 hover:bg-cyan-50" href="tools.html">Tools</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="learn.html">Learn</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="stories.html">Stories</a>
-</div>
-</div>
-<a class="text-graphite hover:text-cyan-500" href="how-it-works.html">How it Works</a>
-<a class="text-graphite hover:text-cyan-500" href="faq.html">FAQs</a>
-<a class="text-graphite hover:text-cyan-500" href="contact.html">Contact</a>
-<a class="bg-emerald text-white px-5 py-2.5 rounded-full shadow-md hover:shadow-lg hover:bg-cyan-700 transition-all duration-300" href="kivo-check.html">Check Your Score</a>
-</nav>
-</div>
-</header>
-<main class="pt-32 px-6 text-center max-w-3xl mx-auto">
-<h1 class="text-3xl font-bold mb-4">Success Stories 💬</h1>
-<p class="text-lg text-gray-700">See how Kivo has helped first-time buyers feel confident, ready, and informed.</p>
-</main>
-<footer class="bg-white border-t text-center text-sm text-gray-600 py-10">
-<p>© 2025 Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.</p>
-</footer><div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity duration-300 opacity-0 animate-fadeIn" id="cookiePreferencesOverlay">
-<div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
-<h2 class="text-lg font-semibold mb-4">Cookie Preferences</h2>
-<p class="text-sm text-gray-700 mb-4">We use cookies to enhance your experience. You can manage your preferences below. Read our <a class="text-cyan-700 underline hover:text-cyan-900" href="privacy.html">cookie policy</a>.</p>
-<form class="space-y-3">
-<label class="flex items-center gap-2 justify-start">
-<input checked="" class="accent-cyan-500" disabled="" type="checkbox"/>
-<span>Essential cookies (always on)</span>
-</label>
-<label class="flex items-center gap-2 justify-start">
-<input class="accent-cyan-500" id="overlayAnalytics" type="checkbox"/>
-<span>Analytics cookies</span>
-</label>
-<label class="flex items-center gap-2 justify-start">
-<input class="accent-cyan-500" id="overlayMarketing" type="checkbox"/>
-<span>Marketing cookies</span>
-</label>
-<div class="flex justify-center gap-2 pt-4">
-<button class="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="savePreferences()" type="button">Accept choices</button>
-<button class="bg-emerald text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="acceptAllCookies()" type="button">Accept all</button>
-<button class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" onclick="rejectAllCookies()" type="button">Reject all</button>
-</div>
-</form>
-</div>
-</div>
-<script>
-  function enableAnalytics() {
-    console.log("✅ Analytics cookies enabled");
-  }
-  function enableMarketing() {
-    console.log("✅ Marketing cookies enabled");
-  }
-  function savePreferences() {
-    const analytics = document.getElementById('overlayAnalytics').checked;
-    const marketing = document.getElementById('overlayMarketing').checked;
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics, marketing }));
-    if (analytics) enableAnalytics();
-    if (marketing) enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  function acceptAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: true, marketing: true }));
-    enableAnalytics();
-    enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  function rejectAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: false, marketing: false }));
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  window.onload = function () {
-  const consent = localStorage.getItem('cookieConsent');
-  if (consent) {
-    const parsed = JSON.parse(consent);
-    if (parsed.analytics) enableAnalytics();
-    if (parsed.marketing) enableMarketing();
-  } else {
-    document.getElementById('cookiePreferencesOverlay').classList.remove('hidden');
-  }
-};
-</script>
-<script>
-  window.addEventListener('scroll', () => {
-    const header = document.getElementById('mainHeader');
-    if (window.scrollY > 10) {
-      header.classList.add('bg-white', 'shadow');
-    } else {
-      header.classList.remove('bg-white', 'shadow');
-    }
-  });
-</script></body></html>
+<html lang="en"><head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Stories – How Kivo Helped Real Buyers | Kivo</title>
+  <link rel="stylesheet" href="kivo.css">
+  <style>
+    .stories-hero{padding-top:68px;background:linear-gradient(160deg,#F0FFF4 0%,#fff 60%)}
+    .stories-hero__inner{padding:72px 0 56px}
+    .stories-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+    .story-card{background:var(--white);border-radius:var(--r-xl);border:1px solid var(--border);box-shadow:var(--shadow-sm);overflow:hidden;transition:transform var(--ease),box-shadow var(--ease)}
+    .story-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+    .story-card__banner{height:120px;display:flex;align-items:center;justify-content:flex-start;gap:20px;padding:0 32px;position:relative;overflow:hidden}
+    .story-card__score{font-family:var(--font-display);font-weight:800;font-size:3rem;color:var(--white);line-height:1}
+    .story-card__score-label{color:rgba(255,255,255,.8);font-size:.9rem;font-weight:600}
+    .story-card__arrow{font-size:1.5rem;color:rgba(255,255,255,.5)}
+    .story-card__score-after{font-family:var(--font-display);font-weight:800;font-size:3rem;color:var(--white);line-height:1}
+    .story-card__body{padding:28px}
+    .story-card__name{font-family:var(--font-display);font-weight:700;font-size:1.0625rem;color:var(--navy);margin-bottom:2px}
+    .story-card__detail{font-size:.8125rem;color:var(--slate);margin-bottom:16px}
+    .story-card__quote{font-size:.9375rem;color:var(--slate);line-height:1.7;font-style:italic;margin-bottom:20px;padding-left:14px;border-left:3px solid var(--coral)}
+    .story-card__outcome{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--mist);border-radius:var(--r-md);font-size:.875rem;color:var(--navy)}
+    @media(max-width:768px){.stories-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header class="header" id="header"><div class="container"><div class="header__inner">
+  <a href="index.html" class="logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
+  <nav class="nav"><div class="nav__item"><a href="how-it-works.html" class="nav__link">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a><a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a></div></div><div class="nav__item"><a href="learn.html" class="nav__link active">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a><a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a><a href="stories.html"><span class="dd-icon" style="background:#F0FFF4">💬</span>Stories</a><a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a></div></div><a href="for-advisors.html" class="nav__link nav__link--teal">For Advisors</a></nav>
+  <div class="header__actions"><a href="kivo-check.html" class="btn btn--primary btn--sm">Check Your Score</a><button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
+</div></div></header>
+<div class="mobile-menu" id="mobile-menu"><div class="mobile-menu__section"><div class="mobile-menu__label">Resources</div><a href="learn.html">📖 Learn</a><a href="tools.html">🧮 Tools</a><a href="stories.html">💬 Stories</a><a href="faq.html">❓ FAQs</a></div><div class="mobile-menu__cta"><a href="kivo-check.html" class="btn btn--primary btn--full">Check My Score</a></div></div>
+
+<section class="stories-hero"><div class="container"><div class="stories-hero__inner">
+  <div class="section-label fade-up"><div class="section-label__line"></div><span>Stories</span></div>
+  <h1 class="t-display-xl fade-up fade-up-d1" style="margin-bottom:16px">Real people. Real homes.</h1>
+  <p class="t-body-lg tc-slate fade-up fade-up-d2" style="max-width:520px">These are placeholder stories — replace them with real testimonials from your users. Each one shows a journey, a challenge, and a result.</p>
+</div></div></section>
+
+<section class="section section--sm" style="background:var(--white)"><div class="container">
+  <div class="stories-grid">
+    <div class="story-card fade-up"><div class="story-card__banner" style="background:linear-gradient(135deg,var(--navy),#1a3a5c)"><div class="story-card__score">51</div><div class="story-card__arrow">→</div><div class="story-card__score-after">74</div><div style="margin-left:8px"><div class="story-card__score-label">Score journey</div><div style="font-size:.75rem;color:rgba(255,255,255,.5)">Over 4 months</div></div></div><div class="story-card__body"><div class="story-card__name">Marcus &amp; Kim Park</div><div class="story-card__detail">First-time buyers · Birmingham · Bought a 3-bed semi</div><div class="story-card__quote">"Kivo told us we had £8,200 too much on a credit card that was killing our affordability. We paid it down, waited 90 days, and our score jumped 23 points. We got the mortgage we wanted."</div><div class="story-card__outcome">🏠 <strong>Outcome:</strong> Secured a 5-year fixed at 4.2% on a £220,000 property. First-time buyer relief saved £2,500 in stamp duty.</div></div></div>
+    <div class="story-card fade-up fade-up-d1"><div class="story-card__banner" style="background:linear-gradient(135deg,var(--teal-dk),#007A66)"><div class="story-card__score">62</div><div class="story-card__arrow">→</div><div class="story-card__score-after">84</div><div style="margin-left:8px"><div class="story-card__score-label">Score journey</div><div style="font-size:.75rem;color:rgba(255,255,255,.5)">Over 6 months</div></div></div><div class="story-card__body"><div class="story-card__name">Sophie Lewis</div><div class="story-card__detail">First-time buyer · Manchester · Used LISA scheme</div><div class="story-card__quote">"I didn't know about the LISA bonus — Kivo flagged it and I used the government's 25% top-up to push my deposit over 10%. That one tip saved me thousands in mortgage interest."</div><div class="story-card__outcome">💰 <strong>Outcome:</strong> Used a £4,000 LISA bonus to hit 10% LTV. Secured a 2-year fix at 3.9%. Total saving vs 5% deposit: ~£180/month.</div></div></div>
+    <div class="story-card fade-up"><div class="story-card__banner" style="background:linear-gradient(135deg,#8B5CF6,#7C3AED)"><div class="story-card__score">38</div><div class="story-card__arrow">→</div><div class="story-card__score-after">71</div><div style="margin-left:8px"><div class="story-card__score-label">Score journey</div><div style="font-size:.75rem;color:rgba(255,255,255,.5)">Over 12 months</div></div></div><div class="story-card__body"><div class="story-card__name">Priya Nair</div><div class="story-card__detail">Self-employed · London · Sole trader for 3 years</div><div class="story-card__quote">"As a freelancer I assumed I couldn't get a mortgage. Kivo explained exactly what lenders need — 2 years of SA302 forms, a strong last year — and I prepared everything in advance. My broker was amazed."</div><div class="story-card__outcome">🎯 <strong>Outcome:</strong> First application accepted. Secured a 5-year fix on a £385,000 flat with a 15% deposit after targeted preparation.</div></div></div>
+    <div class="story-card fade-up fade-up-d1"><div class="story-card__banner" style="background:linear-gradient(135deg,var(--coral),var(--coral-dk))"><div class="story-card__score">77</div><div class="story-card__arrow">→</div><div class="story-card__score-after">77</div><div style="margin-left:8px"><div class="story-card__score-label">Confirmed ready</div><div style="font-size:.75rem;color:rgba(255,255,255,.5)">Applied within 2 weeks</div></div></div><div class="story-card__body"><div class="story-card__name">Tom &amp; Rachel Hughes</div><div class="story-card__detail">Home movers · Bristol · Upsizing family home</div><div class="story-card__quote">"We just needed the confidence to go ahead. Kivo confirmed what we suspected — we were in a strong position. Having the data to show our broker meant the fact-find was 20 minutes, not two hours."</div><div class="story-card__outcome">✅ <strong>Outcome:</strong> Mortgage offer in hand within 6 weeks. Moving into a 4-bed detached in time for the new school year.</div></div></div>
+  </div>
+  <div class="text-center mt-48 fade-up"><p class="t-body-md tc-slate mb-24">Got a Kivo success story? We'd love to share it.</p><a href="contact.html" class="btn btn--secondary">Share your story</a></div>
+</div></section>
+
+<section class="cta-band section--sm"><div class="container cta-band__inner">
+  <h2 class="cta-band__title fade-up">Your story starts with your score</h2>
+  <p class="cta-band__sub fade-up fade-up-d1">Takes 2 minutes. Free forever. No credit check.</p>
+  <div class="cta-band__actions fade-up fade-up-d2"><a href="kivo-check.html" class="btn btn--white btn--lg">Check My Kivo Score — Free <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+</div></section>
+
+<footer class="footer"><div class="container"><div class="footer__grid"><div><a href="index.html" class="logo footer__logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a><p class="footer__tagline">Your friendly AI-powered guide to getting mortgage-ready.</p></div><div><div class="footer__col-title">Product</div><div class="footer__links"><a href="how-it-works.html">How it Works</a><a href="kivo-score.html">Kivo Score</a><a href="kivo-check.html">Kivo Check</a><a href="for-advisors.html">For Advisors</a></div></div><div><div class="footer__col-title">Resources</div><div class="footer__links"><a href="learn.html">Learn</a><a href="tools.html">Tools</a><a href="stories.html">Stories</a><a href="faq.html">FAQs</a></div></div><div><div class="footer__col-title">Company</div><div class="footer__links"><a href="about.html">About</a><a href="security.html">Security</a><a href="contact.html">Contact</a></div></div></div><div class="footer__reg"><strong>Important:</strong> Stories are real user experiences. Individual results vary. Kivo is not a mortgage broker. Kivo Technologies Ltd is registered in England &amp; Wales.</div><div class="footer__bottom"><div class="footer__copy">© 2025 Kivo Technologies Ltd.</div><div class="footer__legal"><a href="privacy.html">Privacy Policy</a><a href="security.html">Security</a></div></div></div></footer>
+<div class="cookie-banner hidden" id="cookieBanner"><div class="cookie-banner__text">🍪 We use cookies. <a href="privacy.html">Learn more</a>.</div><div class="cookie-banner__actions"><button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button><button class="btn btn--primary btn--sm" id="cookieAccept">Accept</button></div></div>
+<script src="kivo.js"></script>
+</body></html>

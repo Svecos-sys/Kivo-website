@@ -1,283 +1,732 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Kivo Check – Step-by-Step</title><script src="https://cdn.tailwindcss.com"></script><style>
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .animate-fadeIn {
-    animation: fadeIn 0.4s ease-out forwards;
-  }
-</style><script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            cyan: {
-              50: '#ECFEFF',
-              500: '#0EA5E9',
-              700: '#0369A1'
-            },
-            emerald: '#10B981',
-            graphite: '#1F2937'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script></head><body><header class="fixed top-0 w-full transition duration-300 z-50 bg-white bg-opacity-90 backdrop-blur" id="mainHeader">
-<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-<a class="text-2xl font-extrabold text-cyan-500" href="index.html">Kivo</a>
-<nav class="flex items-center gap-6 md:gap-8 lg:gap-10 text-lg font-medium">
-<div class="relative group">
-<button class="text-graphite hover:text-cyan-500">Company</button>
-<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50 animate-fadeIn">
-<a class="block px-4 py-2 hover:bg-cyan-50" href="about.html">About</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="security.html">Security</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="partners.html">Partners</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="for-advisors.html">Advisors</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="privacy.html">Privacy</a>
-</div>
-</div>
-<div class="relative group">
-<button class="text-graphite hover:text-cyan-500">Resources</button>
-<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50">
-<a class="block px-4 py-2 hover:bg-cyan-50" href="tools.html">Tools</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="learn.html">Learn</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="stories.html">Stories</a>
-</div>
-</div>
-<a class="text-graphite hover:text-cyan-500" href="how-it-works.html">How it Works</a>
-<a class="text-graphite hover:text-cyan-500" href="faq.html">FAQs</a>
-<a class="text-graphite hover:text-cyan-500" href="contact.html">Contact</a>
-<a class="bg-emerald text-white px-5 py-2.5 rounded-full shadow-md hover:shadow-lg hover:bg-cyan-700 transition-all duration-300" href="kivo-check.html">Check Your Score</a>
-</nav>
-</div>
-</header>
-<section>
-<div class="bg-cyan-50 border border-cyan-100 rounded-md p-4 text-sm text-gray-800 mb-6 flex items-start space-x-3 kivoIntroBox">
-<img alt="Kivo avatar" class="w-10 h-10 rounded-full shadow-sm" src="https://placehold.co/48x48?text=K"/>
-<div class="kivoIntroBox">
-<p class="font-semibold text-cyan-500 mb-1">Hi, I’m Kivo 👋</p>
-<p>I’ll guide you through everything you need to know. Whether you're checking your affordability or exploring mortgage options — I’ve got your back.</p>
-</div>
-</div>
-<section class="max-w-xl mx-auto py-10 px-6">
-<h1 class="text-3xl font-bold text-center mb-4">Your Kivo Check</h1>
-<p class="text-center text-gray-600 mb-8">We’ll ask you a few short questions to personalise your Kivo Score.</p>
-<div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
-<div class="bg-gradient-to-r from-emerald to-cerulean h-2.5 rounded-full transition-all duration-500 ease-in-out shadow-inner" id="progressBar" style="width: 20%"></div>
-</div>
-<div class="space-y-6" id="steps">
-<div class="step active" data-step="0">
-<label class="block mb-2 font-medium">💼 What’s your annual income?</label>
-<input class="w-full p-3 border rounded" inputmode="numeric" name="income" pattern="[0-9]*" placeholder="e.g. £42,000" type="number"/>
-</div>
-<div class="step" data-step="1">
-<label class="block mb-2 font-medium">🏦 How much have you saved for a deposit?</label>
-<input class="w-full p-3 border rounded" inputmode="numeric" name="deposit" pattern="[0-9]*" placeholder="e.g. £10,000" type="number"/>
-</div>
-<div class="step" data-step="2">
-<label class="block mb-2 font-medium">🏠 What’s your current monthly rent?</label>
-<input class="w-full p-3 border rounded" inputmode="numeric" name="rent" pattern="[0-9]*" placeholder="e.g. £800" type="number"/>
-</div>
-<div class="step" data-step="3">
-<label class="block mb-2 font-medium">📉 Do you have any existing debt?</label>
-<select class="w-full p-3 border rounded" name="debt">
-<option value="">Select one</option>
-<option value="Yes">Yes</option>
-<option value="No">No</option>
-</select>
-</div>
-<div class="step" data-step="4">
-<label class="block mb-2 font-medium">💳 How’s your credit history?</label>
-<select class="w-full p-3 border rounded" name="credit">
-<option value="">Select one</option>
-<option value="Good">Good</option>
-<option value="Fair">Fair</option>
-<option value="Poor">Poor</option>
-</select>
-</div>
-</div>
-<div class="flex justify-between items-center mt-10">
-<button class="text-cyan-500 font-medium hover:underline hidden" id="backBtn">← Back</button>
-<button class="bg-cyan-500 text-white px-6 py-2 rounded hover:bg-cyan-700" id="nextBtn">Next</button>
-</div>
-<div class="text-center text-sm text-gray-500 mt-6" id="stepIndicator">Step 1 of 5</div>
-</section>
-<script>
-  const steps = document.querySelectorAll(".step");
-  const nextBtn = document.getElementById("nextBtn");
-  const backBtn = document.getElementById("backBtn");
-  const stepIndicator = document.getElementById("stepIndicator");
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kivo Check – Find Out How Mortgage-Ready You Are</title>
+  <meta name="description" content="Answer a few questions and get your personalised Kivo Score in 2 minutes. No credit check, no paperwork, no pressure.">
+  <link rel="stylesheet" href="kivo.css">
+  <style>
+    body { background: var(--mist); }
 
+    .check-layout {
+      min-height: 100svh;
+      display: flex; flex-direction: column;
+      padding-top: 68px;
+    }
+    .check-header {
+      background: var(--white); border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+    .check-header__inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .check-header__progress { flex: 1; max-width: 480px; }
+    .check-header__step-label { font-size: .8125rem; color: var(--slate); margin-bottom: 8px; }
+    .progress-bar-track {
+      height: 6px; background: var(--border); border-radius: 99px; overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%; background: linear-gradient(90deg, var(--coral), var(--teal));
+      border-radius: 99px;
+      transition: width .5s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .check-header__exit { font-size: .875rem; color: var(--slate); }
+    .check-header__exit:hover { color: var(--coral); }
+
+    .check-main {
+      flex: 1; display: flex; align-items: flex-start;
+      justify-content: center; padding: 40px 24px 80px;
+    }
+    .check-card {
+      background: var(--white); border-radius: var(--r-xl);
+      box-shadow: var(--shadow-lg); width: 100%; max-width: 600px;
+      overflow: hidden;
+    }
+    .check-card__top {
+      background: linear-gradient(135deg, var(--coral-lt) 0%, var(--teal-lt) 100%);
+      padding: 32px 40px; text-align: center;
+    }
+    .check-card__icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .check-card__title {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 1.375rem; color: var(--navy); margin-bottom: 6px;
+    }
+    .check-card__sub { font-size: .9375rem; color: var(--slate); }
+    .check-card__body { padding: 36px 40px; }
+
+    /* Step panels */
+    .step-panel { display: none; }
+    .step-panel.active { display: block; }
+
+    .step-nav {
+      display: flex; gap: 12px; margin-top: 32px;
+      padding-top: 24px; border-top: 1px solid var(--border);
+    }
+    .step-nav .btn-back {
+      background: none; color: var(--slate); font-size: .9375rem;
+      padding: 14px 20px; border-radius: var(--r-pill);
+      font-weight: 600; transition: color var(--ease), background var(--ease);
+    }
+    .step-nav .btn-back:hover { color: var(--navy); background: var(--mist); }
+
+    /* Value display for sliders */
+    .slider-value-row {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px;
+    }
+    .slider-value-display {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 1.125rem; color: var(--coral);
+    }
+
+    /* Results page */
+    .results-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      padding: 48px 40px; text-align: center; position: relative; overflow: hidden;
+    }
+    .results-score-big {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: 5rem; line-height: 1; color: var(--white); margin-bottom: 4px;
+    }
+    .results-score-label {
+      font-size: 1rem; font-weight: 600; margin-bottom: 24px;
+    }
+    .results-ring { position: relative; width: 160px; height: 160px; margin: 0 auto 16px; }
+    .results-ring svg { transform: rotate(-90deg); }
+    .results-ring__track { fill: none; stroke: rgba(255,255,255,.15); stroke-width: 10; }
+    .results-ring__fill  {
+      fill: none; stroke: var(--teal); stroke-width: 10;
+      stroke-linecap: round; stroke-dasharray: 432;
+      stroke-dashoffset: 432; transition: stroke-dashoffset 1.8s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .results-ring__label {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .results-body { padding: 36px 40px; }
+    .results-pillars { display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px; }
+    .results-pillar { }
+    .results-pillar__row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .results-pillar__name { font-weight: 600; font-size: .9375rem; color: var(--navy); }
+    .results-pillar__score { font-family: var(--font-display); font-weight: 700; font-size: .9375rem; }
+    .results-pillar__bar-track { height: 8px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    .results-pillar__bar-fill  { height: 100%; border-radius: 99px; transform: scaleX(0); transform-origin: left; transition: transform 1.2s cubic-bezier(0.34,1.56,0.64,1); }
+
+    .results-insights { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .results-insight {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px; border-radius: var(--r-md);
+      font-size: .9rem; color: var(--navy); line-height: 1.55;
+    }
+    .results-insight--positive { background: #F0FFF4; border: 1px solid #BBF7D0; }
+    .results-insight--improve  { background: #FFFBEB; border: 1px solid #FDE68A; }
+    .results-insight--tip      { background: var(--teal-lt); border: 1px solid #99E6DC; }
+
+    .results-cta {
+      background: var(--mist); border-radius: var(--r-lg); padding: 28px;
+      text-align: center; margin-top: 8px;
+    }
+    .results-cta__title { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; color: var(--navy); margin-bottom: 8px; }
+    .results-cta__text  { font-size: .9rem; color: var(--slate); margin-bottom: 20px; }
+    .results-cta__actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    @media (max-width: 640px) {
+      .check-card__body  { padding: 24px; }
+      .check-card__top   { padding: 24px; }
+      .results-body      { padding: 24px; }
+      .results-header    { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container">
+    <div class="header__inner">
+      <a href="index.html" class="logo">
+        <div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <span class="logo__wordmark">kiv<span>o</span></span>
+      </a>
+      <div class="check-header__progress" style="max-width:400px;flex:1">
+        <div class="check-header__step-label" id="stepLabel">Step 1 of 5 — About you</div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="progressBar" style="width:20%"></div>
+        </div>
+      </div>
+      <a href="index.html" class="check-header__exit hide-mobile">← Save &amp; exit</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu__section">
+    <a href="index.html">🏠 Back to Home</a>
+    <a href="how-it-works.html">📖 How it Works</a>
+    <a href="faq.html">❓ FAQs</a>
+  </div>
+</div>
+
+<main class="check-main">
+  <div class="check-card">
+
+    <!-- ── STEP 1: About you ───────────────────────────────── -->
+    <div class="step-panel active" id="step1">
+      <div class="check-card__top">
+        <div class="check-card__icon">👋</div>
+        <div class="check-card__title">Let's start with the basics</div>
+        <div class="check-card__sub">Tell us a little about yourself and your home buying situation.</div>
+      </div>
+      <div class="check-card__body">
+
+        <div class="form-group">
+          <label class="form-label">What's your home buying situation?</label>
+          <div class="option-cards">
+            <label class="option-card">
+              <input type="radio" name="situation" value="first-time">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content">
+                <div class="option-card__label">🏠 First-time buyer</div>
+                <div class="option-card__sub">I've never owned a home before</div>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="situation" value="moving">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content">
+                <div class="option-card__label">🔑 Moving home</div>
+                <div class="option-card__sub">I currently own and want to move</div>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="situation" value="remortgage">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content">
+                <div class="option-card__label">🔄 Remortgaging</div>
+                <div class="option-card__sub">I want to switch or renew my mortgage</div>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="situation" value="exploring">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content">
+                <div class="option-card__label">🔍 Just exploring</div>
+                <div class="option-card__sub">Not sure yet — I want to understand my options</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group mt-24">
+          <label class="form-label">Are you buying alone or with someone else?</label>
+          <div class="option-cards option-cards--2col">
+            <label class="option-card">
+              <input type="radio" name="buyers" value="solo">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content">
+                <div class="option-card__label">👤 Just me</div>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="buyers" value="joint">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content">
+                <div class="option-card__label">👥 With someone</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn btn--primary" style="flex:1" onclick="goToStep(2)">
+            Continue
+            <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <p class="t-caption text-center mt-16">No account needed · No credit check</p>
+      </div>
+    </div>
+
+    <!-- ── STEP 2: Income ─────────────────────────────────── -->
+    <div class="step-panel" id="step2">
+      <div class="check-card__top">
+        <div class="check-card__icon">💼</div>
+        <div class="check-card__title">Your income</div>
+        <div class="check-card__sub">This helps us estimate what lenders might offer you.</div>
+      </div>
+      <div class="check-card__body">
+
+        <div class="form-group">
+          <label class="form-label">What's your employment status?</label>
+          <div class="option-cards option-cards--2col">
+            <label class="option-card">
+              <input type="radio" name="employment" value="employed">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">👔 Employed</div><div class="option-card__sub">PAYE, full or part-time</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="employment" value="self-employed">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">🧾 Self-employed</div><div class="option-card__sub">Sole trader or director</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="employment" value="contractor">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">📄 Contractor</div><div class="option-card__sub">Fixed-term or day rate</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="employment" value="other">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">🔖 Other</div><div class="option-card__sub">Retired, benefits, mixed</div></div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group mt-24">
+          <label class="form-label" for="annualIncome">Annual income (before tax)</label>
+          <div class="slider-value-row">
+            <span class="t-body-sm tc-slate">Move the slider</span>
+            <span class="slider-value-display" id="incomeDisplay">£35,000</span>
+          </div>
+          <input class="range-slider" type="range" id="annualIncome" name="annualIncome"
+            min="10000" max="200000" step="1000" value="35000"
+            data-display="incomeDisplay" data-prefix="£">
+          <div style="display:flex;justify-content:space-between;margin-top:6px">
+            <span class="t-caption">£10,000</span>
+            <span class="t-caption">£200,000+</span>
+          </div>
+        </div>
+
+        <div class="form-group mt-24" id="partnerIncomeGroup" style="display:none">
+          <label class="form-label" for="partnerIncome">Partner's annual income (before tax) <span class="optional">(if known)</span></label>
+          <input class="form-input" type="text" id="partnerIncome" name="partnerIncome" placeholder="e.g. £30,000" data-format="currency">
+        </div>
+
+        <div class="alert alert--info mt-16">
+          <span>ℹ️</span>
+          <span>Most lenders will offer 4–4.5× your annual income. We'll factor in debts and spending too for a more accurate picture.</span>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn-back" onclick="goToStep(1)">← Back</button>
+          <button class="btn btn--primary" style="flex:1" onclick="goToStep(3)">
+            Continue <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 3: Deposit & Property ─────────────────────── -->
+    <div class="step-panel" id="step3">
+      <div class="check-card__top">
+        <div class="check-card__icon">🏠</div>
+        <div class="check-card__title">Deposit &amp; property</div>
+        <div class="check-card__sub">Your deposit is one of the most important factors for lenders.</div>
+      </div>
+      <div class="check-card__body">
+
+        <div class="form-group">
+          <label class="form-label">How much deposit do you have saved? (approximately)</label>
+          <div class="slider-value-row">
+            <span class="t-body-sm tc-slate">Move the slider</span>
+            <span class="slider-value-display" id="depositDisplay">£20,000</span>
+          </div>
+          <input class="range-slider" type="range" id="depositAmount" name="depositAmount"
+            min="5000" max="200000" step="1000" value="20000"
+            data-display="depositDisplay" data-prefix="£">
+          <div style="display:flex;justify-content:space-between;margin-top:6px">
+            <span class="t-caption">£5,000</span>
+            <span class="t-caption">£200,000+</span>
+          </div>
+        </div>
+
+        <div class="form-group mt-24">
+          <label class="form-label">What's your target property value? (approximately)</label>
+          <div class="slider-value-row">
+            <span class="t-body-sm tc-slate">Move the slider</span>
+            <span class="slider-value-display" id="propertyDisplay">£250,000</span>
+          </div>
+          <input class="range-slider" type="range" id="propertyValue" name="propertyValue"
+            min="75000" max="1000000" step="5000" value="250000"
+            data-display="propertyDisplay" data-prefix="£">
+          <div style="display:flex;justify-content:space-between;margin-top:6px">
+            <span class="t-caption">£75,000</span>
+            <span class="t-caption">£1,000,000+</span>
+          </div>
+        </div>
+
+        <div class="form-group mt-24" id="ltv-hint" style="padding:14px;background:var(--teal-lt);border-radius:var(--r-md);border:1px solid #99E6DC">
+          <div style="font-size:.875rem;color:var(--teal-dk)">
+            <strong>Your estimated LTV:</strong> <span id="ltvDisplay">92%</span> — 
+            <span id="ltvMessage">A 10% deposit gives access to a wider range of mortgage products.</span>
+          </div>
+        </div>
+
+        <div class="form-group mt-24">
+          <label class="form-label">Are you using any government schemes?</label>
+          <div class="option-cards">
+            <label class="option-card">
+              <input type="radio" name="scheme" value="none">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">None</div><div class="option-card__sub">Standard purchase</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="scheme" value="lisa">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">💰 Lifetime ISA (LISA)</div><div class="option-card__sub">Government adds 25% bonus</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="scheme" value="shared-ownership">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">🤝 Shared Ownership</div><div class="option-card__sub">Buy a share of a property</div></div>
+            </label>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn-back" onclick="goToStep(2)">← Back</button>
+          <button class="btn btn--primary" style="flex:1" onclick="goToStep(4)">
+            Continue <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 4: Credit & Debts ─────────────────────────── -->
+    <div class="step-panel" id="step4">
+      <div class="check-card__top">
+        <div class="check-card__icon">💳</div>
+        <div class="check-card__title">Credit &amp; existing debts</div>
+        <div class="check-card__sub">Be as honest as you can — this helps us give you an accurate score.</div>
+      </div>
+      <div class="check-card__body">
+
+        <div class="form-group">
+          <label class="form-label">How would you describe your credit history?</label>
+          <div class="option-cards">
+            <label class="option-card">
+              <input type="radio" name="credit" value="excellent">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">🟢 Excellent</div><div class="option-card__sub">No missed payments, no defaults</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="credit" value="good">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">🔵 Good</div><div class="option-card__sub">Mostly on time, maybe 1–2 late payments</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="credit" value="fair">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">🟡 Fair</div><div class="option-card__sub">A few missed payments or CCJs</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="credit" value="poor">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">🔴 Poor / I'm not sure</div><div class="option-card__sub">Defaults, IVA, or unsure of history</div></div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group mt-24">
+          <label class="form-label">Do you have any outstanding debts?</label>
+          <div class="form-hint">Include credit cards, car finance, student loans, personal loans</div>
+          <div class="option-cards option-cards--2col mt-8">
+            <label class="option-card">
+              <input type="radio" name="hasDebts" value="no">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">No debts</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="hasDebts" value="yes">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">Yes, I have some</div></div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group mt-24" id="debtAmountGroup" style="display:none">
+          <label class="form-label">Roughly how much do you owe in total?</label>
+          <select class="form-select" name="debtAmount">
+            <option value="">Select a range...</option>
+            <option value="under5k">Under £5,000</option>
+            <option value="5k-15k">£5,000 – £15,000</option>
+            <option value="15k-30k">£15,000 – £30,000</option>
+            <option value="30k-50k">£30,000 – £50,000</option>
+            <option value="over50k">Over £50,000</option>
+          </select>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn-back" onclick="goToStep(3)">← Back</button>
+          <button class="btn btn--primary" style="flex:1" onclick="goToStep(5)">
+            Continue <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 5: Almost done ────────────────────────────── -->
+    <div class="step-panel" id="step5">
+      <div class="check-card__top">
+        <div class="check-card__icon">🎉</div>
+        <div class="check-card__title">Almost there!</div>
+        <div class="check-card__sub">One last step — where should we send your score?</div>
+      </div>
+      <div class="check-card__body">
+        <div class="alert alert--success mb-24">
+          <span>✅</span>
+          <span>You've answered everything we need. Your personalised Kivo Score is ready to calculate.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="userEmail">Your email address</label>
+          <input class="form-input" type="email" id="userEmail" name="userEmail" placeholder="you@example.com" required>
+          <div class="form-hint">We'll send your score here. You can also view it instantly.</div>
+        </div>
+
+        <div class="form-group mt-16">
+          <label class="option-card" style="cursor:pointer">
+            <input type="checkbox" name="openBanking" id="openBankingOpt" style="width:18px;height:18px;flex-shrink:0">
+            <div style="margin-left:4px">
+              <div class="option-card__label" style="font-size:.9375rem">🏦 Connect my bank for a more accurate score <span class="badge badge--teal" style="margin-left:6px;font-size:.75rem">Recommended</span></div>
+              <div class="option-card__sub" style="margin-top:4px">Uses Open Banking — read-only, regulated, and secure. Improves your score accuracy significantly.</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="form-group mt-16" style="display:flex;align-items:flex-start;gap:10px">
+          <input type="checkbox" name="consent" id="consentCheck" style="width:18px;height:18px;flex-shrink:0;margin-top:2px" required>
+          <label for="consentCheck" style="font-size:.875rem;color:var(--slate);line-height:1.55;cursor:pointer">
+            I agree to Kivo's <a href="privacy.html" style="color:var(--coral)">Privacy Policy</a> and understand that my data will be used to generate my Kivo Score. I can delete my data at any time.
+          </label>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn-back" onclick="goToStep(4)">← Back</button>
+          <button class="btn btn--primary" style="flex:1" id="calculateBtn" onclick="showResults()">
+            Calculate My Score 🎯
+          </button>
+        </div>
+        <p class="t-caption text-center mt-16">Your data is encrypted and never sold. <a href="security.html" style="color:var(--coral)">Learn about our security.</a></p>
+      </div>
+    </div>
+
+    <!-- ── RESULTS ─────────────────────────────────────────── -->
+    <div class="step-panel" id="stepResults">
+      <div class="results-header">
+        <div class="blob blob--teal-dk-br" style="opacity:.2"></div>
+        <p style="font-size:.875rem;color:rgba(255,255,255,.6);margin-bottom:16px;font-weight:600;letter-spacing:.04em;text-transform:uppercase">Your Kivo Score</p>
+        <div class="results-ring">
+          <svg width="160" height="160" viewBox="0 0 160 160">
+            <circle class="results-ring__track" cx="80" cy="80" r="69"/>
+            <circle class="results-ring__fill" id="resultsRingFill" cx="80" cy="80" r="69"/>
+          </svg>
+          <div class="results-ring__label">
+            <div class="results-score-big" id="resultsScoreNum">0</div>
+            <div style="font-size:.75rem;color:rgba(255,255,255,.6)">out of 100</div>
+          </div>
+        </div>
+        <div class="results-score-label" id="resultsScoreLabel" style="color:var(--teal)">🟢 Good — Mortgage Ready</div>
+        <div class="trust-row" style="justify-content:center;margin-top:0">
+          <span class="badge badge--navy">Score calculated today</span>
+          <span class="badge badge--navy">Based on your answers</span>
+        </div>
+      </div>
+
+      <div class="results-body">
+        <h3 class="t-display-sm" style="margin-bottom:20px">Your score breakdown</h3>
+        <div class="results-pillars">
+          <div class="results-pillar">
+            <div class="results-pillar__row">
+              <span class="results-pillar__name">💼 Income &amp; Affordability</span>
+              <span class="results-pillar__score" id="pillar1Score" style="color:var(--teal)">85</span>
+            </div>
+            <div class="results-pillar__bar-track">
+              <div class="results-pillar__bar-fill" id="pillar1Bar" style="width:85%;background:var(--teal)"></div>
+            </div>
+          </div>
+          <div class="results-pillar">
+            <div class="results-pillar__row">
+              <span class="results-pillar__name">🏦 Deposit Strength</span>
+              <span class="results-pillar__score" id="pillar2Score" style="color:#F59E0B">62</span>
+            </div>
+            <div class="results-pillar__bar-track">
+              <div class="results-pillar__bar-fill" id="pillar2Bar" style="width:62%;background:#F59E0B"></div>
+            </div>
+          </div>
+          <div class="results-pillar">
+            <div class="results-pillar__row">
+              <span class="results-pillar__name">💳 Credit Profile</span>
+              <span class="results-pillar__score" id="pillar3Score" style="color:var(--teal)">88</span>
+            </div>
+            <div class="results-pillar__bar-track">
+              <div class="results-pillar__bar-fill" id="pillar3Bar" style="width:88%;background:var(--teal)"></div>
+            </div>
+          </div>
+          <div class="results-pillar">
+            <div class="results-pillar__row">
+              <span class="results-pillar__name">💸 Spending Behaviour</span>
+              <span class="results-pillar__score" id="pillar4Score" style="color:#F59E0B">70</span>
+            </div>
+            <div class="results-pillar__bar-track">
+              <div class="results-pillar__bar-fill" id="pillar4Bar" style="width:70%;background:#F59E0B"></div>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="t-display-sm mb-16">Key insights for you</h3>
+        <div class="results-insights">
+          <div class="results-insight results-insight--positive">
+            <span>✅</span> Your income-to-loan ratio looks strong. Based on what you've told us, you may be able to borrow up to <strong>£155,000–£175,000</strong>.
+          </div>
+          <div class="results-insight results-insight--improve">
+            <span>⚠️</span> Your deposit represents approximately <strong>8% of your target property</strong>. Getting to 10% would open up significantly better mortgage rates.
+          </div>
+          <div class="results-insight results-insight--tip">
+            <span>💡</span> <strong>Quick win:</strong> Connect your bank account to get a full spending analysis and potentially improve your score by up to 12 points.
+          </div>
+        </div>
+
+        <div class="results-cta">
+          <div class="results-cta__title">What would you like to do next?</div>
+          <div class="results-cta__text">You can improve your score yourself, speak to an advisor, or save your results and come back later.</div>
+          <div class="results-cta__actions">
+            <a href="kivo-score.html" class="btn btn--primary">
+              See Full Report
+              <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="for-advisors.html" class="btn btn--secondary">Speak to an Advisor</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /check-card -->
+</main>
+
+<div class="cookie-banner hidden" id="cookieBanner">
+  <div class="cookie-banner__text">🍪 We use cookies to improve your experience. <a href="privacy.html">Learn more</a>.</div>
+  <div class="cookie-banner__actions">
+    <button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button>
+    <button class="btn btn--primary btn--sm" id="cookieAccept">Accept</button>
+  </div>
+</div>
+
+<script src="kivo.js"></script>
+<script>
+  const steps = ['step1','step2','step3','step4','step5','stepResults'];
+  const labels = [
+    'Step 1 of 5 — About you',
+    'Step 2 of 5 — Your income',
+    'Step 3 of 5 — Deposit & property',
+    'Step 4 of 5 — Credit & debts',
+    'Step 5 of 5 — Almost done!',
+    'Your Kivo Score'
+  ];
+  const progress = ['20%','40%','60%','80%','95%','100%'];
   let currentStep = 0;
 
-  
-function showStep(index) {
-    const progress = ((index + 1) / steps.length) * 100;
-    document.getElementById("progressBar").style.width = progress + "%";
-
-    steps.forEach((step, i) => {
-      step.classList.toggle("active", i === index);
-    });
-    backBtn.style.display = index > 0 ? "inline-block" : "none";
-    nextBtn.textContent = index === steps.length - 1 ? "See My Score" : "Next";
-    stepIndicator.textContent = `Step ${index + 1} of ${steps.length}`;
+  function goToStep(n) {
+    const idx = n - 1;
+    document.getElementById(steps[currentStep]).classList.remove('active');
+    document.getElementById(steps[idx]).classList.add('active');
+    currentStep = idx;
+    document.getElementById('stepLabel').textContent = labels[idx];
+    document.getElementById('progressBar').style.width = progress[idx];
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  nextBtn.addEventListener("click", () => {
-    const input = steps[currentStep].querySelector("input, select");
-    if (!input.value) {
-      input.classList.add("border-red-500");
-      return;
-    } else {
-      input.classList.remove("border-red-500");
+  function showResults() {
+    const emailInput = document.getElementById('userEmail');
+    const consent    = document.getElementById('consentCheck');
+    if (!emailInput.value || !emailInput.value.includes('@')) {
+      emailInput.focus(); return;
+    }
+    if (!consent.checked) {
+      consent.focus(); return;
     }
 
-    if (currentStep < steps.length - 1) {
-      currentStep++;
-      showStep(currentStep);
-    } else {
-      // Gather data
-      const data = {};
-      document.querySelectorAll("input, select").forEach(input => {
-        data[input.name] = isNaN(input.value) ? input.value : Number(input.value);
+    // Show loading state
+    const btn = document.getElementById('calculateBtn');
+    btn.textContent = 'Calculating your score...';
+    btn.disabled = true;
+
+    setTimeout(() => {
+      goToStep(6);
+      animateResults();
+    }, 1400);
+  }
+
+  function animateResults() {
+    // Animate score number
+    const target = 76;
+    const duration = 1800;
+    const start = performance.now();
+    const numEl = document.getElementById('resultsScoreNum');
+    function tick(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      numEl.textContent = Math.round(eased * target);
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    // Animate ring
+    setTimeout(() => {
+      const fill = document.getElementById('resultsRingFill');
+      const circumference = 432;
+      const offset = circumference - (circumference * target / 100);
+      fill.style.strokeDashoffset = offset;
+    }, 200);
+
+    // Animate pillar bars
+    setTimeout(() => {
+      document.querySelectorAll('.results-pillar__bar-fill').forEach(bar => {
+        bar.style.transform = 'scaleX(1)';
       });
-      localStorage.setItem("kivoFormData", JSON.stringify(data));
-      window.location.href = "kivo-score.html";
-    }
-  });
+    }, 600);
+  }
 
-  backBtn.addEventListener("click", () => {
-    if (currentStep > 0) {
-      currentStep--;
-      showStep(currentStep);
-    }
-  });
+  // LTV calculator
+  const depositSlider  = document.getElementById('depositAmount');
+  const propertySlider = document.getElementById('propertyValue');
 
-  showStep(currentStep);
-
-let touchStartX = null;
-
-document.addEventListener('touchstart', function(e) {
-  touchStartX = e.changedTouches[0].screenX;
-}, false);
-
-document.addEventListener('touchend', function(e) {
-  if (touchStartX === null) return;
-  let touchEndX = e.changedTouches[0].screenX;
-  let diff = touchStartX - touchEndX;
-  if (Math.abs(diff) > 50) {
-    if (diff > 0 && currentStep < steps.length - 1) {
-      nextBtn.click();
-    } else if (diff < 0 && currentStep > 0) {
-      backBtn.click();
+  function updateLTV() {
+    if (!depositSlider || !propertySlider) return;
+    const dep = parseInt(depositSlider.value);
+    const prop = parseInt(propertySlider.value);
+    const ltv = Math.round(((prop - dep) / prop) * 100);
+    const ltvEl = document.getElementById('ltvDisplay');
+    const msgEl = document.getElementById('ltvMessage');
+    if (ltvEl) ltvEl.textContent = ltv + '%';
+    if (msgEl) {
+      if (ltv <= 75)      msgEl.textContent = 'Excellent LTV — you\'ll get access to the very best rates.';
+      else if (ltv <= 85) msgEl.textContent = 'Good LTV — a solid range of products available to you.';
+      else if (ltv <= 90) msgEl.textContent = 'A 10% deposit gives access to a wider range of products.';
+      else                msgEl.textContent = 'A smaller deposit may limit your options — we\'ll help you plan.';
     }
   }
-  touchStartX = null;
-}, false);
+  if (depositSlider)  depositSlider.addEventListener('input', updateLTV);
+  if (propertySlider) propertySlider.addEventListener('input', updateLTV);
+  updateLTV();
 
+  // Show partner income field
+  document.querySelectorAll('[name="buyers"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const g = document.getElementById('partnerIncomeGroup');
+      if (g) g.style.display = r.value === 'joint' ? 'flex' : 'none';
+    });
+  });
 
-// Optional: animate a loader before redirection
-const loading = document.createElement("div");
-loading.className = "fixed inset-0 flex items-center justify-center bg-white bg-opacity-70 text-2xl font-semibold z-50 hidden";
-loading.id = "loadingOverlay";
-loading.innerHTML = "Calculating your Kivo Score...";
-document.body.appendChild(loading);
-
-function showLoader() {
-  document.getElementById("loadingOverlay").classList.remove("hidden");
-}
-
-nextBtn.addEventListener("click", () => {
-  if (currentStep === steps.length - 1) {
-    showLoader();
-  }
-});
-
-</script>
-</section>
- Floating Kivo Chat Bubble 
-<div class="fixed bottom-6 right-6 bg-cyan-500 text-white px-4 py-3 rounded-full shadow-lg cursor-pointer hover:bg-cyan-700 transition text-sm z-50" id="kivoChatBubble">
-  💬 Need help? Kivo’s here.
-</div>
-<script>
-  document.getElementById('kivoChatBubble').addEventListener('click', function () {
-    alert("Hi! I'm Kivo 👋 Ask me anything about mortgages. This is just a placeholder — full chat assistant coming soon.");
+  // Show debt amount
+  document.querySelectorAll('[name="hasDebts"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const g = document.getElementById('debtAmountGroup');
+      if (g) g.style.display = r.value === 'yes' ? 'flex' : 'none';
+    });
   });
 </script>
-<footer class="bg-white border-t text-center text-sm text-gray-600 py-10">
-<p>© 2025 Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.</p>
-</footer><div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity duration-300 opacity-0 animate-fadeIn" id="cookiePreferencesOverlay">
-<div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
-<h2 class="text-lg font-semibold mb-4">Cookie Preferences</h2>
-<p class="text-sm text-gray-700 mb-4">We use cookies to enhance your experience. You can manage your preferences below. Read our <a class="text-cyan-700 underline hover:text-cyan-900" href="privacy.html">cookie policy</a>.</p>
-<form class="space-y-3">
-<label class="flex items-center gap-2 justify-start">
-<input checked="" class="accent-cyan-500" disabled="" type="checkbox"/>
-<span>Essential cookies (always on)</span>
-</label>
-<label class="flex items-center gap-2 justify-start">
-<input class="accent-cyan-500" id="overlayAnalytics" type="checkbox"/>
-<span>Analytics cookies</span>
-</label>
-<label class="flex items-center gap-2 justify-start">
-<input class="accent-cyan-500" id="overlayMarketing" type="checkbox"/>
-<span>Marketing cookies</span>
-</label>
-<div class="flex justify-center gap-2 pt-4">
-<button class="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="savePreferences()" type="button">Accept choices</button>
-<button class="bg-emerald text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="acceptAllCookies()" type="button">Accept all</button>
-<button class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" onclick="rejectAllCookies()" type="button">Reject all</button>
-</div>
-</form>
-</div>
-</div>
-<script>
-  function enableAnalytics() {
-    console.log("✅ Analytics cookies enabled");
-  }
-  function enableMarketing() {
-    console.log("✅ Marketing cookies enabled");
-  }
-  function savePreferences() {
-    const analytics = document.getElementById('overlayAnalytics').checked;
-    const marketing = document.getElementById('overlayMarketing').checked;
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics, marketing }));
-    if (analytics) enableAnalytics();
-    if (marketing) enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  function acceptAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: true, marketing: true }));
-    enableAnalytics();
-    enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  function rejectAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: false, marketing: false }));
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  window.onload = function () {
-  const consent = localStorage.getItem('cookieConsent');
-  if (consent) {
-    const parsed = JSON.parse(consent);
-    if (parsed.analytics) enableAnalytics();
-    if (parsed.marketing) enableMarketing();
-  } else {
-    document.getElementById('cookiePreferencesOverlay').classList.remove('hidden');
-  }
-};
-</script>
-<script>
-  window.addEventListener('scroll', () => {
-    const header = document.getElementById('mainHeader');
-    if (window.scrollY > 10) {
-      header.classList.add('bg-white', 'shadow');
-    } else {
-      header.classList.remove('bg-white', 'shadow');
-    }
-  });
-</script></body></html>
+</body>
+</html>

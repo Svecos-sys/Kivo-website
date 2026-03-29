@@ -1,134 +1,94 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Mortgage Learning Hub</title><script src="https://cdn.tailwindcss.com"></script><style>
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .animate-fadeIn {
-    animation: fadeIn 0.4s ease-out forwards;
-  }
-</style><script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            cyan: {
-              50: '#ECFEFF',
-              500: '#0EA5E9',
-              700: '#0369A1'
-            },
-            emerald: '#10B981',
-            graphite: '#1F2937'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script></head><body><header class="fixed top-0 w-full transition duration-300 z-50 bg-white bg-opacity-90 backdrop-blur" id="mainHeader">
-<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-<a class="text-2xl font-extrabold text-cyan-500" href="index.html">Kivo</a>
-<nav class="flex items-center gap-6 md:gap-8 lg:gap-10 text-lg font-medium">
-<div class="relative group">
-<button class="text-graphite hover:text-cyan-500">Company</button>
-<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50 animate-fadeIn">
-<a class="block px-4 py-2 hover:bg-cyan-50" href="about.html">About</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="security.html">Security</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="partners.html">Partners</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="for-advisors.html">Advisors</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="privacy.html">Privacy</a>
-</div>
-</div>
-<div class="relative group">
-<button class="text-graphite hover:text-cyan-500">Resources</button>
-<div class="absolute top-full left-0 hidden group-hover:block bg-white shadow rounded text-left text-sm min-w-[180px] z-50">
-<a class="block px-4 py-2 hover:bg-cyan-50" href="tools.html">Tools</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="learn.html">Learn</a>
-<a class="block px-4 py-2 hover:bg-cyan-50" href="stories.html">Stories</a>
-</div>
-</div>
-<a class="text-graphite hover:text-cyan-500" href="how-it-works.html">How it Works</a>
-<a class="text-graphite hover:text-cyan-500" href="faq.html">FAQs</a>
-<a class="text-graphite hover:text-cyan-500" href="contact.html">Contact</a>
-<a class="bg-emerald text-white px-5 py-2.5 rounded-full shadow-md hover:shadow-lg hover:bg-cyan-700 transition-all duration-300" href="kivo-check.html">Check Your Score</a>
-</nav>
-</div>
-</header>
-<main class="pt-32 px-6 text-center max-w-3xl mx-auto">
-<h1 class="text-3xl font-bold mb-4">Learn About Mortgages 📘</h1>
-<p class="text-lg text-gray-700">Bite-sized guides on everything from fixed vs. variable rates to help-to-buy schemes.</p>
-</main>
-<footer class="bg-white border-t text-center text-sm text-gray-600 py-10">
-<p>© 2025 Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.</p>
-</footer><div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity duration-300 opacity-0 animate-fadeIn" id="cookiePreferencesOverlay">
-<div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
-<h2 class="text-lg font-semibold mb-4">Cookie Preferences</h2>
-<p class="text-sm text-gray-700 mb-4">We use cookies to enhance your experience. You can manage your preferences below. Read our <a class="text-cyan-700 underline hover:text-cyan-900" href="privacy.html">cookie policy</a>.</p>
-<form class="space-y-3">
-<label class="flex items-center gap-2 justify-start">
-<input checked="" class="accent-cyan-500" disabled="" type="checkbox"/>
-<span>Essential cookies (always on)</span>
-</label>
-<label class="flex items-center gap-2 justify-start">
-<input class="accent-cyan-500" id="overlayAnalytics" type="checkbox"/>
-<span>Analytics cookies</span>
-</label>
-<label class="flex items-center gap-2 justify-start">
-<input class="accent-cyan-500" id="overlayMarketing" type="checkbox"/>
-<span>Marketing cookies</span>
-</label>
-<div class="flex justify-center gap-2 pt-4">
-<button class="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="savePreferences()" type="button">Accept choices</button>
-<button class="bg-emerald text-white px-4 py-2 rounded hover:bg-cyan-700" onclick="acceptAllCookies()" type="button">Accept all</button>
-<button class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" onclick="rejectAllCookies()" type="button">Reject all</button>
-</div>
-</form>
-</div>
-</div>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn – Mortgage Guides for First-Time Buyers | Kivo</title>
+  <meta name="description" content="Plain-English guides to mortgages, deposits, credit scores, and the home buying process in the UK. Written for real people, not financial experts.">
+  <link rel="stylesheet" href="kivo.css">
+  <style>
+    .learn-hero{padding-top:68px;background:linear-gradient(160deg,var(--coral-lt) 0%,#fff 60%)}
+    .learn-hero__inner{padding:72px 0 56px}
+    .filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px}
+    .filter-btn{padding:8px 18px;border-radius:var(--r-pill);font-size:.875rem;font-weight:600;border:1.5px solid var(--border);color:var(--slate);cursor:pointer;transition:all var(--ease);background:var(--white)}
+    .filter-btn:hover,.filter-btn.active{background:var(--coral);border-color:var(--coral);color:var(--white)}
+    .articles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .article-card{background:var(--white);border-radius:var(--r-lg);border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform var(--ease),box-shadow var(--ease)}
+    .article-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+    .article-card__thumb{height:160px;display:flex;align-items:center;justify-content:center;font-size:3rem}
+    .article-card__body{padding:20px}
+    .article-card__tag{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--coral);margin-bottom:8px}
+    .article-card__title{font-family:var(--font-display);font-weight:700;font-size:1rem;color:var(--navy);margin-bottom:8px;line-height:1.3}
+    .article-card__excerpt{font-size:.875rem;color:var(--slate);line-height:1.55;margin-bottom:16px}
+    .article-card__meta{display:flex;align-items:center;gap:8px;font-size:.8125rem;color:var(--slate-lt)}
+    .article-card__avatar{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6875rem;font-weight:700;color:var(--white);flex-shrink:0}
+    .featured-article{background:var(--navy);border-radius:var(--r-xl);padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-bottom:48px;position:relative;overflow:hidden}
+    .featured-article::after{content:'';position:absolute;bottom:-80px;right:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(0,194,168,.15) 0%,transparent 65%);border-radius:50%}
+    @media(max-width:1024px){.articles-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:768px){.articles-grid{grid-template-columns:1fr}.featured-article{grid-template-columns:1fr;gap:24px}}
+  </style>
+</head>
+<body>
+<header class="header" id="header"><div class="container"><div class="header__inner">
+  <a href="index.html" class="logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
+  <nav class="nav"><div class="nav__item"><a href="how-it-works.html" class="nav__link">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a><a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a></div></div><div class="nav__item"><a href="learn.html" class="nav__link active">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a><a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a><a href="stories.html"><span class="dd-icon" style="background:#F0FFF4">💬</span>Stories</a><a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a></div></div><a href="for-advisors.html" class="nav__link nav__link--teal">For Advisors</a></nav>
+  <div class="header__actions"><a href="kivo-check.html" class="btn btn--primary btn--sm">Check Your Score</a><button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
+</div></div></header>
+<div class="mobile-menu" id="mobile-menu"><div class="mobile-menu__section"><div class="mobile-menu__label">Features</div><a href="how-it-works.html">🏠 How it Works</a><a href="kivo-score.html">📊 Kivo Score</a><a href="kivo-check.html">✅ Kivo Check</a></div><div class="mobile-menu__section"><div class="mobile-menu__label">Resources</div><a href="learn.html">📖 Learn</a><a href="tools.html">🧮 Tools</a><a href="stories.html">💬 Stories</a><a href="faq.html">❓ FAQs</a></div><div class="mobile-menu__cta"><a href="kivo-check.html" class="btn btn--primary btn--full">Check My Score</a></div></div>
+
+<section class="learn-hero"><div class="container"><div class="learn-hero__inner">
+  <div class="section-label fade-up"><div class="section-label__line"></div><span>Learn</span></div>
+  <h1 class="t-display-xl fade-up fade-up-d1" style="margin-bottom:16px">Mortgages, explained simply</h1>
+  <p class="t-body-lg tc-slate fade-up fade-up-d2" style="max-width:520px">Plain-English guides written by our mortgage specialists. No jargon, no fluff — just the stuff you actually need to know.</p>
+</div></div></section>
+
+<section class="section section--sm" style="background:var(--white)"><div class="container">
+
+  <!-- Featured -->
+  <div class="featured-article fade-up">
+    <div>
+      <span class="badge badge--teal" style="margin-bottom:16px">Essential read</span>
+      <h2 class="t-display-md tc-white" style="margin-bottom:12px">The Complete First-Time Buyer's Guide to Getting a Mortgage in 2025</h2>
+      <p style="color:rgba(255,255,255,.7);font-size:.9375rem;line-height:1.65;margin-bottom:24px">Everything you need to know — from understanding your credit score to what happens on completion day. This is the guide we wish existed when we started.</p>
+      <div style="display:flex;align-items:center;gap:12px">
+        <a href="#" class="btn btn--teal">Read the guide <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <span style="font-size:.875rem;color:rgba(255,255,255,.5)">12 min read</span>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:6rem;position:relative;z-index:1">🏠</div>
+  </div>
+
+  <div class="filter-row fade-up">
+    <button class="filter-btn active">All guides</button>
+    <button class="filter-btn">Deposits</button>
+    <button class="filter-btn">Credit &amp; Affordability</button>
+    <button class="filter-btn">The Application</button>
+    <button class="filter-btn">Schemes &amp; Help</button>
+    <button class="filter-btn">Self-Employed</button>
+  </div>
+
+  <div class="articles-grid">
+    <div class="article-card fade-up"><div class="article-card__thumb" style="background:var(--coral-lt)">💰</div><div class="article-card__body"><div class="article-card__tag">Deposits</div><div class="article-card__title">How much deposit do you actually need in 2025?</div><div class="article-card__excerpt">The 10% rule explained, how LTV affects your rate, and the smartest ways to save faster — including the LISA.</div><div class="article-card__meta"><div class="article-card__avatar" style="background:var(--coral)">JC</div><span>Jamie Clarke</span><span>·</span><span>5 min read</span></div></div></div>
+    <div class="article-card fade-up fade-up-d1"><div class="article-card__thumb" style="background:var(--teal-lt)">💳</div><div class="article-card__body"><div class="article-card__tag">Credit</div><div class="article-card__title">What your credit score actually means for a mortgage</div><div class="article-card__excerpt">Your Experian score isn't what lenders use. Here's what they actually look for, and how to fix the things that matter.</div><div class="article-card__meta"><div class="article-card__avatar" style="background:var(--teal-dk)">JC</div><span>Jamie Clarke</span><span>·</span><span>7 min read</span></div></div></div>
+    <div class="article-card fade-up fade-up-d2"><div class="article-card__thumb" style="background:#EDE9FE">🧾</div><div class="article-card__body"><div class="article-card__tag">Self-Employed</div><div class="article-card__title">Getting a mortgage when you're self-employed: a complete guide</div><div class="article-card__excerpt">It's not as hard as you think — but there are things you need to prepare. What lenders want to see from sole traders and directors.</div><div class="article-card__meta"><div class="article-card__avatar" style="background:#8B5CF6">SP</div><span>Sam Patel</span><span>·</span><span>8 min read</span></div></div></div>
+    <div class="article-card fade-up"><div class="article-card__thumb" style="background:var(--mist)">🏦</div><div class="article-card__body"><div class="article-card__tag">The Application</div><div class="article-card__title">What happens when you apply for a mortgage?</div><div class="article-card__excerpt">A step-by-step walkthrough of the full mortgage application process — what to expect, what documents you'll need, and common pitfalls.</div><div class="article-card__meta"><div class="article-card__avatar" style="background:var(--navy)">AM</div><span>Alex Morgan</span><span>·</span><span>6 min read</span></div></div></div>
+    <div class="article-card fade-up fade-up-d1"><div class="article-card__thumb" style="background:#FFF9E6">💸</div><div class="article-card__body"><div class="article-card__tag">Affordability</div><div class="article-card__title">How much can you actually borrow? The 4.5× rule and beyond</div><div class="article-card__excerpt">Most lenders use income multiples — but there's more to it. How stress tests, debts, and dependants affect your maximum loan.</div><div class="article-card__meta"><div class="article-card__avatar" style="background:var(--coral)">JC</div><span>Jamie Clarke</span><span>·</span><span>5 min read</span></div></div></div>
+    <div class="article-card fade-up fade-up-d2"><div class="article-card__thumb" style="background:#F0FFF4">🤝</div><div class="article-card__body"><div class="article-card__tag">Schemes &amp; Help</div><div class="article-card__title">Government schemes for first-time buyers in 2025</div><div class="article-card__excerpt">LISA, Shared Ownership, First Homes — what's still available, what's changed, and which scheme might be right for you.</div><div class="article-card__meta"><div class="article-card__avatar" style="background:var(--teal-dk)">AM</div><span>Alex Morgan</span><span>·</span><span>6 min read</span></div></div></div>
+  </div>
+</div></section>
+
+<section class="cta-band section--sm"><div class="container cta-band__inner">
+  <h2 class="cta-band__title fade-up">Reading helps. Your score helps more.</h2>
+  <p class="cta-band__sub fade-up fade-up-d1">Put your knowledge into action — check where you actually stand in 2 minutes.</p>
+  <div class="cta-band__actions fade-up fade-up-d2"><a href="kivo-check.html" class="btn btn--white btn--lg">Check My Score — Free <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+</div></section>
+
+<footer class="footer"><div class="container"><div class="footer__grid"><div><a href="index.html" class="logo footer__logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a><p class="footer__tagline">Your friendly AI-powered guide to getting mortgage-ready.</p></div><div><div class="footer__col-title">Product</div><div class="footer__links"><a href="how-it-works.html">How it Works</a><a href="kivo-score.html">Kivo Score</a><a href="kivo-check.html">Kivo Check</a><a href="for-advisors.html">For Advisors</a></div></div><div><div class="footer__col-title">Resources</div><div class="footer__links"><a href="learn.html">Learn</a><a href="tools.html">Tools</a><a href="stories.html">Stories</a><a href="faq.html">FAQs</a></div></div><div><div class="footer__col-title">Company</div><div class="footer__links"><a href="about.html">About</a><a href="security.html">Security</a><a href="partners.html">Partners</a><a href="contact.html">Contact</a></div></div></div><div class="footer__reg"><strong>Important:</strong> Articles are for informational purposes only and do not constitute financial advice. Always speak to a qualified FCA-regulated adviser. Kivo Technologies Ltd is registered in England &amp; Wales.</div><div class="footer__bottom"><div class="footer__copy">© 2025 Kivo Technologies Ltd.</div><div class="footer__legal"><a href="privacy.html">Privacy Policy</a><a href="security.html">Security</a></div></div></div></footer>
+<div class="cookie-banner hidden" id="cookieBanner"><div class="cookie-banner__text">🍪 We use cookies. <a href="privacy.html">Learn more</a>.</div><div class="cookie-banner__actions"><button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button><button class="btn btn--primary btn--sm" id="cookieAccept">Accept</button></div></div>
+<script src="kivo.js"></script>
 <script>
-  function enableAnalytics() {
-    console.log("✅ Analytics cookies enabled");
-  }
-  function enableMarketing() {
-    console.log("✅ Marketing cookies enabled");
-  }
-  function savePreferences() {
-    const analytics = document.getElementById('overlayAnalytics').checked;
-    const marketing = document.getElementById('overlayMarketing').checked;
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics, marketing }));
-    if (analytics) enableAnalytics();
-    if (marketing) enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  function acceptAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: true, marketing: true }));
-    enableAnalytics();
-    enableMarketing();
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  function rejectAllCookies() {
-    localStorage.setItem('cookieConsent', JSON.stringify({ analytics: false, marketing: false }));
-    document.getElementById('cookiePreferencesOverlay').style.display = 'none';
-  }
-  window.onload = function () {
-  const consent = localStorage.getItem('cookieConsent');
-  if (consent) {
-    const parsed = JSON.parse(consent);
-    if (parsed.analytics) enableAnalytics();
-    if (parsed.marketing) enableMarketing();
-  } else {
-    document.getElementById('cookiePreferencesOverlay').classList.remove('hidden');
-  }
-};
-</script>
-<script>
-  window.addEventListener('scroll', () => {
-    const header = document.getElementById('mainHeader');
-    if (window.scrollY > 10) {
-      header.classList.add('bg-white', 'shadow');
-    } else {
-      header.classList.remove('bg-white', 'shadow');
-    }
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); });
   });
-</script></body></html>
+</script>
+</body>
+</html>
