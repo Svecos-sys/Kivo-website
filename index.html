@@ -53,17 +53,7 @@
     .score-cta-mini { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); font-size: .875rem; color: var(--slate); text-align: center; }
     .score-cta-mini a { color: var(--coral); font-weight: 600; }
 
-    /* Floating badges */
-    .float-badge {
-      position: absolute; background: var(--white); border-radius: var(--r-md);
-      box-shadow: var(--shadow-lg); padding: 10px 14px;
-      display: flex; align-items: center; gap: 8px;
-      font-size: .8125rem; font-weight: 600; color: var(--navy);
-      animation: float 6s ease-in-out infinite;
-    }
-    .float-badge--1 { top: 12%; right: -5%; animation-delay: 0s; }
-    .float-badge--2 { bottom: 18%; left: -8%; animation-delay: 2s; }
-    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    /* Floating badges — removed, replaced with card footer strip */
 
     /* ── Problem section ─────────────────────────────────── */
     .problem-section { background: var(--navy); position: relative; overflow: hidden; }
@@ -102,7 +92,7 @@
     .adv-stat__num { font-family: var(--font-display); font-weight: 800; font-size: 2rem; color: var(--teal); margin-bottom: 4px; }
     .adv-stat__label { font-size: .875rem; color: rgba(255,255,255,.6); }
 
-    @media(max-width:1024px) { .hero__inner { grid-template-columns: 1fr; gap: 40px; } .float-badge { display: none; } .problem-grid { grid-template-columns: 1fr; } .feature-row { grid-template-columns: 1fr; gap: 32px; } .feature-row--reverse .feature-row__visual { order: 0; } .testimonials-grid { grid-template-columns: 1fr 1fr; } .advisors-stats { grid-template-columns: 1fr 1fr; } }
+    @media(max-width:1024px) { .hero__inner { grid-template-columns: 1fr; gap: 40px; } .problem-grid { grid-template-columns: 1fr; } .feature-row { grid-template-columns: 1fr; gap: 32px; } .feature-row--reverse .feature-row__visual { order: 0; } .testimonials-grid { grid-template-columns: 1fr 1fr; } .advisors-stats { grid-template-columns: 1fr 1fr; } }
     @media(max-width:768px) { .testimonials-grid { grid-template-columns: 1fr; } .advisors-stats { grid-template-columns: 1fr; } }
   </style>
   <meta property="og:type" content="website">
@@ -166,11 +156,11 @@
         <div class="hero__chip">🆓 Completely free</div>
       </div>
     </div>
-    <div style="position:relative;" class="fade-up fade-up-d1">
+    <div class="fade-up fade-up-d1">
       <div class="score-card-mockup">
         <div class="score-card-mockup__header">
-          <div class="score-card-mockup__name">Sophie's Kivo Score</div>
-          <span class="badge badge--teal">Updated today</span>
+          <div class="score-card-mockup__name" id="heroCardName">Sophie's Kivo Score</div>
+          <span class="badge badge--teal" id="heroCardBadge">Updated today</span>
         </div>
         <div class="score-ring-wrap">
           <svg width="180" height="180" viewBox="0 0 180 180">
@@ -182,7 +172,7 @@
             <div class="ring-label__sub">out of 100</div>
           </div>
         </div>
-        <div class="score-band">🟢 Good — Mortgage Ready</div>
+        <div class="score-band" id="heroCardBand">🟢 Good — Mortgage Ready</div>
         <div class="pillar-list">
           <div class="pillar-item">
             <div class="pillar-item__label">💼 Income</div>
@@ -205,10 +195,19 @@
             <div class="pillar-item__val" style="color:#F59E0B">70</div>
           </div>
         </div>
-        <div class="score-cta-mini">💡 <a href="kivo-score.html">2 improvements</a> could raise your score by up to 14 points</div>
+        <div class="score-cta-mini" id="heroCardCta">💡 <a href="kivo-score.html">2 improvements</a> could raise your score by up to 14 points</div>
+        <div style="display:flex;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="flex:1;text-align:center;padding:10px;background:var(--mist);border-radius:var(--r-md)">
+            <div style="font-size:.75rem;color:var(--slate-lt);margin-bottom:2px">Borrowing est.</div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:.9375rem;color:var(--navy)" id="heroCardBorrow">~£210,000</div>
+          </div>
+          <div style="flex:1;text-align:center;padding:10px;background:var(--mist);border-radius:var(--r-md)">
+            <div style="font-size:.75rem;color:var(--slate-lt);margin-bottom:2px">No credit check</div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:.9375rem;color:var(--teal-dk)">✓ Safe to try</div>
+          </div>
+        </div>
       </div>
-      <div class="float-badge float-badge--1">✅ No credit check needed</div>
-      <div class="float-badge float-badge--2">🏠 £210k borrowing potential</div>
+
     </div>
   </div></div>
 </section>
@@ -351,10 +350,51 @@
 
 <script src="kivo.js"></script>
 <script>
-  // Hero score animation on load
+  // Hero score animation on load — uses real score from localStorage if available
   window.addEventListener('load', () => {
     setTimeout(() => {
-      const target = 78;
+      // Check for a real saved score
+      let saved;
+      try { saved = JSON.parse(localStorage.getItem('kivoScore')); } catch(e) {}
+      const target = (saved && saved.overallScore) ? saved.overallScore : 78;
+
+      // Personalise the card if a real score exists
+      if (saved && saved.overallScore) {
+        const nameEl  = document.getElementById('heroCardName');
+        const badgeEl = document.getElementById('heroCardBadge');
+        const bandEl  = document.getElementById('heroCardBand');
+        const ctaEl   = document.getElementById('heroCardCta');
+        if (nameEl)  nameEl.textContent  = 'Your Kivo Score';
+        if (badgeEl) { badgeEl.textContent = 'Your latest score'; }
+        if (bandEl)  bandEl.textContent  = (saved.bandEmoji || '') + ' ' + (saved.band || '');
+        // Update borrow estimate
+        const borrowEl = document.getElementById('heroCardBorrow');
+        if (borrowEl && saved.borrowMax) {
+          borrowEl.textContent = '~£' + saved.borrowMax.toLocaleString('en-GB');
+        }
+        if (ctaEl) {
+          const s = saved.overallScore;
+          if (s >= 80) ctaEl.innerHTML = '🎉 Excellent score — <a href="kivo-score.html">view your full report</a>';
+          else if (s >= 61) ctaEl.innerHTML = '💡 <a href="kivo-score.html">See personalised improvements</a> to boost your score';
+          else ctaEl.innerHTML = '📈 <a href="kivo-score.html">View your action plan</a> to improve your score';
+        }
+        // Update pillar bars from real data
+        if (saved.pillars) {
+          const pillarMap = { income: 'p1', deposit: 'p2', credit: 'p3', spending: 'p4' };
+          Object.entries(pillarMap).forEach(([key, id]) => {
+            const el = document.getElementById(id);
+            const score = saved.pillars[key] || 0;
+            const colour = score >= 75 ? 'var(--teal)' : score >= 50 ? '#F59E0B' : '#EF4444';
+            if (el) { el.style.width = score + '%'; el.style.background = colour; }
+            // Update the score value label
+            const parent = el?.closest('.pillar-item');
+            const valEl  = parent?.querySelector('.pillar-item__val');
+            if (valEl) { valEl.textContent = score; valEl.style.color = colour; }
+          });
+        }
+      }
+
+      const target2 = target; // alias for closure below
       const numEl  = document.getElementById('heroScoreNum');
       const fillEl = document.getElementById('heroRingFill');
       const circ   = 503;

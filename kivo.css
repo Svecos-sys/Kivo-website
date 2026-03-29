@@ -394,15 +394,19 @@ input, textarea, select {
 .nav__item { position: relative; }
 .nav__item:hover .nav__caret, .nav__item:focus-within .nav__caret { transform: rotate(180deg); }
 .nav__dropdown {
-  position: absolute; top: calc(100% + 8px); left: 0;
+  position: absolute; top: 100%; left: 0;
   min-width: 210px; background: var(--white);
   border: 1px solid var(--border); border-radius: var(--r-md);
-  box-shadow: var(--shadow-lg); padding: 6px;
-  opacity: 0; visibility: hidden; transform: translateY(-8px);
-  transition: all var(--ease); pointer-events: none;
+  box-shadow: var(--shadow-lg);
+  /* 12px invisible top padding = hover bridge so cursor never falls into the gap */
+  padding: 12px 6px 6px;
+  opacity: 0; visibility: hidden; transform: translateY(-4px);
+  transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+  pointer-events: none;
 }
 .nav__item:hover .nav__dropdown, .nav__item:focus-within .nav__dropdown {
   opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto;
+  transition: opacity .18s ease, transform .18s ease, visibility 0s;
 }
 .nav__dropdown a {
   display: flex; align-items: center; gap: 10px; padding: 10px 12px;
