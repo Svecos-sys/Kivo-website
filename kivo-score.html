@@ -43,6 +43,15 @@
     @media(max-width:1024px){ .score-hero__inner{grid-template-columns:1fr;gap:40px;} .pillar-deep{grid-template-columns:1fr;gap:32px;} .improve-cards{grid-template-columns:1fr 1fr;} }
     @media(max-width:768px){ .improve-cards{grid-template-columns:1fr;} }
   </style>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Kivo Score Explained | Kivo">
+  <meta property="og:description" content="Understand your Kivo Score — what it means, how it's calculated, and exactly what you can do to improve it.">
+  <meta property="og:url" content="https://getkivo.co.uk/kivo-score.html">
+  <meta property="og:image" content="https://getkivo.co.uk/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Kivo Score Explained | Kivo">
+  <meta name="twitter:description" content="Understand your Kivo Score — what it means, how it's calculated, and exactly what you can do to improve it.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23FF6B4A'/><path d='M10 8v16M10 16l8-8M10 16l8 8' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 </head>
 <body>
 <header class="header" id="header"><div class="container"><div class="header__inner">
@@ -61,16 +70,35 @@
   <div class="blob blob--coral-dk-tr"></div>
   <div class="container"><div class="score-hero__inner">
     <div>
-      <div class="section-label section-label--white fade-up"><div class="section-label__line"></div><span>The Kivo Score</span></div>
-      <h1 class="t-display-xl tc-white fade-up fade-up-d1" style="margin-bottom:20px">Your score, explained</h1>
-      <p class="t-body-lg fade-up fade-up-d2" style="color:rgba(255,255,255,.75);margin-bottom:32px">The Kivo Score is a number from 1–100 that shows how mortgage-ready you are right now. It's built on four pillars — the same factors lenders actually use — and comes with a clear action plan to improve it.</p>
+      <div class="section-label section-label--white fade-up"><div class="section-label__line"></div><span id="heroLabel">The Kivo Score</span></div>
+      <h1 class="t-display-xl tc-white fade-up fade-up-d1" style="margin-bottom:20px" id="heroTitle">Your score, explained</h1>
+      <p class="t-body-lg fade-up fade-up-d2" style="color:rgba(255,255,255,.75);margin-bottom:32px" id="heroSub">The Kivo Score is a number from 1–100 that shows how mortgage-ready you are right now. It's built on four pillars — the same factors lenders actually use — and comes with a clear action plan to improve it.</p>
       <div class="trust-row fade-up fade-up-d3" style="justify-content:flex-start">
         <span class="badge badge--navy">AI-powered</span>
         <span class="badge badge--navy">Updated in real-time</span>
         <span class="badge badge--navy">Based on real lender criteria</span>
       </div>
     </div>
-    <div class="gauge-card fade-up fade-up-d1">
+    <!-- Personalised (shown when score in localStorage) -->
+    <div class="gauge-card fade-up fade-up-d1" id="scoreCardPersonal" style="display:none">
+      <p style="font-size:.8125rem;color:rgba(255,255,255,.5);margin-bottom:16px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Your Kivo Score</p>
+      <div class="gauge-big" id="personalScoreNum">—</div>
+      <div class="gauge-label" id="personalScoreLabel"></div>
+      <div class="gauge-bar"><div class="gauge-marker" id="personalGaugeMarker" style="left:50%"></div></div>
+      <div class="gauge-labels"><span>1</span><span>50</span><span>100</span></div>
+      <div class="pillar-bars">
+        <div class="pb-row"><div class="pb-label">Income</div><div class="pb-track"><div class="pb-fill" id="pb-income" style="width:0%;background:var(--teal)"></div></div><div class="pb-val" id="pv-income">—</div></div>
+        <div class="pb-row"><div class="pb-label">Deposit</div><div class="pb-track"><div class="pb-fill" id="pb-deposit" style="width:0%;background:#F59E0B"></div></div><div class="pb-val" id="pv-deposit">—</div></div>
+        <div class="pb-row"><div class="pb-label">Credit</div><div class="pb-track"><div class="pb-fill" id="pb-credit" style="width:0%;background:var(--teal)"></div></div><div class="pb-val" id="pv-credit">—</div></div>
+        <div class="pb-row"><div class="pb-label">Spending</div><div class="pb-track"><div class="pb-fill" id="pb-spending" style="width:0%;background:#F59E0B"></div></div><div class="pb-val" id="pv-spending">—</div></div>
+      </div>
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:.75rem;color:rgba(255,255,255,.4)" id="personalScoreDate"></span>
+        <a href="kivo-check.html" style="font-size:.8125rem;color:var(--teal);font-weight:600">Recalculate →</a>
+      </div>
+    </div>
+    <!-- Generic example (shown when no score saved) -->
+    <div class="gauge-card fade-up fade-up-d1" id="scoreCardExample">
       <p style="font-size:.8125rem;color:rgba(255,255,255,.5);margin-bottom:16px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Example score</p>
       <div class="gauge-big">78</div>
       <div class="gauge-label">🟢 Good — Mortgage Ready</div>
@@ -81,6 +109,9 @@
         <div class="pb-row"><div class="pb-label">Deposit</div><div class="pb-track"><div class="pb-fill" style="width:62%;background:#F59E0B"></div></div><div class="pb-val">62</div></div>
         <div class="pb-row"><div class="pb-label">Credit</div><div class="pb-track"><div class="pb-fill" style="width:88%;background:var(--teal)"></div></div><div class="pb-val">88</div></div>
         <div class="pb-row"><div class="pb-label">Spending</div><div class="pb-track"><div class="pb-fill" style="width:70%;background:#F59E0B"></div></div><div class="pb-val">70</div></div>
+      </div>
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);text-align:center">
+        <a href="kivo-check.html" class="btn btn--teal btn--sm">Get your real score <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
     </div>
   </div></div>
@@ -260,5 +291,74 @@
 <footer class="footer"><div class="container"><div class="footer__grid"><div><a href="index.html" class="logo footer__logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a><p class="footer__tagline">Your friendly AI-powered guide to getting mortgage-ready.</p></div><div><div class="footer__col-title">Product</div><div class="footer__links"><a href="how-it-works.html">How it Works</a><a href="kivo-score.html">Kivo Score</a><a href="kivo-check.html">Kivo Check</a><a href="for-advisors.html">For Advisors</a></div></div><div><div class="footer__col-title">Resources</div><div class="footer__links"><a href="learn.html">Learn</a><a href="tools.html">Tools</a><a href="faq.html">FAQs</a></div></div><div><div class="footer__col-title">Company</div><div class="footer__links"><a href="about.html">About</a><a href="security.html">Security</a><a href="contact.html">Contact</a></div></div></div><div class="footer__reg"><strong>Important:</strong> The Kivo Score is indicative only and not a guarantee of a mortgage offer. Always seek qualified advice from an FCA-regulated broker. Kivo Technologies Ltd is registered in England &amp; Wales.</div><div class="footer__bottom"><div class="footer__copy">© 2025 Kivo Technologies Ltd.</div><div class="footer__legal"><a href="privacy.html">Privacy</a><a href="security.html">Security</a></div></div></div></footer>
 <div class="cookie-banner hidden" id="cookieBanner"><div class="cookie-banner__text">🍪 We use cookies to improve your experience. <a href="privacy.html">Learn more</a>.</div><div class="cookie-banner__actions"><button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button><button class="btn btn--primary btn--sm" id="cookieAccept">Accept</button></div></div>
 <script src="kivo.js"></script>
+<script>
+  // ── Load score from localStorage if available ──────────────
+  (function() {
+    let saved;
+    try { saved = JSON.parse(localStorage.getItem('kivoScore')); } catch(e) {}
+
+    if (!saved || !saved.overallScore) return; // no score — show example card
+
+    // Switch cards
+    document.getElementById('scoreCardExample').style.display = 'none';
+    document.getElementById('scoreCardPersonal').style.display = 'block';
+
+    const s = saved.overallScore;
+    const p = saved.pillars || {};
+
+    // Hero text
+    document.getElementById('heroLabel').textContent = 'Your Kivo Score';
+    document.getElementById('heroTitle').textContent = 'Here's your personalised score';
+    document.getElementById('heroSub').textContent =
+      'Based on the information you provided' +
+      (saved.formData?.openBanking ? ' and your bank data' : '') +
+      ', here's how mortgage-ready you are right now.';
+
+    // Score number
+    document.getElementById('personalScoreNum').textContent = s;
+
+    // Band label
+    document.getElementById('personalScoreLabel').textContent =
+      (saved.bandEmoji || '') + ' ' + (saved.band || '');
+
+    // Gauge marker position
+    const marker = document.getElementById('personalGaugeMarker');
+    if (marker) marker.style.left = s + '%';
+
+    // Pillar bars + values
+    const pillarMap = {
+      income:  { bar: 'pb-income',  val: 'pv-income'  },
+      deposit: { bar: 'pb-deposit', val: 'pv-deposit' },
+      credit:  { bar: 'pb-credit',  val: 'pv-credit'  },
+      spending:{ bar: 'pb-spending',val: 'pv-spending' },
+    };
+    Object.entries(pillarMap).forEach(([key, ids]) => {
+      const score = p[key] || 0;
+      const colour = score >= 75 ? 'var(--teal)' : score >= 50 ? '#F59E0B' : '#EF4444';
+      const barEl = document.getElementById(ids.bar);
+      const valEl = document.getElementById(ids.val);
+      if (barEl) { barEl.style.width = score + '%'; barEl.style.background = colour; }
+      if (valEl) { valEl.textContent = score; valEl.style.color = colour; }
+    });
+
+    // Date stamp
+    const dateEl = document.getElementById('personalScoreDate');
+    if (dateEl && saved.calculatedAt) {
+      const d = new Date(saved.calculatedAt);
+      dateEl.textContent = 'Calculated ' + d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+    }
+
+    // Update CTA section
+    const ctaTitle = document.querySelector('.cta-band__title');
+    const ctaSub   = document.querySelector('.cta-band__sub');
+    const ctaBtn   = document.querySelector('.cta-band__actions a');
+    if (ctaTitle) ctaTitle.textContent = s >= 61 ? 'You're in good shape. Ready to take the next step?' : 'Your score can improve — let's get you there.';
+    if (ctaSub)   ctaSub.textContent   = s >= 61 ? 'Speak to a vetted advisor who already knows your Kivo profile.' : 'Retake the check any time as your situation changes.';
+    if (ctaBtn && s >= 61) {
+      ctaBtn.href = 'for-advisors.html';
+      ctaBtn.innerHTML = 'Speak to an Advisor <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    }
+  })();
+</script>
 </body>
 </html>

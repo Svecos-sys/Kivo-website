@@ -164,6 +164,15 @@
       .process-steps { grid-template-columns: 1fr; }
     }
   </style>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kivo for Mortgage Advisors & Brokers | Kivo">
+  <meta property="og:description" content="Kivo helps mortgage advisors work with better-prepared clients, spend less time on fact-finds, and convert more enquiries into completions.">
+  <meta property="og:url" content="https://getkivo.co.uk/for-advisors.html">
+  <meta property="og:image" content="https://getkivo.co.uk/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kivo for Mortgage Advisors & Brokers | Kivo">
+  <meta name="twitter:description" content="Kivo helps mortgage advisors work with better-prepared clients, spend less time on fact-finds, and convert more enquiries into completions.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23FF6B4A'/><path d='M10 8v16M10 16l8-8M10 16l8 8' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 </head>
 <body>
 
@@ -614,14 +623,30 @@
 
 <script src="kivo.js"></script>
 <script>
-  // Form submission handler
-  document.getElementById('advisorForm').addEventListener('submit', function(e) {
+  // ⚠️  Replace YOUR_FORM_ID with your Formspree ID from formspree.io
+  const ADVISOR_FORM_ID = 'YOUR_FORM_ID';
+
+  document.getElementById('advisorForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = this.querySelector('button[type="submit"]');
-    btn.textContent = '✓ Request received — we\'ll be in touch soon!';
+    btn.textContent = 'Sending your request...';
     btn.disabled = true;
-    btn.style.background = 'var(--teal)';
-    // Wire to your backend here
+    try {
+      const res = await fetch('https://formspree.io/f/' + ADVISOR_FORM_ID, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(this)))
+      });
+      if (res.ok) {
+        btn.textContent = '✓ Request received — we\'ll be in touch within one business day.';
+        btn.style.background = 'var(--teal)';
+        this.reset();
+      } else { throw new Error(); }
+    } catch(err) {
+      btn.textContent = 'Something went wrong — email advisors@getkivo.co.uk';
+      btn.disabled = false;
+      btn.style.background = '#EF4444';
+    }
   });
 </script>
 </body>

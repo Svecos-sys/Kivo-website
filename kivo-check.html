@@ -139,6 +139,15 @@
       .results-header    { padding: 36px 24px; }
     }
   </style>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Check Your Mortgage Readiness – Free | Kivo">
+  <meta property="og:description" content="Answer a few questions and get your personalised Kivo Score in 2 minutes. No credit check, no paperwork, no pressure.">
+  <meta property="og:url" content="https://getkivo.co.uk/kivo-check.html">
+  <meta property="og:image" content="https://getkivo.co.uk/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Check Your Mortgage Readiness – Free | Kivo">
+  <meta name="twitter:description" content="Answer a few questions and get your personalised Kivo Score in 2 minutes. No credit check, no paperwork, no pressure.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23FF6B4A'/><path d='M10 8v16M10 16l8-8M10 16l8 8' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 </head>
 <body>
 
@@ -616,15 +625,9 @@
 
 <script src="kivo.js"></script>
 <script>
-  const steps = ['step1','step2','step3','step4','step5','stepResults'];
-  const labels = [
-    'Step 1 of 5 — About you',
-    'Step 2 of 5 — Your income',
-    'Step 3 of 5 — Deposit & property',
-    'Step 4 of 5 — Credit & debts',
-    'Step 5 of 5 — Almost done!',
-    'Your Kivo Score'
-  ];
+  // ── Step navigation ────────────────────────────────────────
+  const steps    = ['step1','step2','step3','step4','step5','stepResults'];
+  const labels   = ['Step 1 of 5 — About you','Step 2 of 5 — Your income','Step 3 of 5 — Deposit & property','Step 4 of 5 — Credit & debts','Step 5 of 5 — Almost done!','Your Kivo Score'];
   const progress = ['20%','40%','60%','80%','95%','100%'];
   let currentStep = 0;
 
@@ -638,33 +641,309 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function showResults() {
-    const emailInput = document.getElementById('userEmail');
-    const consent    = document.getElementById('consentCheck');
-    if (!emailInput.value || !emailInput.value.includes('@')) {
-      emailInput.focus(); return;
-    }
-    if (!consent.checked) {
-      consent.focus(); return;
-    }
+  // ── Collect all form data into a structured object ─────────
+  function collectFormData() {
+    const getVal   = id => (document.getElementById(id) || {}).value || '';
+    const getRadio = name => { const el = document.querySelector(`[name="${name}"]:checked`); return el ? el.value : ''; };
 
-    // Show loading state
-    const btn = document.getElementById('calculateBtn');
-    btn.textContent = 'Calculating your score...';
-    btn.disabled = true;
+    const income      = parseInt(getVal('annualIncome')) || 35000;
+    const partnerInc  = parseInt((getVal('partnerIncome') || '0').replace(/[^0-9]/g,'')) || 0;
+    const deposit     = parseInt(getVal('depositAmount')) || 20000;
+    const property    = parseInt(getVal('propertyValue')) || 250000;
+    const ltv         = Math.round(((property - deposit) / property) * 100);
+    const ltvPct      = 100 - ltv; // deposit as % of property
 
-    setTimeout(() => {
-      goToStep(6);
-      animateResults();
-    }, 1400);
+    return {
+      situation:   getRadio('situation')   || 'first-time',
+      buyers:      getRadio('buyers')      || 'solo',
+      employment:  getRadio('employment')  || 'employed',
+      income,
+      partnerIncome: partnerInc,
+      totalIncome:   income + partnerInc,
+      deposit,
+      propertyValue: property,
+      ltv,
+      depositPct:    ltvPct,
+      scheme:        getRadio('scheme')  || 'none',
+      credit:        getRadio('credit')  || 'good',
+      hasDebts:      getRadio('hasDebts') || 'no',
+      debtAmount:    getVal('debtAmount') || 'none',
+      email:         getVal('userEmail'),
+      openBanking:   document.getElementById('openBankingOpt')?.checked || false,
+    };
   }
 
-  function animateResults() {
-    // Animate score number
-    const target = 76;
+  // ── Build Claude prompt from form data ─────────────────────
+  function buildPrompt(d) {
+    const loanNeeded = d.propertyValue - d.deposit;
+    const incomeMultiple = loanNeeded > 0 ? (loanNeeded / d.totalIncome).toFixed(1) : 'N/A';
+
+    return `You are Kivo's AI mortgage readiness scoring engine. Based on the applicant data below, return ONLY a valid JSON object — no markdown, no explanation, nothing else.
+
+APPLICANT DATA:
+- Situation: ${d.situation}
+- Buying: ${d.buyers === 'joint' ? 'Joint application' : 'Solo'}
+- Employment: ${d.employment}
+- Annual income: £${d.income.toLocaleString('en-GB')}${d.partnerIncome > 0 ? ` (partner: £${d.partnerIncome.toLocaleString('en-GB')}, combined: £${d.totalIncome.toLocaleString('en-GB')})` : ''}
+- Deposit saved: £${d.deposit.toLocaleString('en-GB')} (${d.depositPct}% of property, LTV: ${d.ltv}%)
+- Target property value: £${d.propertyValue.toLocaleString('en-GB')}
+- Loan needed: £${loanNeeded.toLocaleString('en-GB')} (${incomeMultiple}× income)
+- Government scheme: ${d.scheme}
+- Credit history: ${d.credit}
+- Outstanding debts: ${d.hasDebts === 'yes' ? d.debtAmount : 'none'}
+- Open Banking connected: ${d.openBanking ? 'yes' : 'no'}
+
+SCORING RULES:
+Income & Affordability (25% weight, score 1-100):
+- 4.5× income or less = 85-100. 4.5-5× = 65-84. 5-5.5× = 40-64. Over 5.5× = 10-39.
+- Self-employed/contractor: subtract 5-10 points (income harder to verify).
+- Joint application with combined income: boost 5-10 points vs solo.
+
+Deposit Strength (25% weight, score 1-100):
+- 25%+ deposit (LTV ≤75%) = 90-100. 15-24% = 75-89. 10-14% = 60-74. 5-9% = 30-59. Under 5% = 10-29.
+- LISA scheme: add 5 points. Shared Ownership: subtract 5 points.
+
+Credit Profile (30% weight, score 1-100):
+- Excellent = 85-100. Good = 65-84. Fair = 35-64. Poor/unknown = 10-34.
+
+Spending Behaviour (20% weight, score 1-100):
+- No debts + employed = 75-90. No debts + self-employed = 65-80.
+- Under £5k debts = subtract 10. £5k-£15k = subtract 20. £15k-£30k = subtract 30. Over £30k = subtract 40.
+- Apply floor of 10.
+- Open Banking connected: add 5 points (more data = more confidence).
+
+Overall score = weighted average of the four pillar scores, rounded to nearest integer.
+
+BORROWING ESTIMATE:
+- Conservative: totalIncome × 4.0
+- Optimistic: totalIncome × 4.5 (or 5.0 if credit is excellent and LTV ≤85%)
+- Round both to nearest £5,000.
+
+RETURN EXACTLY THIS JSON SHAPE:
+{
+  "overallScore": <integer 1-100>,
+  "band": <"Not ready yet" | "Getting there" | "Good" | "Excellent">,
+  "bandEmoji": <"🔴" | "🟡" | "🔵" | "🟢">,
+  "pillars": {
+    "income": <integer 1-100>,
+    "deposit": <integer 1-100>,
+    "credit": <integer 1-100>,
+    "spending": <integer 1-100>
+  },
+  "borrowMin": <integer, nearest £5000>,
+  "borrowMax": <integer, nearest £5000>,
+  "insights": [
+    { "type": <"positive"|"improve"|"tip">, "text": <string, max 120 chars, specific to their data> },
+    { "type": <"positive"|"improve"|"tip">, "text": <string, max 120 chars, specific to their data> },
+    { "type": <"positive"|"improve"|"tip">, "text": <string, max 120 chars, specific to their data> }
+  ],
+  "topAction": <string, single most impactful improvement they can make, max 100 chars>
+}`;
+  }
+
+  // ── Show loading messages while Claude thinks ──────────────
+  const loadingMessages = [
+    'Reviewing your income & affordability...',
+    'Checking your deposit strength...',
+    'Analysing your credit profile...',
+    'Calculating your spending behaviour...',
+    'Generating your personalised score...',
+  ];
+
+  function cycleLoadingMessages(btn) {
+    let i = 0;
+    btn.textContent = loadingMessages[0];
+    return setInterval(() => {
+      i = (i + 1) % loadingMessages.length;
+      btn.textContent = loadingMessages[i];
+    }, 1800);
+  }
+
+  // ── Main: call Claude API, render results ──────────────────
+  async function showResults() {
+    const emailInput = document.getElementById('userEmail');
+    const consent    = document.getElementById('consentCheck');
+    if (!emailInput.value || !emailInput.value.includes('@')) { emailInput.focus(); return; }
+    if (!consent.checked) { consent.focus(); return; }
+
+    const btn = document.getElementById('calculateBtn');
+    btn.disabled = true;
+    const msgInterval = cycleLoadingMessages(btn);
+
+    const formData = collectFormData();
+
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          messages: [{ role: 'user', content: buildPrompt(formData) }]
+        })
+      });
+
+      if (!response.ok) throw new Error(`API error ${response.status}`);
+      const data = await response.json();
+      const raw  = data.content?.[0]?.text || '';
+
+      // Strip any accidental markdown fences
+      const clean  = raw.replace(/```json|```/gi, '').trim();
+      const result = JSON.parse(clean);
+
+      clearInterval(msgInterval);
+
+      // Save to localStorage for kivo-score.html to read
+      localStorage.setItem('kivoScore', JSON.stringify({
+        ...result,
+        formData,
+        calculatedAt: new Date().toISOString()
+      }));
+
+      // Submit to Formspree in background (non-blocking)
+      submitToFormspree(formData, result);
+
+      // Render results into the DOM
+      renderResults(result, formData);
+      goToStep(6);
+      animateResults(result);
+
+    } catch (err) {
+      clearInterval(msgInterval);
+      console.error('Scoring error:', err);
+      // Graceful fallback: use client-side scoring so user always gets a result
+      const fallback = clientSideFallback(formData);
+      localStorage.setItem('kivoScore', JSON.stringify({
+        ...fallback,
+        formData,
+        calculatedAt: new Date().toISOString()
+      }));
+      renderResults(fallback, formData);
+      goToStep(6);
+      animateResults(fallback);
+    }
+  }
+
+  // ── Client-side fallback if API unavailable ─────────────────
+  function clientSideFallback(d) {
+    const loanNeeded = d.propertyValue - d.deposit;
+    const multiple   = d.totalIncome > 0 ? loanNeeded / d.totalIncome : 5;
+
+    let income = multiple <= 4.5 ? 88 : multiple <= 5 ? 72 : multiple <= 5.5 ? 52 : 28;
+    if (d.employment === 'self-employed' || d.employment === 'contractor') income = Math.max(10, income - 8);
+    if (d.buyers === 'joint') income = Math.min(100, income + 6);
+
+    let deposit = d.depositPct >= 25 ? 92 : d.depositPct >= 15 ? 80 : d.depositPct >= 10 ? 66 : d.depositPct >= 5 ? 42 : 18;
+    if (d.scheme === 'lisa') deposit = Math.min(100, deposit + 5);
+
+    const creditMap = { excellent: 90, good: 72, fair: 48, poor: 22 };
+    const credit = creditMap[d.credit] || 60;
+
+    const debtPenalty = { none: 0, under5k: 10, '5k-15k': 20, '15k-30k': 30, '30k-50k': 38, over50k: 45 };
+    let spending = (d.employment === 'employed' ? 78 : 66) - (debtPenalty[d.debtAmount] || 0);
+    if (d.openBanking) spending = Math.min(100, spending + 5);
+    spending = Math.max(10, spending);
+
+    const overall = Math.round(income * 0.25 + deposit * 0.25 + credit * 0.30 + spending * 0.20);
+    const band    = overall >= 80 ? 'Excellent' : overall >= 61 ? 'Good' : overall >= 31 ? 'Getting there' : 'Not ready yet';
+    const bandEmoji = overall >= 80 ? '🟢' : overall >= 61 ? '🔵' : overall >= 31 ? '🟡' : '🔴';
+
+    const borrowMin = Math.round(d.totalIncome * 4.0 / 5000) * 5000;
+    const borrowMax = Math.round(d.totalIncome * (credit >= 85 && d.ltv <= 85 ? 5.0 : 4.5) / 5000) * 5000;
+
+    const insights = [];
+    if (income >= 75) insights.push({ type: 'positive', text: `Your income-to-loan ratio looks strong — you may borrow £${borrowMin.toLocaleString('en-GB')}–£${borrowMax.toLocaleString('en-GB')}.` });
+    else insights.push({ type: 'improve', text: `At ${multiple.toFixed(1)}× income, you're above standard thresholds. A larger deposit or second income would help.` });
+    if (d.depositPct < 10) insights.push({ type: 'improve', text: `Your ${d.depositPct}% deposit is below the 10% threshold. Reaching 10% opens significantly better rates.` });
+    else insights.push({ type: 'positive', text: `A ${d.depositPct}% deposit is solid. You have access to a good range of mortgage products.` });
+    if (!d.openBanking) insights.push({ type: 'tip', text: 'Connecting your bank via Open Banking could improve your score accuracy by up to 8 points.' });
+    else insights.push({ type: 'tip', text: 'With Open Banking connected, your spending analysis is more accurate — lenders will appreciate this.' });
+
+    const topAction = d.depositPct < 10 ? 'Save to reach a 10% deposit — this is your single biggest unlock.'
+      : credit === 'fair' || credit === 'poor' ? 'Focus on improving your credit profile — register to vote and clear any defaults.'
+      : 'Reduce recurring outgoings over the next 3 months to strengthen your spending profile.';
+
+    return { overallScore: overall, band, bandEmoji, pillars: { income, deposit, credit, spending }, borrowMin, borrowMax, insights, topAction };
+  }
+
+  // ── Submit to Formspree ────────────────────────────────────
+  async function submitToFormspree(formData, result) {
+    // ⚠️  Replace YOUR_FORM_ID with your Formspree form ID
+    // Get one free at formspree.io — takes 2 minutes
+    const FORMSPREE_ID = 'YOUR_FORM_ID'; // ⚠️ Get a free ID at formspree.io — paste it here
+    if (FORMSPREE_ID === 'YOUR_FORM_ID') return; // skip if not configured
+
+    try {
+      await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email:       formData.email,
+          situation:   formData.situation,
+          employment:  formData.employment,
+          income:      `£${formData.income.toLocaleString('en-GB')}`,
+          deposit:     `£${formData.deposit.toLocaleString('en-GB')} (${formData.depositPct}% / LTV ${formData.ltv}%)`,
+          property:    `£${formData.propertyValue.toLocaleString('en-GB')}`,
+          credit:      formData.credit,
+          debts:       formData.hasDebts === 'yes' ? formData.debtAmount : 'none',
+          kivoScore:   result.overallScore,
+          band:        result.band,
+          submittedAt: new Date().toISOString(),
+        })
+      });
+    } catch (e) { /* silent fail — score still shows */ }
+  }
+
+  // ── Render Claude's result into the results panel ──────────
+  function renderResults(result, formData) {
+    // Score label
+    const labelEl = document.getElementById('resultsScoreLabel');
+    if (labelEl) labelEl.textContent = `${result.bandEmoji} ${result.band}`;
+
+    // Pillar scores + bar colours
+    const pillarData = [
+      { id: 1, key: 'income',   label: '💼 Income & Affordability' },
+      { id: 2, key: 'deposit',  label: '🏦 Deposit Strength' },
+      { id: 3, key: 'credit',   label: '💳 Credit Profile' },
+      { id: 4, key: 'spending', label: '💸 Spending Behaviour' },
+    ];
+    pillarData.forEach(({ id, key }) => {
+      const score = result.pillars[key];
+      const colour = score >= 75 ? 'var(--teal)' : score >= 50 ? '#F59E0B' : '#EF4444';
+      const scoreEl = document.getElementById(`pillar${id}Score`);
+      const barEl   = document.getElementById(`pillar${id}Bar`);
+      if (scoreEl) { scoreEl.textContent = score; scoreEl.style.color = colour; }
+      if (barEl)   { barEl.style.width = score + '%'; barEl.style.background = colour; }
+    });
+
+    // Borrow range
+    const insightsContainer = document.querySelector('.results-insights');
+    if (insightsContainer && result.insights?.length) {
+      const typeMap = {
+        positive: { cls: 'results-insight--positive', icon: '✅' },
+        improve:  { cls: 'results-insight--improve',  icon: '⚠️' },
+        tip:      { cls: 'results-insight--tip',       icon: '💡' },
+      };
+      insightsContainer.innerHTML = result.insights.map(ins => {
+        const { cls, icon } = typeMap[ins.type] || typeMap.tip;
+        return `<div class="results-insight ${cls}"><span>${icon}</span> ${ins.text}</div>`;
+      }).join('');
+    }
+
+    // Top action
+    const ctaTitle = document.querySelector('.results-cta__title');
+    const ctaText  = document.querySelector('.results-cta__text');
+    if (ctaTitle) ctaTitle.textContent = '📌 Your top priority action';
+    if (ctaText && result.topAction) ctaText.textContent = result.topAction;
+  }
+
+  // ── Animate the score ring + numbers ──────────────────────
+  function animateResults(result) {
+    const target   = result?.overallScore || 0;
+    const numEl    = document.getElementById('resultsScoreNum');
     const duration = 1800;
-    const start = performance.now();
-    const numEl = document.getElementById('resultsScoreNum');
+    const start    = performance.now();
+
     function tick(now) {
       const p = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - p, 3);
@@ -673,15 +952,12 @@
     }
     requestAnimationFrame(tick);
 
-    // Animate ring
     setTimeout(() => {
       const fill = document.getElementById('resultsRingFill');
       const circumference = 432;
-      const offset = circumference - (circumference * target / 100);
-      fill.style.strokeDashoffset = offset;
+      if (fill) fill.style.strokeDashoffset = circumference - (circumference * target / 100);
     }, 200);
 
-    // Animate pillar bars
     setTimeout(() => {
       document.querySelectorAll('.results-pillar__bar-fill').forEach(bar => {
         bar.style.transform = 'scaleX(1)';
@@ -689,15 +965,15 @@
     }, 600);
   }
 
-  // LTV calculator
+  // ── LTV live calculator (step 3) ───────────────────────────
   const depositSlider  = document.getElementById('depositAmount');
   const propertySlider = document.getElementById('propertyValue');
 
   function updateLTV() {
     if (!depositSlider || !propertySlider) return;
-    const dep = parseInt(depositSlider.value);
+    const dep  = parseInt(depositSlider.value);
     const prop = parseInt(propertySlider.value);
-    const ltv = Math.round(((prop - dep) / prop) * 100);
+    const ltv  = Math.round(((prop - dep) / prop) * 100);
     const ltvEl = document.getElementById('ltvDisplay');
     const msgEl = document.getElementById('ltvMessage');
     if (ltvEl) ltvEl.textContent = ltv + '%';
@@ -712,15 +988,13 @@
   if (propertySlider) propertySlider.addEventListener('input', updateLTV);
   updateLTV();
 
-  // Show partner income field
+  // ── Conditional fields ────────────────────────────────────
   document.querySelectorAll('[name="buyers"]').forEach(r => {
     r.addEventListener('change', () => {
       const g = document.getElementById('partnerIncomeGroup');
       if (g) g.style.display = r.value === 'joint' ? 'flex' : 'none';
     });
   });
-
-  // Show debt amount
   document.querySelectorAll('[name="hasDebts"]').forEach(r => {
     r.addEventListener('change', () => {
       const g = document.getElementById('debtAmountGroup');

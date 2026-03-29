@@ -20,6 +20,15 @@
     @media(max-width:1024px){.contact-layout{grid-template-columns:1fr;gap:40px}}
     @media(max-width:640px){.form-row-2{grid-template-columns:1fr}}
   </style>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Contact Kivo | Kivo">
+  <meta property="og:description" content="Have a question about Kivo? We'd love to hear from you. Get in touch with our team.">
+  <meta property="og:url" content="https://getkivo.co.uk/contact.html">
+  <meta property="og:image" content="https://getkivo.co.uk/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contact Kivo | Kivo">
+  <meta name="twitter:description" content="Have a question about Kivo? We'd love to hear from you. Get in touch with our team.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23FF6B4A'/><path d='M10 8v16M10 16l8-8M10 16l8 8' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 </head>
 <body>
 <header class="header" id="header"><div class="container"><div class="header__inner">
@@ -56,7 +65,7 @@
       </div>
       <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border)">
         <p class="t-label tc-slate" style="margin-bottom:8px">Registered address</p>
-        <p class="t-body-sm tc-slate">Kivo Technologies Ltd<br>Registered in England &amp; Wales<br>Company number: 16424999</p>
+        <p class="t-body-sm tc-slate">Kivo Technologies Ltd<br>Registered in England &amp; Wales<br>Company number: <mark style="background:var(--coral-lt);padding:2px 6px;border-radius:4px;font-weight:700">TODO: Add Companies House number</mark></p>
       </div>
     </div>
     <div class="contact-form-card fade-up fade-up-d1">
@@ -81,13 +90,29 @@
 <div class="cookie-banner hidden" id="cookieBanner"><div class="cookie-banner__text">🍪 We use cookies. <a href="privacy.html">Learn more</a>.</div><div class="cookie-banner__actions"><button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button><button class="btn btn--primary btn--sm" id="cookieAccept">Accept</button></div></div>
 <script src="kivo.js"></script>
 <script>
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = document.getElementById('contactSubmit');
-    btn.textContent = '✓ Message sent! We\'ll be in touch soon.';
+    btn.textContent = 'Sending...';
     btn.disabled = true;
-    btn.style.background = 'var(--teal)';
-    // Wire to your backend: fetch('/api/contact', { method:'POST', body: new FormData(this) })
+    // ⚠️  Replace YOUR_FORM_ID with your Formspree ID from formspree.io
+    const FORM_ID = 'YOUR_FORM_ID';
+    try {
+      const res = await fetch('https://formspree.io/f/' + FORM_ID, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(this)))
+      });
+      if (res.ok) {
+        btn.textContent = '✓ Message sent! We\'ll be in touch within one business day.';
+        btn.style.background = 'var(--teal)';
+        this.reset();
+      } else { throw new Error(); }
+    } catch(err) {
+      btn.textContent = 'Something went wrong — email hello@getkivo.co.uk';
+      btn.disabled = false;
+      btn.style.background = '#EF4444';
+    }
   });
 </script>
 </body>
