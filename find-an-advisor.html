@@ -566,23 +566,195 @@
     });
   });
 
-  // ── Submit lead to Formspree ──────────────────────────────
+  // ── Resend API key ────────────────────────────────────────
+  // ⚠️  Replace with your Resend API key from resend.com
+  // Ensure your domain getkivo.co.uk is verified in Resend first
+  const RESEND_API_KEY = 're_WooeHwpe_2LU1EiS3Tg5njKN3B3AeJKGd';
+  const FROM_EMAIL     = 'noreply@getkivo.co.uk';
+  const NOTIFY_EMAIL   = 'hello@getkivo.co.uk'; // internal notification recipient
+
+  // ── Build buyer confirmation email HTML ───────────────────
+  function buildBuyerEmail(advisor, kivoData) {
+    const fd    = kivoData?.formData || {};
+    const score = kivoData?.overallScore || '—';
+    const band  = kivoData?.band || '—';
+    const borrow = kivoData?.borrowMax
+      ? `£${kivoData.borrowMax.toLocaleString('en-GB')}`
+      : '—';
+
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>You're connected with ${advisor.name}</title>
+</head>
+<body style="margin:0;padding:0;background:#F7F8FA;font-family:'DM Sans',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#F7F8FA;padding:40px 0">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%">
+
+        <!-- Header -->
+        <tr><td style="background:#0F1E2D;border-radius:16px 16px 0 0;padding:28px 40px;text-align:center">
+          <div style="display:inline-flex;align-items:center;gap:10px">
+            <div style="background:#FF6B4A;border-radius:10px;width:36px;height:36px;display:inline-block;line-height:36px;text-align:center;font-weight:800;font-size:1rem;color:#fff">k</div>
+            <span style="font-family:Arial,sans-serif;font-weight:800;font-size:1.375rem;color:#fff;letter-spacing:-0.03em">kivo</span>
+          </div>
+        </td></tr>
+
+        <!-- Hero -->
+        <tr><td style="background:#fff;padding:40px 40px 28px;text-align:center;border-left:1px solid #E8ECF0;border-right:1px solid #E8ECF0">
+          <div style="font-size:3rem;margin-bottom:16px">🎉</div>
+          <h1 style="font-family:Arial,sans-serif;font-weight:800;font-size:1.625rem;color:#0F1E2D;margin:0 0 10px;line-height:1.2">
+            You're connected with ${advisor.name}
+          </h1>
+          <p style="color:#4A5568;font-size:1rem;line-height:1.6;margin:0">
+            Your Kivo profile has been shared with your chosen advisor.<br>
+            They'll be in touch <strong>within 48 hours</strong>.
+          </p>
+        </td></tr>
+
+        <!-- Advisor card -->
+        <tr><td style="background:#fff;padding:0 40px 28px;border-left:1px solid #E8ECF0;border-right:1px solid #E8ECF0">
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#F7F8FA;border:1px solid #E8ECF0;border-radius:12px;padding:20px">
+            <tr>
+              <td width="52" valign="top" style="padding-right:16px">
+                <div style="width:48px;height:48px;border-radius:50%;background:${advisor.colour};text-align:center;line-height:48px;font-weight:800;font-size:1rem;color:#fff;font-family:Arial,sans-serif">${advisor.initials}</div>
+              </td>
+              <td valign="top">
+                <div style="font-weight:700;font-size:1rem;color:#0F1E2D;font-family:Arial,sans-serif">${advisor.name}</div>
+                <div style="font-size:.875rem;color:#FF6B4A;font-weight:600;margin-bottom:4px">${advisor.firm}</div>
+                <div style="font-size:.8125rem;color:#718096">★ ${advisor.rating} &nbsp;·&nbsp; FCA regulated &nbsp;·&nbsp; ${advisor.location}</div>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+
+        <!-- Your score summary -->
+        <tr><td style="background:#fff;padding:0 40px 28px;border-left:1px solid #E8ECF0;border-right:1px solid #E8ECF0">
+          <h2 style="font-family:Arial,sans-serif;font-weight:700;font-size:1rem;color:#0F1E2D;margin:0 0 14px">Your Kivo profile shared with them</h2>
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="50%" style="padding:10px 12px;background:#F7F8FA;border-radius:8px;margin-right:8px">
+                <div style="font-size:.75rem;color:#718096;margin-bottom:3px;text-transform:uppercase;letter-spacing:.06em">Kivo Score</div>
+                <div style="font-family:Arial,sans-serif;font-weight:800;font-size:1.5rem;color:#0F1E2D">${score}</div>
+                <div style="font-size:.8125rem;color:#009E88;font-weight:600">${band}</div>
+              </td>
+              <td width="8"></td>
+              <td width="50%" style="padding:10px 12px;background:#F7F8FA;border-radius:8px">
+                <div style="font-size:.75rem;color:#718096;margin-bottom:3px;text-transform:uppercase;letter-spacing:.06em">Estimated borrowing</div>
+                <div style="font-family:Arial,sans-serif;font-weight:800;font-size:1.5rem;color:#0F1E2D">${borrow}</div>
+                <div style="font-size:.8125rem;color:#718096">indicative only</div>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+
+        <!-- What happens next -->
+        <tr><td style="background:#fff;padding:0 40px 28px;border-left:1px solid #E8ECF0;border-right:1px solid #E8ECF0">
+          <h2 style="font-family:Arial,sans-serif;font-weight:700;font-size:1rem;color:#0F1E2D;margin:0 0 14px">What happens next</h2>
+          <table width="100%" cellpadding="0" cellspacing="0">
+            ${[
+              ['1', '#00C2A8', `${advisor.name} will review your Kivo profile`],
+              ['2', '#00C2A8', 'They'll reach out by email or phone within 48 hours'],
+              ['3', '#00C2A8', 'Your first call will be focused — they already know your situation'],
+              ['4', '#00C2A8', 'You decide whether to proceed — no obligation, no pressure'],
+            ].map(([num, col, text]) => `
+            <tr>
+              <td width="32" valign="top" style="padding-bottom:10px">
+                <div style="width:24px;height:24px;border-radius:50%;background:${col};text-align:center;line-height:24px;font-weight:700;font-size:.75rem;color:#fff;font-family:Arial,sans-serif">${num}</div>
+              </td>
+              <td style="padding-bottom:10px;padding-left:10px;font-size:.9rem;color:#4A5568;line-height:1.5">${text}</td>
+            </tr>`).join('')}
+          </table>
+        </td></tr>
+
+        <!-- CTA -->
+        <tr><td style="background:#fff;padding:0 40px 32px;border-left:1px solid #E8ECF0;border-right:1px solid #E8ECF0;text-align:center">
+          <a href="https://getkivo.co.uk/kivo-score.html"
+             style="display:inline-block;background:#FF6B4A;color:#fff;font-family:Arial,sans-serif;font-weight:700;font-size:.9375rem;padding:14px 32px;border-radius:100px;text-decoration:none;box-shadow:0 4px 14px rgba(255,107,74,.35)">
+            View My Full Score Report →
+          </a>
+        </td></tr>
+
+        <!-- Disclaimer -->
+        <tr><td style="background:#F7F8FA;border:1px solid #E8ECF0;border-radius:0 0 16px 16px;padding:20px 40px;text-align:center">
+          <p style="font-size:.75rem;color:#718096;margin:0 0 6px;line-height:1.55">
+            You chose to share your Kivo profile with ${advisor.name} of ${advisor.firm}.<br>
+            They are independently FCA-regulated. Kivo is not a mortgage broker and does not provide regulated financial advice.
+          </p>
+          <p style="font-size:.75rem;color:#A0AEC0;margin:0">
+            If you did not make this request, email <a href="mailto:privacy@getkivo.co.uk" style="color:#FF6B4A">privacy@getkivo.co.uk</a><br>
+            © ${new Date().getFullYear()} Kivo Technologies Ltd · <a href="https://getkivo.co.uk/privacy.html" style="color:#A0AEC0">Privacy Policy</a>
+          </p>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+  }
+
+  // ── Build internal notification email ─────────────────────
+  function buildNotifyEmail(advisor, kivoData) {
+    const fd    = kivoData?.formData || {};
+    const score = kivoData?.overallScore || '—';
+    const lines = [
+      `<b>New advisor connection</b>`,
+      ``,
+      `<b>Buyer email:</b> ${fd.email || '(not provided)'}`,
+      `<b>Chosen advisor:</b> ${advisor.name} — ${advisor.firm} (${advisor.id})`,
+      `<b>Kivo Score:</b> ${score} (${kivoData?.band || '—'})`,
+      `<b>Situation:</b> ${fd.situation || '—'} · ${fd.employment || '—'}`,
+      `<b>Income:</b> £${(fd.income || 0).toLocaleString('en-GB')}`,
+      `<b>Deposit:</b> £${(fd.deposit || 0).toLocaleString('en-GB')} (${fd.depositPct || '—'}%)`,
+      `<b>Target property:</b> £${(fd.propertyValue || 0).toLocaleString('en-GB')}`,
+      `<b>Borrow range:</b> £${(kivoData?.borrowMin || 0).toLocaleString('en-GB')} – £${(kivoData?.borrowMax || 0).toLocaleString('en-GB')}`,
+      `<b>Credit:</b> ${fd.credit || '—'} · <b>Debts:</b> ${fd.hasDebts === 'yes' ? fd.debtAmount : 'none'}`,
+      `<b>Consent timestamp:</b> ${new Date().toISOString()}`,
+    ];
+    return `<html><body style="font-family:Arial,sans-serif;font-size:.9rem;color:#0F1E2D;line-height:1.7">${lines.join('<br>')}</body></html>`;
+  }
+
+  // ── Send email via Resend API ──────────────────────────────
+  async function sendEmail({ to, subject, html }) {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: `Kivo <${FROM_EMAIL}>`,
+        to:   [to],
+        subject,
+        html,
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      console.warn('Resend error:', err);
+    }
+    return res.ok;
+  }
+
+  // ── Submit lead: Formspree + two emails ───────────────────
   async function submitLead() {
     const btn = document.getElementById('consentBtn');
-    btn.textContent = 'Sending...';
+    btn.textContent = 'Connecting you...';
     btn.disabled = true;
 
-    const fd = kivoData?.formData || {};
+    const fd      = kivoData?.formData || {};
+    const buyerEmail = fd.email || '';
+
     const payload = {
-      // Lead info
       advisorId:        selectedAdvisor.id,
       advisorName:      selectedAdvisor.name,
       advisorFirm:      selectedAdvisor.firm,
-      // Buyer info
-      buyerEmail:       fd.email || '(not provided)',
+      buyerEmail,
       kivoScore:        kivoData?.overallScore,
       kivoBand:         kivoData?.band,
-      // Profile
       situation:        fd.situation,
       employment:       fd.employment,
       income:           fd.income ? `£${fd.income.toLocaleString('en-GB')}` : '—',
@@ -593,30 +765,47 @@
       debts:            fd.hasDebts === 'yes' ? fd.debtAmount : 'none',
       borrowMin:        kivoData?.borrowMin ? `£${kivoData.borrowMin.toLocaleString('en-GB')}` : '—',
       borrowMax:        kivoData?.borrowMax ? `£${kivoData.borrowMax.toLocaleString('en-GB')}` : '—',
-      // Pillars
       pillarIncome:     kivoData?.pillars?.income,
       pillarDeposit:    kivoData?.pillars?.deposit,
       pillarCredit:     kivoData?.pillars?.credit,
       pillarSpending:   kivoData?.pillars?.spending,
-      // Meta
       consentGiven:     true,
       consentTimestamp: new Date().toISOString(),
       submittedAt:      new Date().toISOString(),
     };
 
-    try {
-      if (LEAD_FORM_ID !== 'YOUR_FORM_ID') {
-        await fetch(`https://formspree.io/f/${LEAD_FORM_ID}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-      }
-      // Show confirmation regardless (don't block UX on API failure)
-      showConfirmation();
-    } catch(e) {
-      showConfirmation(); // still show confirmation
-    }
+    // Fire all three in parallel — don't let any one failure block the UX
+    await Promise.allSettled([
+
+      // 1. Formspree lead capture
+      LEAD_FORM_ID !== 'YOUR_FORM_ID'
+        ? fetch(`https://formspree.io/f/${LEAD_FORM_ID}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          })
+        : Promise.resolve(),
+
+      // 2. Buyer confirmation email
+      buyerEmail
+        ? sendEmail({
+            to:      buyerEmail,
+            subject: `You're connected with ${selectedAdvisor.name} — Kivo`,
+            html:    buildBuyerEmail(selectedAdvisor, kivoData),
+          })
+        : Promise.resolve(),
+
+      // 3. Internal notification email
+      sendEmail({
+        to:      NOTIFY_EMAIL,
+        subject: `New Kivo lead: ${buyerEmail} → ${selectedAdvisor.name}`,
+        html:    buildNotifyEmail(selectedAdvisor, kivoData),
+      }),
+
+    ]);
+
+    // Always show confirmation — never block on API results
+    showConfirmation();
   }
 
   function showConfirmation() {
