@@ -35,10 +35,21 @@
 <body>
 <header class="header" id="header"><div class="container"><div class="header__inner">
   <a href="index.html" class="logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
-  <nav class="nav"><div class="nav__item"><a href="how-it-works.html" class="nav__link">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a></div></div><a href="for-advisors.html" class="nav__link nav__link--teal">For Advisors</a></nav>
-  <div class="header__actions"><a href="kivo-check.html" class="btn btn--primary btn--sm">Check Your Score</a><button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
+  <nav class="nav" role="navigation">
+    <div class="nav__item"><a href="how-it-works.html" class="nav__link">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a><a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a></div></div>
+    <div class="nav__item"><a href="learn.html" class="nav__link">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a><a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a><a href="stories.html"><span class="dd-icon" style="background:#F0FFF4">💬</span>Stories</a><a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a></div></div>
+    <div class="nav__item"><a href="about.html" class="nav__link">Company <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="about.html"><span class="dd-icon" style="background:#F0F4FF">👋</span>About</a><a href="security.html"><span class="dd-icon" style="background:#F0FFF4">🔒</span>Security</a><a href="partners.html"><span class="dd-icon" style="background:#FFF0EC">🤝</span>Partners</a><a href="contact.html"><span class="dd-icon" style="background:#E6FAF8">✉️</span>Contact</a></div></div>
+    <a href="for-advisors.html" class="nav__link nav__link--teal">For Advisors</a>
+  </nav>
+  <div class="header__actions"><a href="for-advisors.html" class="btn btn--secondary btn--sm hide-mobile">For Advisors</a><a href="kivo-check.html" class="btn btn--primary btn--sm">Check Your Score <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a><button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
 </div></div></header>
-<div class="mobile-menu" id="mobile-menu"><div class="mobile-menu__section"><a href="how-it-works.html">🏠 How it Works</a><a href="kivo-check.html">✅ Kivo Check</a></div><div class="mobile-menu__cta"><a href="kivo-check.html" class="btn btn--primary btn--full">Check My Score</a></div></div>
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu__section"><div class="mobile-menu__label">Features</div><a href="how-it-works.html">🏠 How it Works</a><a href="kivo-score.html">📊 Kivo Score</a><a href="kivo-check.html">✅ Kivo Check</a></div>
+  <div class="mobile-menu__section"><div class="mobile-menu__label">Resources</div><a href="learn.html">📖 Learn</a><a href="tools.html">🧮 Tools</a><a href="stories.html">💬 Stories</a><a href="faq.html">❓ FAQs</a></div>
+  <div class="mobile-menu__section"><div class="mobile-menu__label">Company</div><a href="about.html">👋 About Kivo</a><a href="security.html">🔒 Security</a><a href="partners.html">🤝 Partners</a><a href="contact.html">✉️ Contact</a></div>
+  <div class="mobile-menu__section"><a href="for-advisors.html" style="color:var(--teal-dk);font-weight:600;">🏦 For Advisors &amp; Brokers</a></div>
+  <div class="mobile-menu__cta"><a href="kivo-check.html" class="btn btn--primary btn--full">Check My Score — Free</a><a href="for-advisors.html" class="btn btn--secondary btn--full">I'm an Advisor</a></div>
+</div>
 
 <section class="privacy-hero"><div class="container"><div class="privacy-hero__inner">
   <div class="section-label fade-up"><div class="section-label__line"></div><span>Legal</span></div>
@@ -63,7 +74,7 @@
   </div>
 
   <h2 id="who-we-are">1. Who we are</h2>
-  <p>Kivo Technologies Ltd ("Kivo", "we", "us") operates the Kivo platform available at getkivo.co.uk. We are registered in England and Wales (Company number: 16424999) and are the data controller for the personal data we collect.</p>
+  <p>Kivo Technologies Ltd ("Kivo", "we", "us") operates the Kivo platform available at getkivo.co.uk. We are registered in England and Wales (Company number: <mark style="background:var(--coral-lt);padding:2px 6px;border-radius:4px;font-weight:700">TODO: Add Companies House number</mark>) and are the data controller for the personal data we collect.</p>
   <p>Our data protection contact is: <a href="mailto:privacy@getkivo.co.uk">privacy@getkivo.co.uk</a></p>
 
   <h2 id="what-we-collect">2. What data we collect</h2>

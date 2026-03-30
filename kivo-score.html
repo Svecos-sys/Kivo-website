@@ -56,14 +56,21 @@
 <body>
 <header class="header" id="header"><div class="container"><div class="header__inner">
   <a href="index.html" class="logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
-  <nav class="nav">
-    <div class="nav__item"><a href="how-it-works.html" class="nav__link active">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a><a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a></div></div>
-    <div class="nav__item"><a href="learn.html" class="nav__link">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a><a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a><a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a></div></div>
+  <nav class="nav" role="navigation">
+    <div class="nav__item"><a href="how-it-works.html" class="nav__link">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a><a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a></div></div>
+    <div class="nav__item"><a href="learn.html" class="nav__link">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a><a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a><a href="stories.html"><span class="dd-icon" style="background:#F0FFF4">💬</span>Stories</a><a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a></div></div>
+    <div class="nav__item"><a href="about.html" class="nav__link">Company <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="about.html"><span class="dd-icon" style="background:#F0F4FF">👋</span>About</a><a href="security.html"><span class="dd-icon" style="background:#F0FFF4">🔒</span>Security</a><a href="partners.html"><span class="dd-icon" style="background:#FFF0EC">🤝</span>Partners</a><a href="contact.html"><span class="dd-icon" style="background:#E6FAF8">✉️</span>Contact</a></div></div>
     <a href="for-advisors.html" class="nav__link nav__link--teal">For Advisors</a>
   </nav>
-  <div class="header__actions"><a href="kivo-check.html" class="btn btn--primary btn--sm">Check Your Score <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a><button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
+  <div class="header__actions"><a href="for-advisors.html" class="btn btn--secondary btn--sm hide-mobile">For Advisors</a><a href="kivo-check.html" class="btn btn--primary btn--sm">Check Your Score <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a><button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
 </div></div></header>
-<div class="mobile-menu" id="mobile-menu"><div class="mobile-menu__section"><div class="mobile-menu__label">Features</div><a href="how-it-works.html">🏠 How it Works</a><a href="kivo-score.html">📊 Kivo Score</a><a href="kivo-check.html">✅ Kivo Check</a></div><div class="mobile-menu__cta"><a href="kivo-check.html" class="btn btn--primary btn--full">Check My Score — Free</a></div></div>
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu__section"><div class="mobile-menu__label">Features</div><a href="how-it-works.html">🏠 How it Works</a><a href="kivo-score.html">📊 Kivo Score</a><a href="kivo-check.html">✅ Kivo Check</a></div>
+  <div class="mobile-menu__section"><div class="mobile-menu__label">Resources</div><a href="learn.html">📖 Learn</a><a href="tools.html">🧮 Tools</a><a href="stories.html">💬 Stories</a><a href="faq.html">❓ FAQs</a></div>
+  <div class="mobile-menu__section"><div class="mobile-menu__label">Company</div><a href="about.html">👋 About Kivo</a><a href="security.html">🔒 Security</a><a href="partners.html">🤝 Partners</a><a href="contact.html">✉️ Contact</a></div>
+  <div class="mobile-menu__section"><a href="for-advisors.html" style="color:var(--teal-dk);font-weight:600;">🏦 For Advisors &amp; Brokers</a></div>
+  <div class="mobile-menu__cta"><a href="kivo-check.html" class="btn btn--primary btn--full">Check My Score — Free</a><a href="for-advisors.html" class="btn btn--secondary btn--full">I'm an Advisor</a></div>
+</div>
 
 <!-- HERO -->
 <section class="score-hero blob-bg">
@@ -147,8 +154,30 @@
 <!-- THE FOUR PILLARS -->
 <section class="pillars-deep-section section">
   <div class="container">
+    <!-- Personalised banner — shown when score exists in localStorage -->
+    <div id="personalBanner" style="display:none;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:var(--r-xl);padding:28px 32px;margin-bottom:48px;display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+        <div>
+          <div style="font-size:.75rem;color:rgba(255,255,255,.5);font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:6px">Your Kivo Score breakdown</div>
+          <div style="font-family:var(--font-display);font-weight:800;font-size:1.75rem;color:var(--white);line-height:1" id="bannerScore">—</div>
+          <div style="font-size:.9rem;font-weight:600;margin-top:4px" id="bannerBand"></div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div style="text-align:center;padding:12px 16px;background:rgba(255,255,255,.07);border-radius:var(--r-md)">
+            <div style="font-size:.75rem;color:rgba(255,255,255,.5);margin-bottom:3px">Borrow up to</div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:1.0625rem;color:var(--white)" id="bannerBorrow">—</div>
+          </div>
+          <div style="text-align:center;padding:12px 16px;background:rgba(255,255,255,.07);border-radius:var(--r-md)">
+            <div style="font-size:.75rem;color:rgba(255,255,255,.5);margin-bottom:3px">Top action</div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:.875rem;color:var(--teal);max-width:200px" id="bannerAction">—</div>
+          </div>
+        </div>
+        <a href="kivo-check.html" style="font-size:.8125rem;color:rgba(255,255,255,.5);white-space:nowrap">Recalculate →</a>
+      </div>
+    </div>
+
     <div class="section-label fade-up"><div class="section-label__line"></div><span>The four pillars</span></div>
-    <h2 class="t-display-lg section-title fade-up fade-up-d1">How your score is built</h2>
+    <h2 class="t-display-lg section-title fade-up fade-up-d1" id="pillarsTitle">How your score is built</h2>
     <p class="t-body-lg tc-slate section-sub fade-up fade-up-d2">Each pillar represents a key dimension that lenders assess. We weight them based on their real impact on mortgage eligibility.</p>
 
     <div class="pillar-deep fade-up">
@@ -164,17 +193,17 @@
         </div>
       </div>
       <div class="pillar-deep__score-display">
-        <div class="pillar-deep__score-num" style="color:var(--teal)">85</div>
-        <div style="font-size:.875rem;font-weight:600;color:var(--teal-dk);margin-bottom:16px">Strong ✓</div>
-        <p style="font-size:.875rem;color:var(--slate)">Based on a £35,000 salary and a £150,000 target, your income-to-loan ratio is 4.3× — within standard lending criteria.</p>
+        <div class="pillar-deep__score-num" id="deepIncome" style="color:var(--teal)">85</div>
+        <div style="font-size:.875rem;font-weight:600;color:var(--teal-dk);margin-bottom:16px" id="deepIncomeLabel">Strong ✓</div>
+        <p style="font-size:.875rem;color:var(--slate)" id="deepIncomeText">Based on a £35,000 salary and a £150,000 target, your income-to-loan ratio is 4.3× — within standard lending criteria.</p>
       </div>
     </div>
 
     <div class="pillar-deep fade-up">
       <div class="pillar-deep__score-display" style="order:-1">
-        <div class="pillar-deep__score-num" style="color:#F59E0B">62</div>
-        <div style="font-size:.875rem;font-weight:600;color:#92400E;margin-bottom:16px">Could improve ↗</div>
-        <p style="font-size:.875rem;color:var(--slate)">An 8% deposit gives you some options, but getting to 10% would significantly broaden the range of products and rates available to you.</p>
+        <div class="pillar-deep__score-num" id="deepDeposit" style="color:#F59E0B">62</div>
+        <div style="font-size:.875rem;font-weight:600;color:#92400E;margin-bottom:16px" id="deepDepositLabel">Could improve ↗</div>
+        <p style="font-size:.875rem;color:var(--slate)" id="deepDepositText">An 8% deposit gives you some options, but getting to 10% would significantly broaden the range of products and rates available to you.</p>
       </div>
       <div>
         <div class="badge badge--coral mb-16">25% of your score</div>
@@ -202,17 +231,17 @@
         </div>
       </div>
       <div class="pillar-deep__score-display">
-        <div class="pillar-deep__score-num" style="color:var(--teal)">88</div>
-        <div style="font-size:.875rem;font-weight:600;color:var(--teal-dk);margin-bottom:16px">Excellent ✓✓</div>
-        <p style="font-size:.875rem;color:var(--slate)">No missed payments and low credit utilisation. This is one of your strongest areas — lenders will view this very favourably.</p>
+        <div class="pillar-deep__score-num" id="deepCredit" style="color:var(--teal)">88</div>
+        <div style="font-size:.875rem;font-weight:600;color:var(--teal-dk);margin-bottom:16px" id="deepCreditLabel">Excellent ✓✓</div>
+        <p style="font-size:.875rem;color:var(--slate)" id="deepCreditText">No missed payments and low credit utilisation. This is one of your strongest areas — lenders will view this very favourably.</p>
       </div>
     </div>
 
     <div class="pillar-deep fade-up">
       <div class="pillar-deep__score-display" style="order:-1">
-        <div class="pillar-deep__score-num" style="color:#F59E0B">70</div>
-        <div style="font-size:.875rem;font-weight:600;color:#92400E;margin-bottom:16px">Room to improve ↗</div>
-        <p style="font-size:.875rem;color:var(--slate)">We've flagged some regular subscription costs that could be reduced. Cutting £80–100/month in discretionary spending could boost this pillar by up to 8 points.</p>
+        <div class="pillar-deep__score-num" id="deepSpending" style="color:#F59E0B">70</div>
+        <div style="font-size:.875rem;font-weight:600;color:#92400E;margin-bottom:16px" id="deepSpendingLabel">Room to improve ↗</div>
+        <p style="font-size:.875rem;color:var(--slate)" id="deepSpendingText">We've flagged some regular subscription costs that could be reduced. Cutting £80–100/month in discretionary spending could boost this pillar by up to 8 points.</p>
       </div>
       <div>
         <div class="badge badge--coral mb-16">20% of your score</div>
@@ -292,7 +321,7 @@
 <div class="cookie-banner hidden" id="cookieBanner"><div class="cookie-banner__text">🍪 We use cookies to improve your experience. <a href="privacy.html">Learn more</a>.</div><div class="cookie-banner__actions"><button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button><button class="btn btn--primary btn--sm" id="cookieAccept">Accept</button></div></div>
 <script src="kivo.js"></script>
 <script>
-  // ── Load score from localStorage if available ──────────────
+  // ── Load score from localStorage and fully personalise page ─
   (function() {
     let saved;
     try { saved = JSON.parse(localStorage.getItem('kivoScore')); } catch(e) {}
@@ -358,6 +387,128 @@
       ctaBtn.href = 'find-an-advisor.html';
       ctaBtn.innerHTML = 'Find an Advisor <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     }
+
+    // ── Personalise the four pillar deep-dive scores ───────────
+    const fd = saved.formData || {};
+
+    function pillarColour(score) {
+      return score >= 75 ? 'var(--teal)' : score >= 50 ? '#F59E0B' : '#EF4444';
+    }
+    function pillarLabel(score) {
+      if (score >= 85) return 'Excellent ✓✓';
+      if (score >= 75) return 'Strong ✓';
+      if (score >= 61) return 'Good ↗';
+      if (score >= 45) return 'Could improve ↗';
+      return 'Needs attention ↑';
+    }
+    function pillarLabelColour(score) {
+      return score >= 75 ? 'var(--teal-dk)' : score >= 50 ? '#92400E' : '#991B1B';
+    }
+
+    // Income pillar
+    const incScore = p.income || 0;
+    const incMultiple = fd.income && fd.propertyValue
+      ? ((fd.propertyValue - (fd.deposit||0)) / fd.income).toFixed(1)
+      : null;
+    const el = document.getElementById('deepIncome');
+    if (el) { el.textContent = incScore; el.style.color = pillarColour(incScore); }
+    const lbl = document.getElementById('deepIncomeLabel');
+    if (lbl) { lbl.textContent = pillarLabel(incScore); lbl.style.color = pillarLabelColour(incScore); }
+    const txt = document.getElementById('deepIncomeText');
+    if (txt && incMultiple) {
+      const income = fd.income ? '£' + fd.income.toLocaleString('en-GB') : 'your income';
+      const loan   = fd.propertyValue && fd.deposit ? '£' + (fd.propertyValue - fd.deposit).toLocaleString('en-GB') : 'your target loan';
+      txt.textContent = `Based on ${income} and a loan of ${loan}, your income-to-loan ratio is ${incMultiple}×. ${parseFloat(incMultiple) <= 4.5 ? 'This is within standard lending criteria.' : 'Some lenders may require a specialist approach at this multiple.'}`;
+    }
+
+    // Deposit pillar
+    const depScore = p.deposit || 0;
+    const depPct   = fd.depositPct || 0;
+    const el2 = document.getElementById('deepDeposit');
+    if (el2) { el2.textContent = depScore; el2.style.color = pillarColour(depScore); }
+    const lbl2 = document.getElementById('deepDepositLabel');
+    if (lbl2) { lbl2.textContent = pillarLabel(depScore); lbl2.style.color = pillarLabelColour(depScore); }
+    const txt2 = document.getElementById('deepDepositText');
+    if (txt2 && fd.deposit) {
+      const dep  = '£' + fd.deposit.toLocaleString('en-GB');
+      const prop = fd.propertyValue ? '£' + fd.propertyValue.toLocaleString('en-GB') : 'your target property';
+      const ltv  = fd.ltv || (100 - depPct);
+      txt2.textContent = `Your deposit of ${dep} represents ${depPct}% of ${prop} (LTV: ${ltv}%). ${depPct >= 15 ? 'This is a strong position — you have access to a wide range of competitive rates.' : depPct >= 10 ? 'A 10%+ deposit opens up a good range of products. Saving further would improve your rates.' : 'Getting to 10% deposit is the most impactful single change you can make right now.'}`;
+    }
+
+    // Credit pillar
+    const credScore = p.credit || 0;
+    const credBand  = fd.credit || 'good';
+    const el3 = document.getElementById('deepCredit');
+    if (el3) { el3.textContent = credScore; el3.style.color = pillarColour(credScore); }
+    const lbl3 = document.getElementById('deepCreditLabel');
+    if (lbl3) { lbl3.textContent = pillarLabel(credScore); lbl3.style.color = pillarLabelColour(credScore); }
+    const txt3 = document.getElementById('deepCreditText');
+    if (txt3) {
+      const creditMessages = {
+        excellent: 'Your credit history is excellent — no missed payments, no defaults. Lenders will view this very favourably and it opens up the best rates.',
+        good:      'Your credit history is good. A few minor marks won't stop most lenders, but clearing any outstanding issues and staying consistent will help.',
+        fair:      'Your credit profile has some marks on it. Consider checking your credit file for errors, registering to vote, and building a clean payment record over the next 6–12 months.',
+        poor:      'Your credit profile needs some work before most mainstream lenders will consider you. A specialist advisor can help identify the right lenders for your situation.',
+      };
+      txt3.textContent = creditMessages[credBand] || creditMessages.good;
+    }
+
+    // Spending pillar
+    const spendScore = p.spending || 0;
+    const hasDebts   = fd.hasDebts === 'yes';
+    const el4 = document.getElementById('deepSpending');
+    if (el4) { el4.textContent = spendScore; el4.style.color = pillarColour(spendScore); }
+    const lbl4 = document.getElementById('deepSpendingLabel');
+    if (lbl4) { lbl4.textContent = pillarLabel(spendScore); lbl4.style.color = pillarLabelColour(spendScore); }
+    const txt4 = document.getElementById('deepSpendingText');
+    if (txt4) {
+      txt4.textContent = hasDebts
+        ? `You have existing debts (${fd.debtAmount || 'unknown amount'}) which reduce your net affordability. Reducing or clearing these before applying will improve both this pillar and your maximum loan size.`
+        : spendScore >= 75
+          ? 'No outstanding debts and consistent spending behaviour. Lenders will view your financial discipline positively.'
+          : 'Even without major debts, lenders look at your monthly commitments — subscriptions, regular outgoings, and spending patterns. Three months of controlled, consistent spending before applying can make a real difference.';
+    }
+
+    // ── Show personalised summary banner ──────────────────────
+    const banner = document.getElementById('personalBanner');
+    if (banner) {
+      banner.style.display = 'flex';
+      document.getElementById('bannerScore').textContent = s;
+      document.getElementById('bannerBand').innerHTML = `<span style="color:${s >= 80 ? 'var(--teal)' : s >= 61 ? '#60A5FA' : '#F59E0B'}">${saved.bandEmoji || ''} ${saved.band || ''}</span>`;
+      if (saved.borrowMax) document.getElementById('bannerBorrow').textContent = '£' + saved.borrowMax.toLocaleString('en-GB');
+      if (saved.topAction) document.getElementById('bannerAction').textContent = saved.topAction;
+      document.getElementById('pillarsTitle').textContent = 'Your score breakdown';
+    }
+
+    // ── Personalise the improvement cards ─────────────────────
+    // Reorder improvement cards to surface the weakest pillars first
+    const pillarScores = [
+      { key: 'income',   score: p.income   || 0 },
+      { key: 'deposit',  score: p.deposit  || 0 },
+      { key: 'credit',   score: p.credit   || 0 },
+      { key: 'spending', score: p.spending || 0 },
+    ].sort((a, b) => a.score - b.score);
+
+    // Show the user's weakest pillar prominently in the improvement section
+    const weakest = pillarScores[0];
+    const weakestMsg = {
+      income:  { title: 'Increase your income or reduce the loan', text: 'Your income-to-loan ratio is your biggest constraint. Consider a joint application, a longer mortgage term, or targeting a lower property price to improve affordability.', impact: 'High impact', colour: 'var(--teal)' },
+      deposit: { title: 'Save a larger deposit', text: 'Your deposit is your single highest-impact lever. Getting from under 10% to 10% LTV unlocks significantly better rates and more lenders.', impact: 'High impact', colour: 'var(--teal)' },
+      credit:  { title: 'Improve your credit profile', text: 'Register to vote, check your credit file for errors, clear any defaults, and maintain zero missed payments for 6+ months.', impact: 'High impact', colour: 'var(--teal)' },
+      spending:{ title: 'Reduce monthly commitments', text: 'Three months of consistent, controlled spending before applying can meaningfully improve this pillar. Cut subscriptions and reduce discretionary spend.', impact: 'High impact', colour: 'var(--teal)' },
+    };
+
+    // Update the first improvement card with the most relevant action
+    const firstCard = document.querySelector('.improve-card');
+    if (firstCard && weakestMsg[weakest.key]) {
+      const msg = weakestMsg[weakest.key];
+      firstCard.querySelector('.improve-card__impact').textContent = msg.impact;
+      firstCard.querySelector('.improve-card__impact').style.color = msg.colour;
+      firstCard.querySelector('.improve-card__title').textContent  = msg.title;
+      firstCard.querySelector('.improve-card__text').textContent   = msg.text;
+    }
+
   })();
 </script>
 </body>
