@@ -429,30 +429,30 @@
 
 
 <!-- ADVISOR TESTIMONIALS -->
-<section class="section" style="background:var(--white)">
+<!-- TESTIMONIALS HIDDEN: remove style="display:none" when you have real advisor testimonials -->
+<section class="section" style="background:var(--white);display:none" id="advisor-testimonials-section">
   <div class="container">
     <div class="section-label fade-up"><div class="section-label__line"></div><span>What advisors say</span></div>
     <h2 class="t-display-lg section-title fade-up fade-up-d1">Trusted by brokers across the UK</h2>
-
     <div class="adv-testimonials">
       <div class="testimonial fade-up">
         <div class="testimonial__stars">★★★★★</div>
-        <div class="testimonial__text">"Before Kivo, I'd spend the first 30 minutes of every client call just finding out if they could even qualify. Now they arrive knowing their score, their strengths, and what to work on. It's transformed how I work."</div>
+        <div class="testimonial__text"><!-- Replace with real advisor testimonial -->"Before Kivo, I'd spend the first 30 minutes of every client call just finding out if they could even qualify. Now they arrive knowing their score, their strengths, and what to work on. It's transformed how I work."</div>
         <div class="testimonial__author">
           <div class="testimonial__avatar" style="background:var(--navy)">RT</div>
           <div>
-            <div class="testimonial__name">Rachel Thompson</div>
+            <div class="testimonial__name"><!-- Real name -->Rachel Thompson</div>
             <div class="testimonial__detail">Independent Mortgage Advisor, London</div>
           </div>
         </div>
       </div>
       <div class="testimonial fade-up fade-up-d1">
         <div class="testimonial__stars">★★★★★</div>
-        <div class="testimonial__text">"The white-label feature is genuinely excellent. My clients think it's our own tool. It's helped us look more professional and tech-forward, and the quality of the leads has improved noticeably."</div>
+        <div class="testimonial__text"><!-- Replace with real advisor testimonial -->"The white-label feature is genuinely excellent. My clients think it's our own tool. It's helped us look more professional and tech-forward, and the quality of the leads has improved noticeably."</div>
         <div class="testimonial__author">
           <div class="testimonial__avatar" style="background:var(--teal-dk)">DW</div>
           <div>
-            <div class="testimonial__name">David Walsh</div>
+            <div class="testimonial__name"><!-- Real name -->David Walsh</div>
             <div class="testimonial__detail">Director, Walsh Mortgage Services, Manchester</div>
           </div>
         </div>
@@ -624,7 +624,7 @@
 <script src="kivo.js"></script>
 <script>
   // ⚠️  Replace YOUR_FORM_ID with your Formspree ID from formspree.io
-  const ADVISOR_FORM_ID = 'mwvwlqla';
+  const ADVISOR_FORM_ID = 'YOUR_FORM_ID';
 
   document.getElementById('advisorForm').addEventListener('submit', async function(e) {
     e.preventDefault();

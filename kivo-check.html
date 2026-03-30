@@ -621,15 +621,16 @@
         </div>
 
         <div class="results-cta">
-          <div class="results-cta__title">What would you like to do next?</div>
-          <div class="results-cta__text">You can improve your score yourself, speak to an advisor, or save your results and come back later.</div>
+          <div class="results-cta__title" id="resultsCtaTitle">What would you like to do next?</div>
+          <div class="results-cta__text" id="resultsCtaText">You can explore your full score breakdown, or get in touch if you'd like help finding a mortgage advisor.</div>
           <div class="results-cta__actions">
             <a href="kivo-score.html" class="btn btn--primary">
               See Full Report
               <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
-            <a href="for-advisors.html" class="btn btn--secondary">Speak to an Advisor</a>
+            <a href="find-an-advisor.html" class="btn btn--secondary" id="advisorContactBtn">Find an Advisor</a>
           </div>
+          <p style="font-size:.8125rem;color:var(--slate-lt);margin-top:12px;text-align:center">We'll help match you with a vetted, FCA-regulated mortgage advisor.</p>
         </div>
       </div>
     </div>
@@ -892,8 +893,8 @@ RETURN EXACTLY THIS JSON SHAPE:
   async function submitToFormspree(formData, result) {
     // ⚠️  Replace YOUR_FORM_ID with your Formspree form ID
     // Get one free at formspree.io — takes 2 minutes
-    const FORMSPREE_ID = 'xbdpgkgb'; // ⚠️ Get a free ID at formspree.io — paste it here
-    if (FORMSPREE_ID === 'xbdpgkgb') return; // skip if not configured
+    const FORMSPREE_ID = 'YOUR_FORM_ID'; // ⚠️ Get a free ID at formspree.io — paste it here
+    if (FORMSPREE_ID === 'YOUR_FORM_ID') return; // skip if not configured
 
     try {
       await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {

@@ -65,7 +65,7 @@
       </div>
       <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border)">
         <p class="t-label tc-slate" style="margin-bottom:8px">Registered address</p>
-        <p class="t-body-sm tc-slate">Kivo Technologies Ltd<br>Registered in England &amp; Wales<br>Company number: 16424999</p>
+        <p class="t-body-sm tc-slate">Kivo Technologies Ltd<br>Registered in England &amp; Wales<br>Company number: <mark style="background:var(--coral-lt);padding:2px 6px;border-radius:4px;font-weight:700">TODO: Add Companies House number</mark></p>
       </div>
     </div>
     <div class="contact-form-card fade-up fade-up-d1">
@@ -90,12 +90,27 @@
 <div class="cookie-banner hidden" id="cookieBanner"><div class="cookie-banner__text">🍪 We use cookies. <a href="privacy.html">Learn more</a>.</div><div class="cookie-banner__actions"><button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button><button class="btn btn--primary btn--sm" id="cookieAccept">Accept</button></div></div>
 <script src="kivo.js"></script>
 <script>
+  // Pre-fill topic if arriving from advisor CTA
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('subject') === 'advisor') {
+      const topicEl = document.getElementById('cTopic');
+      if (topicEl) topicEl.value = 'advisor';
+      // Scroll to form smoothly
+      setTimeout(() => {
+        const form = document.querySelector('.contact-form-card');
+        if (form) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+  })();
+
   document.getElementById('contactForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = document.getElementById('contactSubmit');
     btn.textContent = 'Sending...';
     btn.disabled = true;
-    const FORM_ID = 'mvzvkqkv';
+    // ⚠️  Replace YOUR_FORM_ID with your Formspree ID from formspree.io
+    const FORM_ID = 'YOUR_FORM_ID';
     try {
       const res = await fetch('https://formspree.io/f/' + FORM_ID, {
         method: 'POST',

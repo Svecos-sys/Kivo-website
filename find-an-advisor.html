@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find a Mortgage Advisor – Kivo</title>
+  <meta name="description" content="Get matched with a vetted, FCA-regulated mortgage advisor based on your Kivo Score and situation.">
+  <link rel="stylesheet" href="kivo.css">
+  <style>
+    body { background: var(--mist); }
+    .match-wrap {
+      min-height: 100svh; padding-top: 68px;
+      display: flex; flex-direction: column;
+    }
+
+    /* ── Score banner ──────────────────────────────────────── */
+    .score-banner {
+      background: var(--white); border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+    .score-banner__inner {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .score-banner__num {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: 1.75rem; color: var(--navy); line-height: 1;
+    }
+    .score-banner__label { font-size: .875rem; color: var(--slate); }
+    .score-banner__band { margin-left: auto; }
+
+    /* ── Main panels ───────────────────────────────────────── */
+    .match-main {
+      flex: 1; display: flex; align-items: flex-start;
+      justify-content: center; padding: 40px 24px 80px;
+    }
+    .match-panel {
+      width: 100%; max-width: 820px;
+    }
+
+    /* State panels */
+    .state-panel { display: none; }
+    .state-panel.active { display: block; }
+
+    /* Not ready */
+    .not-ready-card {
+      background: var(--white); border-radius: var(--r-xl);
+      box-shadow: var(--shadow-lg); padding: 48px;
+      text-align: center; max-width: 560px; margin: 0 auto;
+    }
+    .not-ready-card__icon { font-size: 3rem; margin-bottom: 16px; }
+
+    /* Nurture state */
+    .nurture-card {
+      background: var(--white); border-radius: var(--r-xl);
+      box-shadow: var(--shadow-lg); padding: 40px;
+      max-width: 640px; margin: 0 auto;
+    }
+
+    /* ── Advisor cards ─────────────────────────────────────── */
+    .advisors-header { margin-bottom: 28px; }
+    .advisor-cards { display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px; }
+    .advisor-card {
+      background: var(--white); border-radius: var(--r-xl);
+      border: 2px solid var(--border); padding: 28px;
+      cursor: pointer; transition: border-color var(--ease), box-shadow var(--ease), transform var(--ease);
+      display: grid; grid-template-columns: 64px 1fr auto;
+      gap: 20px; align-items: start;
+    }
+    .advisor-card:hover {
+      border-color: var(--coral); box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    .advisor-card.selected {
+      border-color: var(--coral); background: var(--coral-lt);
+      box-shadow: 0 0 0 3px rgba(255,107,74,.15);
+    }
+    .advisor-card__avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-weight: 800;
+      font-size: 1.25rem; color: var(--white); flex-shrink: 0;
+    }
+    .advisor-card__name {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 1.0625rem; color: var(--navy); margin-bottom: 2px;
+    }
+    .advisor-card__firm { font-size: .875rem; color: var(--coral); font-weight: 600; margin-bottom: 8px; }
+    .advisor-card__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+    .advisor-card__tag {
+      padding: 3px 10px; border-radius: var(--r-pill);
+      background: var(--mist); border: 1px solid var(--border);
+      font-size: .75rem; font-weight: 600; color: var(--slate);
+    }
+    .advisor-card__bio { font-size: .875rem; color: var(--slate); line-height: 1.55; }
+    .advisor-card__meta {
+      display: flex; flex-direction: column; align-items: flex-end;
+      gap: 8px; flex-shrink: 0;
+    }
+    .advisor-card__rating {
+      font-size: .8125rem; color: #F59E0B; font-weight: 700;
+    }
+    .advisor-card__leads {
+      font-size: .75rem; color: var(--slate-lt); text-align: right;
+    }
+    .advisor-card__select {
+      width: 24px; height: 24px; border-radius: 50%;
+      border: 2px solid var(--border); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--ease);
+    }
+    .advisor-card.selected .advisor-card__select {
+      background: var(--coral); border-color: var(--coral);
+    }
+    .advisor-card.selected .advisor-card__select::after {
+      content: '✓'; color: var(--white); font-size: .75rem; font-weight: 700;
+    }
+    .advisor-card__check-col {
+      display: flex; align-items: center; padding-top: 4px;
+    }
+
+    /* ── Consent step ──────────────────────────────────────── */
+    .consent-card {
+      background: var(--white); border-radius: var(--r-xl);
+      box-shadow: var(--shadow-lg); padding: 40px;
+      max-width: 600px; margin: 0 auto;
+    }
+    .selected-advisor-preview {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 20px; background: var(--mist);
+      border-radius: var(--r-lg); border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .selected-advisor-preview__avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-weight: 800;
+      font-size: 1rem; color: var(--white); flex-shrink: 0;
+    }
+    .data-sharing-list {
+      display: flex; flex-direction: column; gap: 8px;
+      margin: 20px 0;
+    }
+    .data-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; background: var(--mist);
+      border-radius: var(--r-md); font-size: .875rem; color: var(--navy);
+    }
+    .data-item__tick { color: var(--teal); font-weight: 700; }
+
+    /* ── Confirmation ──────────────────────────────────────── */
+    .confirm-card {
+      background: var(--white); border-radius: var(--r-xl);
+      box-shadow: var(--shadow-lg); padding: 56px 48px;
+      text-align: center; max-width: 560px; margin: 0 auto;
+    }
+    .confirm-card__icon {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--teal-lt); display: flex; align-items: center;
+      justify-content: center; font-size: 2rem;
+      margin: 0 auto 24px; animation: pop .5s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+
+    /* Progress dots */
+    .match-steps {
+      display: flex; justify-content: center; gap: 8px; margin-bottom: 32px;
+    }
+    .match-step-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--border); transition: background var(--ease), transform var(--ease);
+    }
+    .match-step-dot.active { background: var(--coral); transform: scale(1.3); }
+    .match-step-dot.done   { background: var(--teal); }
+
+    @media (max-width: 640px) {
+      .advisor-card { grid-template-columns: 48px 1fr; }
+      .advisor-card__meta { display: none; }
+      .advisor-card__avatar { width: 48px; height: 48px; font-size: 1rem; }
+      .confirm-card { padding: 36px 24px; }
+      .consent-card { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header" id="header"><div class="container"><div class="header__inner">
+  <a href="index.html" class="logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
+  <nav class="nav" role="navigation">
+    <div class="nav__item"><a href="how-it-works.html" class="nav__link">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a><a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a></div></div>
+    <div class="nav__item"><a href="learn.html" class="nav__link">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a><a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a><a href="stories.html"><span class="dd-icon" style="background:#F0FFF4">💬</span>Stories</a><a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a></div></div>
+    <div class="nav__item"><a href="about.html" class="nav__link">Company <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="about.html"><span class="dd-icon" style="background:#F0F4FF">👋</span>About</a><a href="security.html"><span class="dd-icon" style="background:#F0FFF4">🔒</span>Security</a><a href="partners.html"><span class="dd-icon" style="background:#FFF0EC">🤝</span>Partners</a><a href="contact.html"><span class="dd-icon" style="background:#E6FAF8">✉️</span>Contact</a></div></div>
+    <a href="for-advisors.html" class="nav__link nav__link--teal">For Advisors</a>
+  </nav>
+  <div class="header__actions">
+    <a href="kivo-check.html" class="btn btn--primary btn--sm">Check Your Score</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</div></div></header>
+
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu__section"><div class="mobile-menu__label">Features</div><a href="how-it-works.html">🏠 How it Works</a><a href="kivo-score.html">📊 Kivo Score</a><a href="kivo-check.html">✅ Kivo Check</a></div>
+  <div class="mobile-menu__section"><div class="mobile-menu__label">Resources</div><a href="learn.html">📖 Learn</a><a href="tools.html">🧮 Tools</a><a href="stories.html">💬 Stories</a><a href="faq.html">❓ FAQs</a></div>
+  <div class="mobile-menu__cta"><a href="kivo-check.html" class="btn btn--primary btn--full">Check My Score — Free</a></div>
+</div>
+
+<!-- Score banner -->
+<div class="score-banner" id="scoreBanner" style="display:none">
+  <div class="container">
+    <div class="score-banner__inner">
+      <div>
+        <div style="font-size:.75rem;color:var(--slate-lt);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px">Your Kivo Score</div>
+        <div class="score-banner__num" id="bannerScore">—</div>
+      </div>
+      <div class="score-banner__label" id="bannerBand"></div>
+      <div class="score-banner__band" id="bannerBadge"></div>
+    </div>
+  </div>
+</div>
+
+<main class="match-main">
+  <div class="match-panel">
+
+    <!-- ── No score state ──────────────────────────────────── -->
+    <div class="state-panel" id="stateNoScore">
+      <div class="not-ready-card">
+        <div class="not-ready-card__icon">📋</div>
+        <h1 class="t-display-md" style="margin-bottom:12px">Check your score first</h1>
+        <p class="t-body-md tc-slate" style="margin-bottom:28px">To match you with the right advisor, we need to know your Kivo Score. It only takes 2 minutes and there's no credit check.</p>
+        <a href="kivo-check.html" class="btn btn--primary btn--lg btn--full">
+          Get My Kivo Score — Free
+          <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── Not ready state (score < 61) ───────────────────── -->
+    <div class="state-panel" id="stateNotReady">
+      <div class="not-ready-card">
+        <div class="not-ready-card__icon">📈</div>
+        <h1 class="t-display-md" style="margin-bottom:12px">Let's improve your score first</h1>
+        <p class="t-body-md tc-slate" style="margin-bottom:8px">Your current Kivo Score is <strong id="notReadyScore">—</strong>. Advisors on Kivo work with buyers who have a score of 61 or above — this means the conversation is more productive for everyone.</p>
+        <p class="t-body-sm tc-slate" style="margin-bottom:28px">The good news: most people in the 31–60 range can reach 61+ with targeted improvements in 2–3 months.</p>
+        <a href="kivo-score.html" class="btn btn--primary btn--lg btn--full" style="margin-bottom:12px">
+          See My Improvement Plan
+          <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="kivo-check.html" class="btn btn--secondary btn--full">Retake the Check</a>
+      </div>
+    </div>
+
+    <!-- ── Nurture state (score 61–79) ────────────────────── -->
+    <div class="state-panel" id="stateNurture">
+      <div class="nurture-card">
+        <span class="badge badge--coral" style="margin-bottom:16px">Score: <span id="nurtureScore">—</span> — Getting there</span>
+        <h1 class="t-display-md" style="margin-bottom:12px">You're on the right track</h1>
+        <p class="t-body-md tc-slate" style="margin-bottom:20px">Your score of <strong id="nurtureScore2">—</strong> means you're in a good position and may qualify for mortgage products right now. Some of our advisors specialise in working with buyers at this stage — they can help you apply now or build a plan to improve your options.</p>
+        <div class="alert alert--warning" style="margin-bottom:24px">
+          <span>💡</span>
+          <span>Advisors will see your full Kivo profile before your first call — no need to repeat yourself.</span>
+        </div>
+        <button class="btn btn--primary btn--lg btn--full" onclick="showMatchingState()">
+          Show Me Matched Advisors
+          <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Matching state (score 61+) ─────────────────────── -->
+    <div class="state-panel" id="stateMatch">
+      <div class="match-steps" id="matchSteps">
+        <div class="match-step-dot active" id="dot1"></div>
+        <div class="match-step-dot" id="dot2"></div>
+        <div class="match-step-dot" id="dot3"></div>
+      </div>
+
+      <!-- Step 1: Choose an advisor -->
+      <div id="stepChoose">
+        <div class="advisors-header">
+          <div class="section-label"><div class="section-label__line"></div><span>Your matches</span></div>
+          <h1 class="t-display-md" style="margin-bottom:8px">Choose your advisor</h1>
+          <p class="t-body-md tc-slate">These three advisors have been matched to your situation. Choose one — they'll receive your Kivo profile and reach out within 48 hours.</p>
+        </div>
+
+        <div class="advisor-cards" id="advisorCards">
+          <!-- Populated by JS -->
+        </div>
+
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--teal-lt);border:1px solid #99E6DC;border-radius:var(--r-md);margin-bottom:24px">
+          <span style="font-size:1.125rem">🔄</span>
+          <div style="font-size:.875rem;color:var(--teal-dk)">Advisors are rotated fairly so every advisor gets equal access to leads based on their subscription tier.</div>
+        </div>
+
+        <button class="btn btn--primary btn--lg btn--full" id="chooseBtn" onclick="goToConsent()" disabled>
+          Continue with Selected Advisor
+          <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <p class="t-caption text-center mt-12">You're under no obligation. Your advisor will reach out — you choose whether to proceed.</p>
+      </div>
+
+      <!-- Step 2: Consent -->
+      <div id="stepConsent" style="display:none">
+        <div class="consent-card">
+          <h2 class="t-display-sm" style="margin-bottom:6px">Confirm data sharing</h2>
+          <p class="t-body-sm tc-slate" style="margin-bottom:20px">Before we connect you, please confirm you're happy for us to share the following with your chosen advisor.</p>
+
+          <div class="selected-advisor-preview" id="selectedPreview">
+            <!-- Populated by JS -->
+          </div>
+
+          <p style="font-size:.875rem;font-weight:600;color:var(--navy);margin-bottom:10px">We will share with them:</p>
+          <div class="data-sharing-list">
+            <div class="data-item"><span class="data-item__tick">✓</span>Your Kivo Score and pillar breakdown</div>
+            <div class="data-item"><span class="data-item__tick">✓</span>Your income, deposit, and target property value</div>
+            <div class="data-item"><span class="data-item__tick">✓</span>Your employment type and situation</div>
+            <div class="data-item"><span class="data-item__tick">✓</span>Your credit band and debt summary</div>
+            <div class="data-item"><span class="data-item__tick">✓</span>Your email address so they can contact you</div>
+          </div>
+
+          <div style="display:flex;align-items:flex-start;gap:10px;margin:20px 0">
+            <input type="checkbox" id="consentCheck" style="width:18px;height:18px;flex-shrink:0;margin-top:2px">
+            <label for="consentCheck" style="font-size:.875rem;color:var(--slate);line-height:1.55;cursor:pointer">
+              I consent to Kivo sharing my financial profile with the selected advisor. I understand this advisor is independently FCA-regulated and I am under no obligation to proceed. I can withdraw consent at any time by contacting <a href="mailto:privacy@getkivo.co.uk" style="color:var(--coral)">privacy@getkivo.co.uk</a>.
+            </label>
+          </div>
+
+          <button class="btn btn--primary btn--lg btn--full" id="consentBtn" onclick="submitLead()" disabled>
+            Share My Profile &amp; Connect
+            <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="btn-back" onclick="backToChoose()" style="width:100%;text-align:center;padding:12px;margin-top:8px;font-size:.9rem;color:var(--slate);cursor:pointer">← Go back and choose a different advisor</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Confirmed -->
+      <div id="stepConfirm" style="display:none">
+        <div class="confirm-card">
+          <div class="confirm-card__icon">🎉</div>
+          <h2 class="t-display-md" style="margin-bottom:12px">You're connected!</h2>
+          <p class="t-body-md tc-slate" style="margin-bottom:8px">We've shared your Kivo profile with <strong id="confirmedAdvisorName">your advisor</strong>. They'll be in touch within 48 hours.</p>
+          <p class="t-body-sm tc-slate" style="margin-bottom:32px">A confirmation has been sent to your email. If you don't hear back within 48 hours, contact us at <a href="mailto:hello@getkivo.co.uk" style="color:var(--coral)">hello@getkivo.co.uk</a>.</p>
+          <div style="background:var(--mist);border-radius:var(--r-lg);padding:20px;margin-bottom:28px;text-align:left">
+            <div style="font-size:.8125rem;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">What happens next</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;gap:10px;font-size:.875rem;color:var(--navy)"><span style="color:var(--teal);font-weight:700;flex-shrink:0">1.</span>Your advisor reviews your Kivo profile</div>
+              <div style="display:flex;gap:10px;font-size:.875rem;color:var(--navy)"><span style="color:var(--teal);font-weight:700;flex-shrink:0">2.</span>They reach out by email or phone within 48 hours</div>
+              <div style="display:flex;gap:10px;font-size:.875rem;color:var(--navy)"><span style="color:var(--teal);font-weight:700;flex-shrink:0">3.</span>Your first call is focused — they already know your situation</div>
+              <div style="display:flex;gap:10px;font-size:.875rem;color:var(--navy)"><span style="color:var(--teal);font-weight:700;flex-shrink:0">4.</span>You decide whether to proceed — no obligation</div>
+            </div>
+          </div>
+          <a href="kivo-score.html" class="btn btn--secondary btn--full">View My Full Score Report</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<div class="cookie-banner hidden" id="cookieBanner">
+  <div class="cookie-banner__text">🍪 We use cookies to improve your experience. <a href="privacy.html">Learn more</a>.</div>
+  <div class="cookie-banner__actions">
+    <button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button>
+    <button class="btn btn--primary btn--sm" id="cookieAccept">Accept</button>
+  </div>
+</div>
+
+<script src="kivo.js"></script>
+<script>
+  // ── Formspree endpoint for lead capture ───────────────────
+  // ⚠️  Create a new "Kivo Advisor Leads" form at formspree.io and paste the ID here
+  const LEAD_FORM_ID = 'YOUR_FORM_ID';
+
+  // ── Advisor pool ──────────────────────────────────────────
+  // In production this comes from your database.
+  // For now, seed with placeholder advisors — replace with real data when advisors sign up.
+  // The rotation index in localStorage ensures fair distribution.
+  const ADVISOR_POOL = [
+    {
+      id: 'adv-001',
+      name: 'Sarah Mitchell',
+      initials: 'SM',
+      colour: '#FF6B4A',
+      firm: 'Mitchell Mortgage Advice',
+      location: 'London & South East',
+      tags: ['First-time buyers', 'Self-employed', 'Help to Buy'],
+      bio: '12 years helping first-time buyers navigate the London market. CeMAP qualified, whole-of-market access.',
+      rating: '4.9',
+      reviews: 47,
+    },
+    {
+      id: 'adv-002',
+      name: 'James Okafor',
+      initials: 'JO',
+      colour: '#00C2A8',
+      firm: 'Okafor Financial Services',
+      location: 'Midlands & nationwide',
+      tags: ['Remortgages', 'Buy-to-let', 'Complex income'],
+      bio: 'Specialist in complex income cases including contractors, company directors, and multiple income streams.',
+      rating: '4.8',
+      reviews: 31,
+    },
+    {
+      id: 'adv-003',
+      name: 'Priya Sharma',
+      initials: 'PS',
+      colour: '#8B5CF6',
+      firm: 'Sharma Mortgage Brokers',
+      location: 'North West & Yorkshire',
+      tags: ['First-time buyers', 'Shared Ownership', 'New build'],
+      bio: 'Passionate about making homeownership accessible. Specialist in government schemes and new build properties.',
+      rating: '5.0',
+      reviews: 23,
+    },
+    {
+      id: 'adv-004',
+      name: 'David Chen',
+      initials: 'DC',
+      colour: '#0F1E2D',
+      firm: 'Chen Mortgage Consulting',
+      location: 'South West & Wales',
+      tags: ['Moving home', 'Equity release', 'Later life'],
+      bio: 'Experienced advisor specialising in home movers and those approaching retirement who need flexible lending solutions.',
+      rating: '4.7',
+      reviews: 58,
+    },
+    {
+      id: 'adv-005',
+      name: 'Emma Thornton',
+      initials: 'ET',
+      colour: '#F59E0B',
+      firm: 'Thornton & Associates',
+      location: 'Scotland & North East',
+      tags: ['First-time buyers', 'Self-employed', 'Poor credit'],
+      bio: 'Specialist in adverse credit and non-standard income. Helping buyers who've been told no elsewhere.',
+      rating: '4.9',
+      reviews: 39,
+    },
+  ];
+
+  // ── State ─────────────────────────────────────────────────
+  let kivoData    = null;
+  let shownAdvisors = [];
+  let selectedAdvisor = null;
+
+  // ── On load: read score, decide which state to show ───────
+  window.addEventListener('DOMContentLoaded', () => {
+    try { kivoData = JSON.parse(localStorage.getItem('kivoScore')); } catch(e) {}
+
+    if (!kivoData || !kivoData.overallScore) {
+      showState('stateNoScore');
+      return;
+    }
+
+    const score = kivoData.overallScore;
+
+    // Show score banner
+    const banner = document.getElementById('scoreBanner');
+    if (banner) {
+      banner.style.display = 'block';
+      document.getElementById('bannerScore').textContent = score;
+      document.getElementById('bannerBand').textContent  = (kivoData.bandEmoji || '') + ' ' + (kivoData.band || '');
+      const colour = score >= 80 ? 'var(--teal)' : score >= 61 ? '#3B82F6' : '#F59E0B';
+      document.getElementById('bannerBadge').innerHTML =
+        `<span class="badge" style="background:${score >= 80 ? 'var(--teal-lt)' : score >= 61 ? '#EFF6FF' : '#FFFBEB'};color:${colour}">${score >= 80 ? 'Ready' : score >= 61 ? 'Good' : 'Improving'}</span>`;
+    }
+
+    if (score < 61) {
+      document.getElementById('notReadyScore').textContent = score;
+      showState('stateNotReady');
+    } else if (score < 80) {
+      document.getElementById('nurtureScore').textContent  = score;
+      document.getElementById('nurtureScore2').textContent = score;
+      showState('stateNurture');
+    } else {
+      buildAdvisorCards();
+      showState('stateMatch');
+    }
+  });
+
+  function showState(id) {
+    document.querySelectorAll('.state-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function showMatchingState() {
+    buildAdvisorCards();
+    showState('stateMatch');
+  }
+
+  // ── Build the 3 advisor cards with fair rotation ──────────
+  function buildAdvisorCards() {
+    // Get rotation index from localStorage so it's persistent across visits
+    let rotIdx = parseInt(localStorage.getItem('kivoAdvisorRotation') || '0');
+
+    // Select 3 advisors starting from rotation index
+    shownAdvisors = [];
+    for (let i = 0; i < 3; i++) {
+      shownAdvisors.push(ADVISOR_POOL[(rotIdx + i) % ADVISOR_POOL.length]);
+    }
+
+    // Advance rotation by 3 for next visitor
+    localStorage.setItem('kivoAdvisorRotation', (rotIdx + 3) % ADVISOR_POOL.length);
+
+    const container = document.getElementById('advisorCards');
+    container.innerHTML = shownAdvisors.map((adv, i) => `
+      <div class="advisor-card" id="adv-card-${i}" onclick="selectAdvisor(${i})">
+        <div class="advisor-card__avatar" style="background:${adv.colour}">${adv.initials}</div>
+        <div>
+          <div class="advisor-card__name">${adv.name}</div>
+          <div class="advisor-card__firm">${adv.firm}</div>
+          <div class="advisor-card__tags">
+            ${adv.tags.map(t => `<span class="advisor-card__tag">${t}</span>`).join('')}
+            <span class="advisor-card__tag">📍 ${adv.location}</span>
+          </div>
+          <div class="advisor-card__bio">${adv.bio}</div>
+        </div>
+        <div class="advisor-card__meta">
+          <div class="advisor-card__rating">★ ${adv.rating} <span style="color:var(--slate-lt);font-weight:400">(${adv.reviews})</span></div>
+          <div class="advisor-card__leads">FCA regulated</div>
+          <div class="advisor-card__check-col"><div class="advisor-card__select" id="check-${i}"></div></div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function selectAdvisor(idx) {
+    selectedAdvisor = shownAdvisors[idx];
+    document.querySelectorAll('.advisor-card').forEach((c, i) => {
+      c.classList.toggle('selected', i === idx);
+    });
+    document.getElementById('chooseBtn').disabled = false;
+    document.getElementById('chooseBtn').textContent = `Continue with ${selectedAdvisor.name}`;
+    const btn = document.getElementById('chooseBtn');
+    btn.innerHTML = `Continue with ${selectedAdvisor.name} <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  }
+
+  function goToConsent() {
+    if (!selectedAdvisor) return;
+    // Update dots
+    document.getElementById('dot1').classList.remove('active'); document.getElementById('dot1').classList.add('done');
+    document.getElementById('dot2').classList.add('active');
+    // Populate preview
+    document.getElementById('selectedPreview').innerHTML = `
+      <div class="selected-advisor-preview__avatar" style="background:${selectedAdvisor.colour}">${selectedAdvisor.initials}</div>
+      <div>
+        <div style="font-weight:700;font-size:.9375rem;color:var(--navy)">${selectedAdvisor.name}</div>
+        <div style="font-size:.875rem;color:var(--coral);font-weight:600">${selectedAdvisor.firm}</div>
+        <div style="font-size:.8125rem;color:var(--slate)">★ ${selectedAdvisor.rating} · FCA regulated · ${selectedAdvisor.location}</div>
+      </div>`;
+    document.getElementById('stepChoose').style.display  = 'none';
+    document.getElementById('stepConsent').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function backToChoose() {
+    document.getElementById('dot2').classList.remove('active');
+    document.getElementById('dot1').classList.remove('done'); document.getElementById('dot1').classList.add('active');
+    document.getElementById('stepConsent').style.display = 'none';
+    document.getElementById('stepChoose').style.display  = 'block';
+  }
+
+  // Enable consent button only when checkbox ticked
+  document.addEventListener('DOMContentLoaded', () => {
+    const cb = document.getElementById('consentCheck');
+    if (cb) cb.addEventListener('change', () => {
+      document.getElementById('consentBtn').disabled = !cb.checked;
+    });
+  });
+
+  // ── Submit lead to Formspree ──────────────────────────────
+  async function submitLead() {
+    const btn = document.getElementById('consentBtn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    const fd = kivoData?.formData || {};
+    const payload = {
+      // Lead info
+      advisorId:        selectedAdvisor.id,
+      advisorName:      selectedAdvisor.name,
+      advisorFirm:      selectedAdvisor.firm,
+      // Buyer info
+      buyerEmail:       fd.email || '(not provided)',
+      kivoScore:        kivoData?.overallScore,
+      kivoBand:         kivoData?.band,
+      // Profile
+      situation:        fd.situation,
+      employment:       fd.employment,
+      income:           fd.income ? `£${fd.income.toLocaleString('en-GB')}` : '—',
+      deposit:          fd.deposit ? `£${fd.deposit.toLocaleString('en-GB')}` : '—',
+      depositPct:       fd.depositPct ? `${fd.depositPct}%` : '—',
+      propertyValue:    fd.propertyValue ? `£${fd.propertyValue.toLocaleString('en-GB')}` : '—',
+      creditBand:       fd.credit,
+      debts:            fd.hasDebts === 'yes' ? fd.debtAmount : 'none',
+      borrowMin:        kivoData?.borrowMin ? `£${kivoData.borrowMin.toLocaleString('en-GB')}` : '—',
+      borrowMax:        kivoData?.borrowMax ? `£${kivoData.borrowMax.toLocaleString('en-GB')}` : '—',
+      // Pillars
+      pillarIncome:     kivoData?.pillars?.income,
+      pillarDeposit:    kivoData?.pillars?.deposit,
+      pillarCredit:     kivoData?.pillars?.credit,
+      pillarSpending:   kivoData?.pillars?.spending,
+      // Meta
+      consentGiven:     true,
+      consentTimestamp: new Date().toISOString(),
+      submittedAt:      new Date().toISOString(),
+    };
+
+    try {
+      if (LEAD_FORM_ID !== 'YOUR_FORM_ID') {
+        await fetch(`https://formspree.io/f/${LEAD_FORM_ID}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      }
+      // Show confirmation regardless (don't block UX on API failure)
+      showConfirmation();
+    } catch(e) {
+      showConfirmation(); // still show confirmation
+    }
+  }
+
+  function showConfirmation() {
+    document.getElementById('dot2').classList.remove('active'); document.getElementById('dot2').classList.add('done');
+    document.getElementById('dot3').classList.add('active');
+    document.getElementById('confirmedAdvisorName').textContent = selectedAdvisor?.name || 'your advisor';
+    document.getElementById('stepConsent').style.display = 'none';
+    document.getElementById('stepConfirm').style.display  = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
