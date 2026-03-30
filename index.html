@@ -60,7 +60,9 @@
     .login-logo {
       display: flex; align-items: center; gap: 10px; margin-bottom: 32px;
       font-family: var(--font-d); font-weight: 800; font-size: 1.5rem; color: var(--navy);
+      letter-spacing: -.03em;
     }
+    .login-logo span { letter-spacing: -.03em; }
     .login-logo__mark {
       width: 36px; height: 36px; background: var(--coral); border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
@@ -112,7 +114,7 @@
     .sidebar__logo {
       display: flex; align-items: center; gap: 10px; padding: 24px 20px 20px;
       font-family: var(--font-d); font-weight: 800; font-size: 1.25rem; color: var(--white);
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255,255,255,.08); letter-spacing: -.03em;
     }
     .sidebar__logo-mark {
       width: 32px; height: 32px; background: var(--coral); border-radius: 9px;
@@ -345,11 +347,10 @@
 ════════════════════════════════════════════════════════════ -->
 <div class="screen active" id="screenLogin">
   <div class="login-card">
-    <div class="login-logo">
+    <a href="../index.html" class="login-logo" style="text-decoration:none;color:var(--navy)">
       <div class="login-logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      kiv<span>o</span>
-      <span class="sidebar__badge" style="font-size:.625rem;padding:2px 7px;border-radius:100px;background:#F0F4FF;color:#4A5568;margin-left:4px">Advisor Portal</span>
-    </div>
+      kiv<span>o</span><span class="sidebar__badge" style="font-size:.625rem;padding:2px 7px;border-radius:100px;background:#F0F4FF;color:#4A5568;margin-left:8px;letter-spacing:.04em">Advisor Portal</span>
+    </a>
     <div class="login-title">Welcome back</div>
     <div class="login-sub">Enter your email and we'll send you a magic link to sign in — no password needed.</div>
 
@@ -388,11 +389,10 @@
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
-      <div class="sidebar__logo">
+      <a href="../index.html" class="sidebar__logo" style="text-decoration:none;color:var(--white)">
         <div class="sidebar__logo-mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        kiv<span>o</span>
-        <span class="sidebar__badge">Portal</span>
-      </div>
+        kiv<span>o</span><span class="sidebar__badge" style="letter-spacing:.04em">Portal</span>
+      </a>
 
       <nav class="sidebar__nav">
         <div class="sidebar__section-label">Main</div>
