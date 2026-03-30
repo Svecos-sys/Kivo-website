@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kivo – Know Your Mortgage Readiness Before You Apply</title>
+  <title>Know Your Mortgage Readiness Before You Apply | Kivo</title>
   <meta name="description" content="Kivo gives you a personalised mortgage readiness score in 2 minutes. Understand exactly where you stand, what lenders see, and how to improve — before you ever speak to a broker.">
   <link rel="stylesheet" href="kivo.css">
   <style>
@@ -104,11 +104,39 @@
   <meta name="twitter:title" content="Kivo – Know Your Mortgage Readiness Before You Apply | Kivo">
   <meta name="twitter:description" content="Get a personalised mortgage readiness score in 2 minutes. Understand what lenders see, where to improve, and the fastest path to your first home. Free, no credit check.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23FF6B4A'/><path d='M10 8v16M10 16l8-8M10 16l8 8' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "Kivo",
+      "legalName": "Kivo Technologies Ltd",
+      "url": "https://getkivo.co.uk",
+      "logo": "https://getkivo.co.uk/og-image.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "hello@getkivo.co.uk",
+        "contactType": "customer service"
+      },
+      "sameAs": []
+    },
+    {
+      "@type": "WebSite",
+      "name": "Kivo",
+      "url": "https://getkivo.co.uk",
+      "description": "AI-powered mortgage readiness platform for UK home buyers"
+    }
+  ]
+}
+</script>
 </head>
 <body>
+<a href="#main-content" class="skip-link" style="position:absolute;top:-40px;left:0;background:var(--coral);color:white;padding:8px 16px;border-radius:0 0 8px 0;font-weight:600;z-index:9999;transition:top .2s" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
 
 <header class="header" id="header"><div class="container"><div class="header__inner">
-  <a href="index.html" class="logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
+  <a href="index.html" class="logo" aria-label="Kivo — go to homepage"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
   <nav class="nav" role="navigation">
     <div class="nav__item"><a href="how-it-works.html" class="nav__link">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a><a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a></div></div>
     <div class="nav__item"><a href="learn.html" class="nav__link">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a><a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a><a href="stories.html"><span class="dd-icon" style="background:#F0FFF4">💬</span>Stories</a><a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a></div></div>
@@ -127,7 +155,7 @@
 </div>
 
 <!-- ── HERO ───────────────────────────────────────────────── -->
-<section class="hero blob-bg">
+<div id="main-content"></div><section class="hero blob-bg">
   <div class="blob blob--coral-tr"></div>
   <div class="blob blob--teal-bl"></div>
   <div class="container"><div class="hero__inner">
@@ -157,7 +185,7 @@
       </div>
     </div>
     <div class="fade-up fade-up-d1">
-      <div class="score-card-mockup">
+      <div class="score-card-mockup" id="heroScoreCard" style="opacity:0;transition:opacity .3s ease">
         <div class="score-card-mockup__header">
           <div class="score-card-mockup__name" id="heroCardName">Sophie's Kivo Score</div>
           <span class="badge badge--teal" id="heroCardBadge">Updated today</span>
@@ -346,7 +374,7 @@
   </div>
 </section>
 
-<footer class="footer"><div class="container"><div class="footer__grid"><div><a href="index.html" class="logo footer__logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a><p class="footer__tagline">Your friendly AI-powered guide to getting mortgage-ready. No jargon, no pressure — just clarity and a clear next step.</p><div class="footer__social"><a href="#" aria-label="Twitter">𝕏</a><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="Instagram">📷</a></div></div><div><div class="footer__col-title">Product</div><div class="footer__links"><a href="how-it-works.html">How it Works</a><a href="kivo-score.html">Kivo Score</a><a href="kivo-check.html">Kivo Check</a><a href="for-advisors.html">For Advisors</a></div></div><div><div class="footer__col-title">Resources</div><div class="footer__links"><a href="learn.html">Learn</a><a href="tools.html">Tools</a><a href="stories.html">Stories</a><a href="faq.html">FAQs</a></div></div><div><div class="footer__col-title">Company</div><div class="footer__links"><a href="about.html">About</a><a href="security.html">Security</a><a href="partners.html">Partners</a><a href="contact.html">Contact</a><a href="mailto:hello@getkivo.co.uk">hello@getkivo.co.uk</a></div></div></div><div class="footer__reg"><strong>Important:</strong> Kivo is not a mortgage broker and does not provide regulated financial advice. The Kivo Score is an indicative tool — it is not a guarantee of a mortgage offer. Always speak to a qualified, FCA-regulated mortgage adviser before making any financial decisions. Kivo Technologies Ltd is registered in England &amp; Wales.</div><div class="footer__bottom"><div class="footer__copy">© 2025 Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.</div><div class="footer__legal"><a href="privacy.html">Privacy Policy</a><a href="security.html">Security</a><a href="privacy.html">Cookie Policy</a></div></div></div></footer>
+<footer class="footer"><div class="container"><div class="footer__grid"><div><a href="index.html" class="logo footer__logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a><p class="footer__tagline">Your friendly AI-powered guide to getting mortgage-ready. No jargon, no pressure — just clarity and a clear next step.</p><div class="footer__social"><a href="#" aria-label="Twitter">𝕏</a><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="Instagram">📷</a></div></div><div><div class="footer__col-title">Product</div><div class="footer__links"><a href="how-it-works.html">How it Works</a><a href="kivo-score.html">Kivo Score</a><a href="kivo-check.html">Kivo Check</a><a href="for-advisors.html">For Advisors</a></div></div><div><div class="footer__col-title">Resources</div><div class="footer__links"><a href="learn.html">Learn</a><a href="tools.html">Tools</a><a href="stories.html">Stories</a><a href="faq.html">FAQs</a></div></div><div><div class="footer__col-title">Company</div><div class="footer__links"><a href="about.html">About</a><a href="security.html">Security</a><a href="partners.html">Partners</a><a href="contact.html">Contact</a><a href="mailto:hello@getkivo.co.uk">hello@getkivo.co.uk</a></div></div></div><div class="footer__reg"><strong>Important:</strong> Kivo is not a mortgage broker and does not provide regulated financial advice. The Kivo Score is an indicative tool — it is not a guarantee of a mortgage offer. Always speak to a qualified, FCA-regulated mortgage adviser before making any financial decisions. Kivo Technologies Ltd is registered in England &amp; Wales.</div><div class="footer__bottom"><div class="footer__copy">© <span class="year"></span> Kivo Technologies Ltd. · Built for first-time buyers, dreamers, and doers.</div><div class="footer__legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="security.html">Security</a><a href="privacy.html">Cookie Policy</a></div></div></div></footer>
 <div class="cookie-banner hidden" id="cookieBanner"><div class="cookie-banner__text">🍪 We use cookies to improve your experience. <a href="privacy.html">Learn more</a>.</div><div class="cookie-banner__actions"><button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button><button class="btn btn--primary btn--sm" id="cookieAccept">Accept</button></div></div>
 
 <script src="kivo.js"></script>
@@ -394,6 +422,10 @@
           });
         }
       }
+
+      // Fade in score card now that content is correct (prevents flash)
+      const cardEl = document.getElementById('heroScoreCard');
+      if (cardEl) cardEl.style.opacity = '1';
 
       const target2 = target; // alias for closure below
       const numEl  = document.getElementById('heroScoreNum');

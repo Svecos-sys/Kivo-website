@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kivo for Advisors – Better-Prepared Clients. More Completions.</title>
+  <title>Kivo for Mortgage Advisors — Better-Prepared Clients | Kivo</title>
   <meta name="description" content="Kivo helps mortgage advisors and brokers work with better-prepared clients, spend less time on fact-finds, and convert more enquiries into completions.">
   <link rel="stylesheet" href="kivo.css">
   <style>
@@ -175,11 +175,12 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23FF6B4A'/><path d='M10 8v16M10 16l8-8M10 16l8 8' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 </head>
 <body>
+<a href="#main-content" class="skip-link" style="position:absolute;top:-40px;left:0;background:var(--coral);color:white;padding:8px 16px;border-radius:0 0 8px 0;font-weight:600;z-index:9999;transition:top .2s" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
 
 <header class="header" id="header">
   <div class="container">
     <div class="header__inner">
-      <a href="index.html" class="logo">
+      <a href="index.html" class="logo" aria-label="Kivo — go to homepage">
         <div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <span class="logo__wordmark">kiv<span>o</span></span>
       </a>
@@ -240,7 +241,7 @@
 
 
 <!-- HERO -->
-<section class="adv-hero blob-bg">
+<div id="main-content"></div><section class="adv-hero blob-bg">
   <div class="blob blob--coral-dk-tr"></div>
   <div class="blob blob--teal-dk-br"></div>
   <div class="container">
@@ -608,8 +609,8 @@
     </div>
     <div class="footer__reg"><strong>Important:</strong> Kivo is not a mortgage broker and does not provide regulated financial advice. Kivo Technologies Ltd is registered in England &amp; Wales.</div>
     <div class="footer__bottom">
-      <div class="footer__copy">© 2025 Kivo Technologies Ltd.</div>
-      <div class="footer__legal"><a href="privacy.html">Privacy Policy</a><a href="security.html">Security</a></div>
+      <div class="footer__copy">© <span class="year"></span> Kivo Technologies Ltd.</div>
+      <div class="footer__legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="security.html">Security</a></div>
     </div>
   </div>
 </footer>
@@ -625,7 +626,7 @@
 <script src="kivo.js"></script>
 <script>
   // ⚠️  Replace YOUR_FORM_ID with your Formspree ID from formspree.io
-  const ADVISOR_FORM_ID = 'mwvwlqla';
+  const ADVISOR_FORM_ID = 'YOUR_FORM_ID';
 
   document.getElementById('advisorForm').addEventListener('submit', async function(e) {
     e.preventDefault();

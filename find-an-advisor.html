@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Find a Mortgage Advisor – Kivo</title>
+  <title>Find a Matched Mortgage Advisor | Kivo</title>
   <meta name="description" content="Get matched with a vetted, FCA-regulated mortgage advisor based on your Kivo Score and situation.">
   <link rel="stylesheet" href="kivo.css">
   <style>
@@ -179,9 +179,10 @@
   </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link" style="position:absolute;top:-40px;left:0;background:var(--coral);color:white;padding:8px 16px;border-radius:0 0 8px 0;font-weight:600;z-index:9999;transition:top .2s" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
 
 <header class="header" id="header"><div class="container"><div class="header__inner">
-  <a href="index.html" class="logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
+  <a href="index.html" class="logo" aria-label="Kivo — go to homepage"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
   <nav class="nav" role="navigation">
     <div class="nav__item"><a href="how-it-works.html" class="nav__link">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a><a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a></div></div>
     <div class="nav__item"><a href="learn.html" class="nav__link">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a><a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a><a href="stories.html"><span class="dd-icon" style="background:#F0FFF4">💬</span>Stories</a><a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a></div></div>
@@ -563,12 +564,10 @@
     });
   });
 
-  // ── Resend API key ────────────────────────────────────────
-  // ⚠️  Replace with your Resend API key from resend.com
-  // Ensure your domain getkivo.co.uk is verified in Resend first
-  const RESEND_API_KEY = 're_WooeHwpe_2LU1EiS3Tg5njKN3B3AeJKGd';
-  const FROM_EMAIL     = 'noreply@getkivo.co.uk';
-  const NOTIFY_EMAIL   = 'hello@getkivo.co.uk'; // internal notification recipient
+  // ── Email config ──────────────────────────────────────────
+  // API key is stored in Vercel environment variables (not here)
+  // Emails are sent via /api/send-email serverless function
+  const NOTIFY_EMAIL = 'hello@getkivo.co.uk'; // internal notification recipient
 
   // ── Build buyer confirmation email HTML ───────────────────
   function buildBuyerEmail(advisor, kivoData) {
@@ -714,26 +713,26 @@
     return `<html><body style="font-family:Arial,sans-serif;font-size:.9rem;color:#0F1E2D;line-height:1.7">${lines.join('<br>')}</body></html>`;
   }
 
-  // ── Send email via Resend API ──────────────────────────────
+  // ── Send email via Vercel serverless proxy ───────────────
+  // Calls /api/send-email which forwards to Resend server-side
+  // This avoids CORS issues with calling Resend directly from the browser
   async function sendEmail({ to, subject, html }) {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
-      },
-      body: JSON.stringify({
-        from: `Kivo <${FROM_EMAIL}>`,
-        to:   [to],
-        subject,
-        html,
-      }),
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      console.warn('Resend error:', err);
+    try {
+      const res = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ to, subject, html }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        console.warn('Email proxy error:', err);
+        return false;
+      }
+      return true;
+    } catch (err) {
+      console.warn('Email send failed:', err);
+      return false;
     }
-    return res.ok;
   }
 
   // ── Submit lead: Formspree + two emails ───────────────────

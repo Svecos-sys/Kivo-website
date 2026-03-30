@@ -75,8 +75,24 @@
     if (!localStorage.getItem('kivo_cookie')) {
       setTimeout(() => cookieBanner.classList.remove('hidden'), 1400);
     }
-    if (cookieAccept)  cookieAccept.addEventListener('click',  () => { localStorage.setItem('kivo_cookie','accepted');  cookieBanner.classList.add('hidden'); });
-    if (cookieDecline) cookieDecline.addEventListener('click', () => { localStorage.setItem('kivo_cookie','declined');  cookieBanner.classList.add('hidden'); });
+    if (cookieAccept) cookieAccept.addEventListener('click', () => {
+      localStorage.setItem('kivo_cookie', 'accepted');
+      cookieBanner.classList.add('hidden');
+      // Enable Vercel Analytics when accepted
+      if (typeof window.va === 'function') window.va('event', 'cookie_accepted');
+    });
+    if (cookieDecline) cookieDecline.addEventListener('click', () => {
+      localStorage.setItem('kivo_cookie', 'declined');
+      cookieBanner.classList.add('hidden');
+      // Disable Vercel Analytics when declined — set opt-out flag
+      localStorage.setItem('va-disable', '1');
+      // Remove any existing va cookies
+      document.cookie.split(';').forEach(c => {
+        if (c.trim().startsWith('va_')) {
+          document.cookie = c.trim().split('=')[0] + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
+        }
+      });
+    });
   }
 
   // ── 5. Active nav link ─────────────────────────────────
@@ -125,5 +141,22 @@
       }
     });
   });
+
+  // ── Dynamic copyright year ────────────────────────────────
+  document.querySelectorAll('.footer__copy').forEach(el => {
+    el.innerHTML = el.innerHTML.replace(/© \d{4}/, '© ' + new Date().getFullYear());
+  });
+
+  // ── Score history ─────────────────────────────────────────
+  // Expose globally so kivo-check.html can call it after scoring
+  window.kivoSaveScoreHistory = function(score, band, bandEmoji) {
+    try {
+      const history = JSON.parse(localStorage.getItem('kivoScoreHistory') || '[]');
+      history.unshift({ score, band, bandEmoji, date: new Date().toISOString() });
+      // Keep last 3 only
+      localStorage.setItem('kivoScoreHistory', JSON.stringify(history.slice(0, 3)));
+    } catch(e) {}
+  };
+
 
 })();

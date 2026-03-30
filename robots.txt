@@ -1,4 +1,8 @@
 User-agent: *
-Disallow:
+Allow: /
+
+# Block advisor portal from indexing
+Disallow: /advisor-portal.html
+Disallow: /api/
 
 Sitemap: https://getkivo.co.uk/sitemap.xml
