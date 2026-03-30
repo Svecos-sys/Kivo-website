@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Kivo Score — Personalised Mortgage Readiness Report | Kivo</title>
+  <title>Kivo Score – Your Personalised Mortgage Readiness Score</title>
   <meta name="description" content="Understand your Kivo Score — what it means, how it's calculated, and exactly what you can do to improve it.">
   <link rel="stylesheet" href="kivo.css">
   <style>
@@ -42,6 +42,54 @@
 
     @media(max-width:1024px){ .score-hero__inner{grid-template-columns:1fr;gap:40px;} .pillar-deep{grid-template-columns:1fr;gap:32px;} .improve-cards{grid-template-columns:1fr 1fr;} }
     @media(max-width:768px){ .improve-cards{grid-template-columns:1fr;} }
+
+    /* ── Explain button & modal ───────────────────────────── */
+    .explain-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 14px; padding: 8px 14px;
+      background: none; border: 1.5px solid var(--border);
+      border-radius: var(--r-pill); font-size: .8125rem;
+      font-weight: 600; color: var(--slate); cursor: pointer;
+      transition: all var(--ease); font-family: var(--font-body);
+    }
+    .explain-btn:hover { border-color: var(--coral); color: var(--coral); }
+    .explain-modal {
+      position: fixed; inset: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px; background: rgba(15,30,45,.6);
+      backdrop-filter: blur(4px);
+    }
+    .explain-modal__card {
+      background: var(--white); border-radius: var(--r-xl);
+      box-shadow: 0 24px 64px rgba(15,30,45,.2); padding: 36px;
+      max-width: 540px; width: 100%; max-height: 80vh; overflow-y: auto;
+      animation: modal-in .25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes modal-in { from { transform: scale(.92); opacity: 0; } }
+    .explain-modal__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+    .explain-modal__title { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; color: var(--navy); }
+    .explain-modal__close { background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--slate-lt); }
+    .explain-modal__body { font-size: .9375rem; color: var(--slate); line-height: 1.75; }
+
+    /* ── What-if Chat ─────────────────────────────────────── */
+    .chat-section { background: var(--navy); }
+    .chat-wrap { max-width: 720px; margin: 0 auto; }
+    .chat-window { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: var(--r-xl); overflow: hidden; }
+    .chat-messages { padding: 24px; display: flex; flex-direction: column; gap: 14px; min-height: 260px; max-height: 400px; overflow-y: auto; }
+    .chat-msg { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: .9rem; line-height: 1.6; }
+    .chat-msg--kivo { background: rgba(255,255,255,.08); color: rgba(255,255,255,.9); border-radius: 4px 16px 16px 16px; align-self: flex-start; }
+    .chat-msg--user { background: var(--coral); color: var(--white); border-radius: 16px 16px 4px 16px; align-self: flex-end; margin-left: auto; }
+    .chat-msg--loading { background: rgba(255,255,255,.06); color: rgba(255,255,255,.5); border-radius: 4px 16px 16px 16px; font-style: italic; font-size: .875rem; align-self: flex-start; }
+    .chat-input-row { display: flex; gap: 8px; padding: 16px; border-top: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); }
+    .chat-input { flex: 1; padding: 11px 16px; border-radius: var(--r-pill); border: 1.5px solid rgba(255,255,255,.15); background: rgba(255,255,255,.07); color: var(--white); font-family: var(--font-body); font-size: .9rem; outline: none; transition: border-color var(--ease); }
+    .chat-input::placeholder { color: rgba(255,255,255,.3); }
+    .chat-input:focus { border-color: var(--coral); }
+    .chat-send { width: 42px; height: 42px; border-radius: 50%; background: var(--coral); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background var(--ease), transform var(--ease); }
+    .chat-send:hover { background: var(--coral-dk); transform: scale(1.05); }
+    .chat-send:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+    .chat-suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .chat-suggestion { padding: 7px 14px; border-radius: var(--r-pill); background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.7); font-size: .8125rem; cursor: pointer; transition: all var(--ease); font-family: var(--font-body); }
+    .chat-suggestion:hover { background: rgba(255,255,255,.14); color: var(--white); }
   </style>
   <meta property="og:type" content="website">
   <meta property="og:title" content="The Kivo Score Explained | Kivo">
@@ -54,27 +102,19 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23FF6B4A'/><path d='M10 8v16M10 16l8-8M10 16l8 8' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 </head>
 <body>
-<a href="#main-content" class="skip-link" style="position:absolute;top:-40px;left:0;background:var(--coral);color:white;padding:8px 16px;border-radius:0 0 8px 0;font-weight:600;z-index:9999;transition:top .2s" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
 <header class="header" id="header"><div class="container"><div class="header__inner">
-  <a href="index.html" class="logo" aria-label="Kivo — go to homepage"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
-  <nav class="nav" role="navigation">
-    <div class="nav__item"><a href="how-it-works.html" class="nav__link">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a><a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a></div></div>
-    <div class="nav__item"><a href="learn.html" class="nav__link">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a><a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a><a href="stories.html"><span class="dd-icon" style="background:#F0FFF4">💬</span>Stories</a><a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a></div></div>
-    <div class="nav__item"><a href="about.html" class="nav__link">Company <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="about.html"><span class="dd-icon" style="background:#F0F4FF">👋</span>About</a><a href="security.html"><span class="dd-icon" style="background:#F0FFF4">🔒</span>Security</a><a href="partners.html"><span class="dd-icon" style="background:#FFF0EC">🤝</span>Partners</a><a href="contact.html"><span class="dd-icon" style="background:#E6FAF8">✉️</span>Contact</a></div></div>
+  <a href="index.html" class="logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
+  <nav class="nav">
+    <div class="nav__item"><a href="how-it-works.html" class="nav__link active">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a><a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a></div></div>
+    <div class="nav__item"><a href="learn.html" class="nav__link">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a><a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a><a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a></div></div>
     <a href="for-advisors.html" class="nav__link nav__link--teal">For Advisors</a>
   </nav>
-  <div class="header__actions"><a href="for-advisors.html" class="btn btn--secondary btn--sm hide-mobile">For Advisors</a><a href="kivo-check.html" class="btn btn--primary btn--sm">Check Your Score <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a><button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
+  <div class="header__actions"><a href="kivo-check.html" class="btn btn--primary btn--sm">Check Your Score <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a><button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
 </div></div></header>
-<div class="mobile-menu" id="mobile-menu">
-  <div class="mobile-menu__section"><div class="mobile-menu__label">Features</div><a href="how-it-works.html">🏠 How it Works</a><a href="kivo-score.html">📊 Kivo Score</a><a href="kivo-check.html">✅ Kivo Check</a></div>
-  <div class="mobile-menu__section"><div class="mobile-menu__label">Resources</div><a href="learn.html">📖 Learn</a><a href="tools.html">🧮 Tools</a><a href="stories.html">💬 Stories</a><a href="faq.html">❓ FAQs</a></div>
-  <div class="mobile-menu__section"><div class="mobile-menu__label">Company</div><a href="about.html">👋 About Kivo</a><a href="security.html">🔒 Security</a><a href="partners.html">🤝 Partners</a><a href="contact.html">✉️ Contact</a></div>
-  <div class="mobile-menu__section"><a href="for-advisors.html" style="color:var(--teal-dk);font-weight:600;">🏦 For Advisors &amp; Brokers</a></div>
-  <div class="mobile-menu__cta"><a href="kivo-check.html" class="btn btn--primary btn--full">Check My Score — Free</a><a href="for-advisors.html" class="btn btn--secondary btn--full">I'm an Advisor</a></div>
-</div>
+<div class="mobile-menu" id="mobile-menu"><div class="mobile-menu__section"><div class="mobile-menu__label">Features</div><a href="how-it-works.html">🏠 How it Works</a><a href="kivo-score.html">📊 Kivo Score</a><a href="kivo-check.html">✅ Kivo Check</a></div><div class="mobile-menu__cta"><a href="kivo-check.html" class="btn btn--primary btn--full">Check My Score — Free</a></div></div>
 
 <!-- HERO -->
-<div id="main-content"></div><section class="score-hero blob-bg">
+<section class="score-hero blob-bg">
   <div class="blob blob--coral-dk-tr"></div>
   <div class="container"><div class="score-hero__inner">
     <div>
@@ -155,30 +195,8 @@
 <!-- THE FOUR PILLARS -->
 <section class="pillars-deep-section section">
   <div class="container">
-    <!-- Personalised banner — shown when score exists in localStorage -->
-    <div id="personalBanner" style="display:none;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:var(--r-xl);padding:28px 32px;margin-bottom:48px;display:none">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
-        <div>
-          <div style="font-size:.75rem;color:rgba(255,255,255,.5);font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:6px">Your Kivo Score breakdown</div>
-          <div style="font-family:var(--font-display);font-weight:800;font-size:1.75rem;color:var(--white);line-height:1" id="bannerScore">—</div>
-          <div style="font-size:.9rem;font-weight:600;margin-top:4px" id="bannerBand"></div>
-        </div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <div style="text-align:center;padding:12px 16px;background:rgba(255,255,255,.07);border-radius:var(--r-md)">
-            <div style="font-size:.75rem;color:rgba(255,255,255,.5);margin-bottom:3px">Borrow up to</div>
-            <div style="font-family:var(--font-display);font-weight:700;font-size:1.0625rem;color:var(--white)" id="bannerBorrow">—</div>
-          </div>
-          <div style="text-align:center;padding:12px 16px;background:rgba(255,255,255,.07);border-radius:var(--r-md)">
-            <div style="font-size:.75rem;color:rgba(255,255,255,.5);margin-bottom:3px">Top action</div>
-            <div style="font-family:var(--font-display);font-weight:700;font-size:.875rem;color:var(--teal);max-width:200px" id="bannerAction">—</div>
-          </div>
-        </div>
-        <a href="kivo-check.html" style="font-size:.8125rem;color:rgba(255,255,255,.5);white-space:nowrap">Recalculate →</a>
-      </div>
-    </div>
-
     <div class="section-label fade-up"><div class="section-label__line"></div><span>The four pillars</span></div>
-    <h2 class="t-display-lg section-title fade-up fade-up-d1" id="pillarsTitle">How your score is built</h2>
+    <h2 class="t-display-lg section-title fade-up fade-up-d1">How your score is built</h2>
     <p class="t-body-lg tc-slate section-sub fade-up fade-up-d2">Each pillar represents a key dimension that lenders assess. We weight them based on their real impact on mortgage eligibility.</p>
 
     <div class="pillar-deep fade-up">
@@ -195,16 +213,18 @@
       </div>
       <div class="pillar-deep__score-display">
         <div class="pillar-deep__score-num" id="deepIncome" style="color:var(--teal)">85</div>
-        <div style="font-size:.875rem;font-weight:600;color:var(--teal-dk);margin-bottom:16px" id="deepIncomeLabel">Strong ✓</div>
-        <p style="font-size:.875rem;color:var(--slate)" id="deepIncomeText">Based on a £35,000 salary and a £150,000 target, your income-to-loan ratio is 4.3× — within standard lending criteria.</p>
+        <div style="font-size:.875rem;font-weight:600;color:var(--teal-dk);margin-bottom:16px">Strong ✓</div>
+        <p style="font-size:.875rem;color:var(--slate)">Based on a £35,000 salary and a £150,000 target, your income-to-loan ratio is 4.3× — within standard lending criteria.</p>
+        <button class="explain-btn" onclick="explainPillar('income')">💬 Explain my score</button>
       </div>
     </div>
 
     <div class="pillar-deep fade-up">
       <div class="pillar-deep__score-display" style="order:-1">
         <div class="pillar-deep__score-num" id="deepDeposit" style="color:#F59E0B">62</div>
-        <div style="font-size:.875rem;font-weight:600;color:#92400E;margin-bottom:16px" id="deepDepositLabel">Could improve ↗</div>
-        <p style="font-size:.875rem;color:var(--slate)" id="deepDepositText">An 8% deposit gives you some options, but getting to 10% would significantly broaden the range of products and rates available to you.</p>
+        <div style="font-size:.875rem;font-weight:600;color:#92400E;margin-bottom:16px">Could improve ↗</div>
+        <p style="font-size:.875rem;color:var(--slate)">An 8% deposit gives you some options, but getting to 10% would significantly broaden the range of products and rates available to you.</p>
+        <button class="explain-btn" onclick="explainPillar('deposit')">💬 Explain my score</button>
       </div>
       <div>
         <div class="badge badge--coral mb-16">25% of your score</div>
@@ -233,16 +253,18 @@
       </div>
       <div class="pillar-deep__score-display">
         <div class="pillar-deep__score-num" id="deepCredit" style="color:var(--teal)">88</div>
-        <div style="font-size:.875rem;font-weight:600;color:var(--teal-dk);margin-bottom:16px" id="deepCreditLabel">Excellent ✓✓</div>
-        <p style="font-size:.875rem;color:var(--slate)" id="deepCreditText">No missed payments and low credit utilisation. This is one of your strongest areas — lenders will view this very favourably.</p>
+        <div style="font-size:.875rem;font-weight:600;color:var(--teal-dk);margin-bottom:16px">Excellent ✓✓</div>
+        <p style="font-size:.875rem;color:var(--slate)">No missed payments and low credit utilisation. This is one of your strongest areas — lenders will view this very favourably.</p>
+        <button class="explain-btn" onclick="explainPillar('credit')">💬 Explain my score</button>
       </div>
     </div>
 
     <div class="pillar-deep fade-up">
       <div class="pillar-deep__score-display" style="order:-1">
         <div class="pillar-deep__score-num" id="deepSpending" style="color:#F59E0B">70</div>
-        <div style="font-size:.875rem;font-weight:600;color:#92400E;margin-bottom:16px" id="deepSpendingLabel">Room to improve ↗</div>
-        <p style="font-size:.875rem;color:var(--slate)" id="deepSpendingText">We've flagged some regular subscription costs that could be reduced. Cutting £80–100/month in discretionary spending could boost this pillar by up to 8 points.</p>
+        <div style="font-size:.875rem;font-weight:600;color:#92400E;margin-bottom:16px">Room to improve ↗</div>
+        <p style="font-size:.875rem;color:var(--slate)">We've flagged some regular subscription costs that could be reduced. Cutting £80–100/month in discretionary spending could boost this pillar by up to 8 points.</p>
+        <button class="explain-btn" onclick="explainPillar('spending')">💬 Explain my score</button>
       </div>
       <div>
         <div class="badge badge--coral mb-16">20% of your score</div>
@@ -266,6 +288,17 @@
     <div class="section-label fade-up"><div class="section-label__line"></div><span>How to improve</span></div>
     <h2 class="t-display-lg section-title fade-up fade-up-d1">The highest-impact actions</h2>
     <p class="t-body-lg tc-slate section-sub fade-up fade-up-d2">These are the actions that consistently move people's scores the most. Your personalised plan will prioritise these based on your specific situation.</p>
+    <!-- AI Plan (injected by JS when score exists) -->
+    <div id="aiPlanContainer" style="display:none;margin-bottom:32px">
+      <div id="aiPlanLoading" style="display:none;text-align:center;padding:40px;background:var(--white);border-radius:var(--r-xl);border:1px solid var(--border)">
+        <div style="font-size:1.5rem;margin-bottom:12px">⚙️</div>
+        <div style="font-family:var(--font-display);font-weight:600;color:var(--navy);margin-bottom:6px">Generating your personalised plan...</div>
+        <div style="font-size:.875rem;color:var(--slate)">Claude is analysing your specific numbers</div>
+      </div>
+      <div id="aiPlanContent"></div>
+      <button onclick="regeneratePlan()" style="margin-top:12px;font-size:.8125rem;color:var(--slate);background:none;border:none;cursor:pointer;text-decoration:underline">↻ Regenerate plan</button>
+    </div>
+
     <div class="improve-cards">
       <div class="improve-card fade-up">
         <div class="improve-card__impact" style="color:var(--teal)">High impact</div>
@@ -318,11 +351,62 @@
   </div>
 </section>
 
-<footer class="footer"><div class="container"><div class="footer__grid"><div><a href="index.html" class="logo footer__logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a><p class="footer__tagline">Your friendly AI-powered guide to getting mortgage-ready.</p></div><div><div class="footer__col-title">Product</div><div class="footer__links"><a href="how-it-works.html">How it Works</a><a href="kivo-score.html">Kivo Score</a><a href="kivo-check.html">Kivo Check</a><a href="for-advisors.html">For Advisors</a></div></div><div><div class="footer__col-title">Resources</div><div class="footer__links"><a href="learn.html">Learn</a><a href="tools.html">Tools</a><a href="faq.html">FAQs</a></div></div><div><div class="footer__col-title">Company</div><div class="footer__links"><a href="about.html">About</a><a href="security.html">Security</a><a href="contact.html">Contact</a></div></div></div><div class="footer__reg"><strong>Important:</strong> The Kivo Score is indicative only and not a guarantee of a mortgage offer. Always seek qualified advice from an FCA-regulated broker. Kivo Technologies Ltd is registered in England &amp; Wales.</div><div class="footer__bottom"><div class="footer__copy">© <span class="year"></span> Kivo Technologies Ltd.</div><div class="footer__legal"><a href="privacy.html">Privacy</a><a href="security.html">Security</a></div></div></div></footer>
+<footer class="footer"><div class="container"><div class="footer__grid"><div><a href="index.html" class="logo footer__logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a><p class="footer__tagline">Your friendly AI-powered guide to getting mortgage-ready.</p></div><div><div class="footer__col-title">Product</div><div class="footer__links"><a href="how-it-works.html">How it Works</a><a href="kivo-score.html">Kivo Score</a><a href="kivo-check.html">Kivo Check</a><a href="for-advisors.html">For Advisors</a></div></div><div><div class="footer__col-title">Resources</div><div class="footer__links"><a href="learn.html">Learn</a><a href="tools.html">Tools</a><a href="faq.html">FAQs</a></div></div><div><div class="footer__col-title">Company</div><div class="footer__links"><a href="about.html">About</a><a href="security.html">Security</a><a href="contact.html">Contact</a></div></div></div><div class="footer__reg"><strong>Important:</strong> The Kivo Score is indicative only and not a guarantee of a mortgage offer. Always seek qualified advice from an FCA-regulated broker. Kivo Technologies Ltd is registered in England &amp; Wales.</div><div class="footer__bottom"><div class="footer__copy">© 2025 Kivo Technologies Ltd.</div><div class="footer__legal"><a href="privacy.html">Privacy</a><a href="security.html">Security</a></div></div></div></footer>
+
+<!-- WHAT-IF CHAT ─────────────────────────────────────────── -->
+<section class="chat-section section" id="kivoChat">
+  <div class="container">
+    <div class="chat-wrap">
+      <div class="section-label fade-up"><div class="section-label__line" style="background:rgba(255,255,255,.2)"></div><span style="color:rgba(255,255,255,.5)">Ask Kivo</span></div>
+      <h2 class="t-display-lg fade-up fade-up-d1" style="color:var(--white);margin-bottom:8px">What would change your score?</h2>
+      <p class="t-body-lg fade-up fade-up-d2" style="color:rgba(255,255,255,.55);margin-bottom:32px">Ask Claude anything about your mortgage readiness — what-if questions, what terms mean for your situation, or what to focus on next.</p>
+      <div id="chatNoScore" style="text-align:center;padding:40px;background:rgba(255,255,255,.05);border-radius:var(--r-xl);border:1px solid rgba(255,255,255,.1)">
+        <div style="font-size:2rem;margin-bottom:12px">📋</div>
+        <div style="color:rgba(255,255,255,.7);font-size:.9375rem;margin-bottom:16px">Complete the Kivo Check first so Claude has your real numbers to work with.</div>
+        <a href="kivo-check.html" class="btn btn--primary">Get My Kivo Score</a>
+      </div>
+      <div id="chatInterface" style="display:none">
+        <div class="chat-window fade-up">
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg chat-msg--kivo" id="chatWelcome"></div>
+          </div>
+          <div class="chat-input-row">
+            <input class="chat-input" id="chatInput" type="text" placeholder="e.g. What if I paid off my car finance?" maxlength="200" aria-label="Ask a question about your mortgage readiness">
+            <button class="chat-send" id="chatSendBtn" onclick="sendChatMessage()" aria-label="Send">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M15.75 9L3.75 3l2.25 6-2.25 6 12-6z" fill="white"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="chat-suggestions" id="chatSuggestions">
+          <button class="chat-suggestion" onclick="askSuggestion(this)">What if I saved £5,000 more deposit?</button>
+          <button class="chat-suggestion" onclick="askSuggestion(this)">What if I applied jointly?</button>
+          <button class="chat-suggestion" onclick="askSuggestion(this)">How long until I could get a mortgage?</button>
+          <button class="chat-suggestion" onclick="askSuggestion(this)">Should I pay off my debts first?</button>
+          <button class="chat-suggestion" onclick="askSuggestion(this)">What does LTV mean for my situation?</button>
+        </div>
+        <p style="font-size:.75rem;color:rgba(255,255,255,.3);margin-top:16px;text-align:center">Powered by Claude · For guidance only · Always speak to an FCA-regulated advisor</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Explain Score Modal ────────────────────────────────────── -->
+<div class="explain-modal" id="explainModal" style="display:none" onclick="if(event.target===this)closeExplainModal()">
+  <div class="explain-modal__card">
+    <div class="explain-modal__header">
+      <div class="explain-modal__title" id="explainModalTitle">Explaining your score</div>
+      <button class="explain-modal__close" onclick="closeExplainModal()" aria-label="Close">✕</button>
+    </div>
+    <div class="explain-modal__body" id="explainModalBody">
+      <p style="color:var(--slate);font-style:italic">Loading explanation...</p>
+    </div>
+  </div>
+</div>
+
 <div class="cookie-banner hidden" id="cookieBanner"><div class="cookie-banner__text">🍪 We use cookies to improve your experience. <a href="privacy.html">Learn more</a>.</div><div class="cookie-banner__actions"><button class="btn btn--secondary btn--sm" id="cookieDecline">Decline</button><button class="btn btn--primary btn--sm" id="cookieAccept">Accept</button></div></div>
 <script src="kivo.js"></script>
 <script>
-  // ── Load score from localStorage and fully personalise page ─
+  // ── Load score from localStorage if available ──────────────
   (function() {
     let saved;
     try { saved = JSON.parse(localStorage.getItem('kivoScore')); } catch(e) {}
@@ -338,11 +422,11 @@
 
     // Hero text
     document.getElementById('heroLabel').textContent = 'Your Kivo Score';
-    document.getElementById('heroTitle').textContent = 'Here's your personalised score';
+    document.getElementById("heroTitle").textContent = "Here's your personalised score";
     document.getElementById('heroSub').textContent =
       'Based on the information you provided' +
       (saved.formData?.openBanking ? ' and your bank data' : '') +
-      ', here's how mortgage-ready you are right now.';
+      ", here's how mortgage-ready you are right now.";
 
     // Score number
     document.getElementById('personalScoreNum').textContent = s;
@@ -382,135 +466,298 @@
     const ctaTitle = document.querySelector('.cta-band__title');
     const ctaSub   = document.querySelector('.cta-band__sub');
     const ctaBtn   = document.querySelector('.cta-band__actions a');
-    if (ctaTitle) ctaTitle.textContent = s >= 61 ? 'You're in good shape. Ready to take the next step?' : 'Your score can improve — let's get you there.';
-    if (ctaSub)   ctaSub.textContent   = s >= 61 ? 'Speak to a vetted advisor who already knows your Kivo profile.' : 'Retake the check any time as your situation changes.';
+    if (ctaTitle) ctaTitle.textContent = s >= 61 ? "You're in good shape. Ready to take the next step?" : "Your score can improve — let's get you there.";
+    if (ctaSub)   ctaSub.textContent   = s >= 61 ? "Speak to a vetted advisor who already knows your Kivo profile." : "Retake the check any time as your situation changes.";
     if (ctaBtn && s >= 61) {
       ctaBtn.href = 'find-an-advisor.html';
       ctaBtn.innerHTML = 'Find an Advisor <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     }
-
-    // ── Personalise the four pillar deep-dive scores ───────────
-    const fd = saved.formData || {};
-
-    function pillarColour(score) {
-      return score >= 75 ? 'var(--teal)' : score >= 50 ? '#F59E0B' : '#EF4444';
-    }
-    function pillarLabel(score) {
-      if (score >= 85) return 'Excellent ✓✓';
-      if (score >= 75) return 'Strong ✓';
-      if (score >= 61) return 'Good ↗';
-      if (score >= 45) return 'Could improve ↗';
-      return 'Needs attention ↑';
-    }
-    function pillarLabelColour(score) {
-      return score >= 75 ? 'var(--teal-dk)' : score >= 50 ? '#92400E' : '#991B1B';
-    }
-
-    // Income pillar
-    const incScore = p.income || 0;
-    const incMultiple = fd.income && fd.propertyValue
-      ? ((fd.propertyValue - (fd.deposit||0)) / fd.income).toFixed(1)
-      : null;
-    const el = document.getElementById('deepIncome');
-    if (el) { el.textContent = incScore; el.style.color = pillarColour(incScore); }
-    const lbl = document.getElementById('deepIncomeLabel');
-    if (lbl) { lbl.textContent = pillarLabel(incScore); lbl.style.color = pillarLabelColour(incScore); }
-    const txt = document.getElementById('deepIncomeText');
-    if (txt && incMultiple) {
-      const income = fd.income ? '£' + fd.income.toLocaleString('en-GB') : 'your income';
-      const loan   = fd.propertyValue && fd.deposit ? '£' + (fd.propertyValue - fd.deposit).toLocaleString('en-GB') : 'your target loan';
-      txt.textContent = `Based on ${income} and a loan of ${loan}, your income-to-loan ratio is ${incMultiple}×. ${parseFloat(incMultiple) <= 4.5 ? 'This is within standard lending criteria.' : 'Some lenders may require a specialist approach at this multiple.'}`;
-    }
-
-    // Deposit pillar
-    const depScore = p.deposit || 0;
-    const depPct   = fd.depositPct || 0;
-    const el2 = document.getElementById('deepDeposit');
-    if (el2) { el2.textContent = depScore; el2.style.color = pillarColour(depScore); }
-    const lbl2 = document.getElementById('deepDepositLabel');
-    if (lbl2) { lbl2.textContent = pillarLabel(depScore); lbl2.style.color = pillarLabelColour(depScore); }
-    const txt2 = document.getElementById('deepDepositText');
-    if (txt2 && fd.deposit) {
-      const dep  = '£' + fd.deposit.toLocaleString('en-GB');
-      const prop = fd.propertyValue ? '£' + fd.propertyValue.toLocaleString('en-GB') : 'your target property';
-      const ltv  = fd.ltv || (100 - depPct);
-      txt2.textContent = `Your deposit of ${dep} represents ${depPct}% of ${prop} (LTV: ${ltv}%). ${depPct >= 15 ? 'This is a strong position — you have access to a wide range of competitive rates.' : depPct >= 10 ? 'A 10%+ deposit opens up a good range of products. Saving further would improve your rates.' : 'Getting to 10% deposit is the most impactful single change you can make right now.'}`;
-    }
-
-    // Credit pillar
-    const credScore = p.credit || 0;
-    const credBand  = fd.credit || 'good';
-    const el3 = document.getElementById('deepCredit');
-    if (el3) { el3.textContent = credScore; el3.style.color = pillarColour(credScore); }
-    const lbl3 = document.getElementById('deepCreditLabel');
-    if (lbl3) { lbl3.textContent = pillarLabel(credScore); lbl3.style.color = pillarLabelColour(credScore); }
-    const txt3 = document.getElementById('deepCreditText');
-    if (txt3) {
-      const creditMessages = {
-        excellent: 'Your credit history is excellent — no missed payments, no defaults. Lenders will view this very favourably and it opens up the best rates.',
-        good:      'Your credit history is good. A few minor marks won't stop most lenders, but clearing any outstanding issues and staying consistent will help.',
-        fair:      'Your credit profile has some marks on it. Consider checking your credit file for errors, registering to vote, and building a clean payment record over the next 6–12 months.',
-        poor:      'Your credit profile needs some work before most mainstream lenders will consider you. A specialist advisor can help identify the right lenders for your situation.',
-      };
-      txt3.textContent = creditMessages[credBand] || creditMessages.good;
-    }
-
-    // Spending pillar
-    const spendScore = p.spending || 0;
-    const hasDebts   = fd.hasDebts === 'yes';
-    const el4 = document.getElementById('deepSpending');
-    if (el4) { el4.textContent = spendScore; el4.style.color = pillarColour(spendScore); }
-    const lbl4 = document.getElementById('deepSpendingLabel');
-    if (lbl4) { lbl4.textContent = pillarLabel(spendScore); lbl4.style.color = pillarLabelColour(spendScore); }
-    const txt4 = document.getElementById('deepSpendingText');
-    if (txt4) {
-      txt4.textContent = hasDebts
-        ? `You have existing debts (${fd.debtAmount || 'unknown amount'}) which reduce your net affordability. Reducing or clearing these before applying will improve both this pillar and your maximum loan size.`
-        : spendScore >= 75
-          ? 'No outstanding debts and consistent spending behaviour. Lenders will view your financial discipline positively.'
-          : 'Even without major debts, lenders look at your monthly commitments — subscriptions, regular outgoings, and spending patterns. Three months of controlled, consistent spending before applying can make a real difference.';
-    }
-
-    // ── Show personalised summary banner ──────────────────────
-    const banner = document.getElementById('personalBanner');
-    if (banner) {
-      banner.style.display = 'flex';
-      document.getElementById('bannerScore').textContent = s;
-      document.getElementById('bannerBand').innerHTML = `<span style="color:${s >= 80 ? 'var(--teal)' : s >= 61 ? '#60A5FA' : '#F59E0B'}">${saved.bandEmoji || ''} ${saved.band || ''}</span>`;
-      if (saved.borrowMax) document.getElementById('bannerBorrow').textContent = '£' + saved.borrowMax.toLocaleString('en-GB');
-      if (saved.topAction) document.getElementById('bannerAction').textContent = saved.topAction;
-      document.getElementById('pillarsTitle').textContent = 'Your score breakdown';
-    }
-
-    // ── Personalise the improvement cards ─────────────────────
-    // Reorder improvement cards to surface the weakest pillars first
-    const pillarScores = [
-      { key: 'income',   score: p.income   || 0 },
-      { key: 'deposit',  score: p.deposit  || 0 },
-      { key: 'credit',   score: p.credit   || 0 },
-      { key: 'spending', score: p.spending || 0 },
-    ].sort((a, b) => a.score - b.score);
-
-    // Show the user's weakest pillar prominently in the improvement section
-    const weakest = pillarScores[0];
-    const weakestMsg = {
-      income:  { title: 'Increase your income or reduce the loan', text: 'Your income-to-loan ratio is your biggest constraint. Consider a joint application, a longer mortgage term, or targeting a lower property price to improve affordability.', impact: 'High impact', colour: 'var(--teal)' },
-      deposit: { title: 'Save a larger deposit', text: 'Your deposit is your single highest-impact lever. Getting from under 10% to 10% LTV unlocks significantly better rates and more lenders.', impact: 'High impact', colour: 'var(--teal)' },
-      credit:  { title: 'Improve your credit profile', text: 'Register to vote, check your credit file for errors, clear any defaults, and maintain zero missed payments for 6+ months.', impact: 'High impact', colour: 'var(--teal)' },
-      spending:{ title: 'Reduce monthly commitments', text: 'Three months of consistent, controlled spending before applying can meaningfully improve this pillar. Cut subscriptions and reduce discretionary spend.', impact: 'High impact', colour: 'var(--teal)' },
-    };
-
-    // Update the first improvement card with the most relevant action
-    const firstCard = document.querySelector('.improve-card');
-    if (firstCard && weakestMsg[weakest.key]) {
-      const msg = weakestMsg[weakest.key];
-      firstCard.querySelector('.improve-card__impact').textContent = msg.impact;
-      firstCard.querySelector('.improve-card__impact').style.color = msg.colour;
-      firstCard.querySelector('.improve-card__title').textContent  = msg.title;
-      firstCard.querySelector('.improve-card__text').textContent   = msg.text;
-    }
-
   })();
 </script>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// KIVO AI FEATURES — Features 1, 2, 3
+// All API calls use the Anthropic client-side endpoint
+// ═══════════════════════════════════════════════════════════════
+
+// ── Load saved score once ────────────────────────────────────
+let _kivoSaved = null;
+try { _kivoSaved = JSON.parse(localStorage.getItem('kivoScore')); } catch(e) {}
+
+// ── Trigger all AI features when score exists ────────────────
+if (_kivoSaved && _kivoSaved.overallScore) {
+  // Update improve section heading
+  const improveTitle = document.querySelector('.improve-section .section-title');
+  const improveSub   = document.querySelector('.improve-section .section-sub');
+  if (improveTitle) improveTitle.textContent = 'Your personalised improvement plan';
+  if (improveSub)   improveSub.textContent   = 'Generated by Claude based on your exact numbers — not generic advice.';
+
+  // Trigger features
+  loadImprovementPlan(_kivoSaved);
+  initChat(_kivoSaved);
+}
+
+// ════════════════════════════════════════════════════════════
+// FEATURE 1: AI-GENERATED PERSONALISED IMPROVEMENT PLAN
+// ════════════════════════════════════════════════════════════
+
+async function loadImprovementPlan(saved) {
+  const container = document.getElementById('aiPlanContainer');
+  const loading   = document.getElementById('aiPlanLoading');
+  const planDiv   = document.getElementById('aiPlanContent');
+  if (!container) return;
+
+  container.style.display = 'block';
+  loading.style.display   = 'block';
+
+  // Cache keyed to score + date so it regenerates when score changes
+  const cacheKey = 'kivoPlan_' + saved.overallScore + '_' + (saved.calculatedAt || '').slice(0, 10);
+  try {
+    const cached = JSON.parse(localStorage.getItem(cacheKey) || 'null');
+    if (cached) { loading.style.display = 'none'; planDiv.innerHTML = renderPlan(cached); return; }
+  } catch(e) {}
+
+  try {
+    const plan = await generatePlan(saved);
+    loading.style.display = 'none';
+    planDiv.innerHTML = renderPlan(plan);
+    try { localStorage.setItem(cacheKey, JSON.stringify(plan)); } catch(e) {}
+  } catch(err) {
+    loading.style.display = 'none';
+    planDiv.innerHTML = '<p style="color:var(--slate);font-size:.9rem;padding:16px">Unable to generate your personalised plan right now. The general guidance below still applies.</p>';
+  }
+}
+
+async function generatePlan(saved) {
+  const fd = saved.formData || {};
+  const p  = saved.pillars  || {};
+  const depositNeeded = fd.propertyValue && fd.deposit
+    ? Math.max(0, Math.round(fd.propertyValue * 0.1) - fd.deposit)
+    : null;
+
+  const prompt = `You are Kivo's AI mortgage advisor. Generate a highly specific, personalised improvement plan.
+
+USER PROFILE:
+- Kivo Score: ${saved.overallScore}/100 (${saved.band})
+- Pillars: Income ${p.income || 0}, Deposit ${p.deposit || 0}, Credit ${p.credit || 0}, Spending ${p.spending || 0}
+- Income: GBP ${(fd.income || 0).toLocaleString('en-GB')}
+- Deposit: GBP ${(fd.deposit || 0).toLocaleString('en-GB')} (${fd.depositPct || 0}% of target, LTV ${fd.ltv || 0}%)
+- Target property: GBP ${(fd.propertyValue || 0).toLocaleString('en-GB')}
+- Employment: ${fd.employment || 'unknown'}
+- Credit band: ${fd.credit || 'unknown'}
+- Debts: ${fd.hasDebts === 'yes' ? (fd.debtAmount || 'some') : 'none'}
+- Estimated borrowing: GBP ${(saved.borrowMin || 0).toLocaleString('en-GB')} to GBP ${(saved.borrowMax || 0).toLocaleString('en-GB')}
+${depositNeeded ? '- Deposit needed to reach 10% LTV: GBP ' + depositNeeded.toLocaleString('en-GB') : ''}
+
+Generate exactly 4 improvement actions ordered by impact. Use the user's ACTUAL numbers in each action.
+
+Return ONLY valid JSON (no markdown fences):
+{"headline":"<one sentence summary max 80 chars>","actions":[{"impact":"<High|Medium|Quick win>","title":"<max 50 chars>","text":"<specific advice with real numbers, 1-2 sentences>","boost":"<e.g. +8 to +12 points>","timeframe":"<e.g. 3-6 months>"}]}`;
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 800,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  });
+  if (!response.ok) throw new Error('API ' + response.status);
+  const data = await response.json();
+  const raw  = (data.content?.[0]?.text || '').replace(/```json|```/gi, '').trim();
+  return JSON.parse(raw);
+}
+
+function renderPlan(plan) {
+  const colours = { 'High': 'var(--teal)', 'Medium': '#F59E0B', 'Quick win': 'var(--slate)' };
+  return `
+    <div style="background:linear-gradient(135deg,var(--coral-lt),var(--teal-lt));border-radius:var(--r-lg);padding:20px 24px;margin-bottom:20px;border:1px solid var(--border)">
+      <div style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--coral-dk);margin-bottom:6px">Your personalised plan</div>
+      <div style="font-family:var(--font-display);font-weight:700;font-size:1.0625rem;color:var(--navy)">${plan.headline}</div>
+    </div>
+    <div class="improve-cards">
+      ${plan.actions.map((a, i) => `
+      <div class="improve-card fade-up" style="animation-delay:${i * 0.1}s">
+        <div class="improve-card__impact" style="color:${colours[a.impact] || 'var(--teal)'}">${a.impact}</div>
+        <div class="improve-card__title">${a.title}</div>
+        <div class="improve-card__text">${a.text}</div>
+        <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
+          <div class="improve-card__boost" style="color:${colours[a.impact] || 'var(--teal)'}">&#8593; ${a.boost}</div>
+          <div style="font-size:.75rem;color:var(--slate-lt)">&#9201; ${a.timeframe}</div>
+        </div>
+      </div>`).join('')}
+    </div>`;
+}
+
+async function regeneratePlan() {
+  let saved;
+  try { saved = JSON.parse(localStorage.getItem('kivoScore')); } catch(e) {}
+  if (!saved) return;
+  const cacheKey = 'kivoPlan_' + saved.overallScore + '_' + (saved.calculatedAt || '').slice(0, 10);
+  localStorage.removeItem(cacheKey);
+  await loadImprovementPlan(saved);
+}
+
+// ════════════════════════════════════════════════════════════
+// FEATURE 2: EXPLAIN MY PILLAR SCORE
+// ════════════════════════════════════════════════════════════
+
+const PILLAR_LABELS = {
+  income:   'Income & Affordability',
+  deposit:  'Deposit Strength',
+  credit:   'Credit Profile',
+  spending: 'Spending Behaviour',
+};
+
+async function explainPillar(key) {
+  let saved;
+  try { saved = JSON.parse(localStorage.getItem('kivoScore')); } catch(e) {}
+
+  const modal      = document.getElementById('explainModal');
+  const modalTitle = document.getElementById('explainModalTitle');
+  const modalBody  = document.getElementById('explainModalBody');
+
+  modal.style.display = 'flex';
+  modalTitle.textContent = 'Explaining: ' + (PILLAR_LABELS[key] || key);
+  modalBody.innerHTML    = '<p style="color:var(--slate);font-style:italic">Generating your explanation...</p>';
+
+  const fd    = saved?.formData || {};
+  const p     = saved?.pillars  || {};
+  const score = p[key] || 0;
+
+  const context = {
+    income:   `Income GBP ${(fd.income||0).toLocaleString('en-GB')}, loan needed GBP ${((fd.propertyValue||0)-(fd.deposit||0)).toLocaleString('en-GB')}, multiple ${fd.income ? (((fd.propertyValue||0)-(fd.deposit||0))/fd.income).toFixed(1) : '?'}x, employment ${fd.employment}.`,
+    deposit:  `Deposit GBP ${(fd.deposit||0).toLocaleString('en-GB')} (${fd.depositPct||0}% of GBP ${(fd.propertyValue||0).toLocaleString('en-GB')} target, LTV ${fd.ltv||0}%).`,
+    credit:   `Self-reported credit band: ${fd.credit}. Outstanding debts: ${fd.hasDebts==='yes' ? (fd.debtAmount||'some') : 'none'}.`,
+    spending: `Debts: ${fd.hasDebts==='yes' ? (fd.debtAmount||'some') : 'none'}. Employment: ${fd.employment}.`,
+  };
+
+  const prompt = `You are Kivo's friendly mortgage advisor. Explain in 3-4 short paragraphs why this user scored ${score}/100 for their ${PILLAR_LABELS[key]} pillar, and give 2 specific, actionable things they can do to improve it. Use plain English and their actual numbers. No bullet points. Start directly with the explanation.
+
+Context: ${context[key] || ''} Overall score: ${saved?.overallScore}/100.`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 500,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    if (!response.ok) throw new Error('API error');
+    const data = await response.json();
+    const text = (data.content?.[0]?.text || '').trim();
+    const html = text.split(/\n\n+/).map(para => `<p style="margin-bottom:14px">${para}</p>`).join('');
+    modalBody.innerHTML = html + '<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:.8125rem;color:var(--slate-lt)">For guidance only. Always speak to a qualified, FCA-regulated mortgage adviser.</div>';
+  } catch(err) {
+    modalBody.innerHTML = '<p style="color:var(--slate)">Unable to generate explanation right now. Please try again.</p>';
+  }
+}
+
+function closeExplainModal() {
+  document.getElementById('explainModal').style.display = 'none';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeExplainModal(); });
+
+// ════════════════════════════════════════════════════════════
+// FEATURE 3: CONVERSATIONAL WHAT-IF CHAT
+// ════════════════════════════════════════════════════════════
+
+let _chatHistory = [];
+
+function initChat(saved) {
+  const noScore  = document.getElementById('chatNoScore');
+  const chatUI   = document.getElementById('chatInterface');
+  const welcome  = document.getElementById('chatWelcome');
+  if (!noScore || !chatUI) return;
+
+  noScore.style.display = 'none';
+  chatUI.style.display  = 'block';
+
+  const fd  = saved.formData || {};
+  const msg = `Hi! I can see your Kivo Score is ${saved.overallScore} (${saved.band}). I know your income, deposit, credit profile, and target property — ask me anything specific to your situation.`;
+  if (welcome) welcome.textContent = msg;
+
+  _chatHistory = [
+    { role: 'user', content: `My mortgage profile: Score ${saved.overallScore}/100 (${saved.band}). Income: GBP ${(fd.income||0).toLocaleString('en-GB')}. Deposit: GBP ${(fd.deposit||0).toLocaleString('en-GB')} (${fd.depositPct||0}% of GBP ${(fd.propertyValue||0).toLocaleString('en-GB')}). Employment: ${fd.employment}. Credit: ${fd.credit}. Debts: ${fd.hasDebts==='yes'?fd.debtAmount:'none'}. Pillars — Income: ${saved.pillars?.income}, Deposit: ${saved.pillars?.deposit}, Credit: ${saved.pillars?.credit}, Spending: ${saved.pillars?.spending}.` },
+    { role: 'assistant', content: msg }
+  ];
+
+  const input = document.getElementById('chatInput');
+  if (input) input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); sendChatMessage(); } });
+}
+
+function askSuggestion(btn) {
+  const input = document.getElementById('chatInput');
+  if (input) input.value = btn.textContent.trim();
+  const sugg = document.getElementById('chatSuggestions');
+  if (sugg) sugg.style.display = 'none';
+  sendChatMessage();
+}
+
+async function sendChatMessage() {
+  const input   = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('chatSendBtn');
+  const text    = input ? input.value.trim() : '';
+  if (!text) return;
+
+  sendBtn.disabled = true;
+  input.value      = '';
+
+  const sugg = document.getElementById('chatSuggestions');
+  if (sugg) sugg.style.display = 'none';
+
+  appendChatMsg(text, 'user');
+  _chatHistory.push({ role: 'user', content: text });
+  const loadId = appendChatMsg('Thinking...', 'loading');
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 400,
+        system: 'You are Kivo\'s friendly AI mortgage advisor. Answer questions specifically about this user\'s mortgage readiness using their actual numbers. Keep answers concise (2-3 sentences). Be warm and clear. Note when relevant that this is guidance, not regulated advice.',
+        messages: _chatHistory
+      })
+    });
+    if (!response.ok) throw new Error('API ' + response.status);
+    const data  = await response.json();
+    const reply = data.content?.[0]?.text || 'Sorry, something went wrong.';
+    removeChatMsg(loadId);
+    appendChatMsg(reply, 'kivo');
+    _chatHistory.push({ role: 'assistant', content: reply });
+    if (_chatHistory.length > 22) _chatHistory = [_chatHistory[0], _chatHistory[1], ..._chatHistory.slice(-20)];
+  } catch(err) {
+    removeChatMsg(loadId);
+    appendChatMsg('Sorry, something went wrong. Please try again.', 'kivo');
+  }
+  sendBtn.disabled = false;
+  if (input) input.focus();
+}
+
+function appendChatMsg(text, type) {
+  const msgs = document.getElementById('chatMessages');
+  const div  = document.createElement('div');
+  const id   = 'cm-' + Date.now();
+  div.id        = id;
+  div.className = 'chat-msg chat-msg--' + type;
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return id;
+}
+
+function removeChatMsg(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+</script>
+
 </body>
 </html>
