@@ -20,7 +20,7 @@
     .pb-row { display:flex;align-items:center;gap:10px; }
     .pb-label { font-size:.8125rem;color:rgba(255,255,255,.7);width:90px;flex-shrink:0; }
     .pb-track { flex:1;height:6px;background:rgba(255,255,255,.15);border-radius:99px;overflow:hidden; }
-    .pb-fill  { height:100%;border-radius:99px; }
+    .pb-fill  { height:100%;border-radius:99px;transition:width .8s cubic-bezier(0.34,1.56,0.64,1); }
     .pb-val   { font-size:.8125rem;font-weight:700;color:var(--white);width:24px;text-align:right; }
 
     .pillars-deep-section { background:var(--white); }
@@ -439,20 +439,22 @@
     const marker = document.getElementById('personalGaugeMarker');
     if (marker) marker.style.left = s + '%';
 
-    // Pillar bars + values
+    // Pillar bars + values — use rAF to ensure card is visible before setting widths
     const pillarMap = {
       income:  { bar: 'pb-income',  val: 'pv-income'  },
       deposit: { bar: 'pb-deposit', val: 'pv-deposit' },
       credit:  { bar: 'pb-credit',  val: 'pv-credit'  },
       spending:{ bar: 'pb-spending',val: 'pv-spending' },
     };
-    Object.entries(pillarMap).forEach(([key, ids]) => {
-      const score = p[key] || 0;
-      const colour = score >= 75 ? 'var(--teal)' : score >= 50 ? '#F59E0B' : '#EF4444';
-      const barEl = document.getElementById(ids.bar);
-      const valEl = document.getElementById(ids.val);
-      if (barEl) { barEl.style.width = score + '%'; barEl.style.background = colour; }
-      if (valEl) { valEl.textContent = score; valEl.style.color = colour; }
+    requestAnimationFrame(function() {
+      Object.entries(pillarMap).forEach(([key, ids]) => {
+        const score = p[key] || 0;
+        const colour = score >= 75 ? 'var(--teal)' : score >= 50 ? '#F59E0B' : '#EF4444';
+        const barEl = document.getElementById(ids.bar);
+        const valEl = document.getElementById(ids.val);
+        if (barEl) { barEl.style.width = score + '%'; barEl.style.background = colour; }
+        if (valEl) { valEl.textContent = score; valEl.style.color = colour; }
+      });
     });
 
     // Date stamp
