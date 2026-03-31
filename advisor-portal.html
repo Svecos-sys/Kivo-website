@@ -925,103 +925,12 @@
   }
 
   // ── Feature 4: AI Lead Summary ───────────────────────────
-  async function generateLeadSummary() {
-    const lead = DEMO_LEADS.find(l => l.id === currentLeadId);
-    if (!lead) return;
 
-    const summaryEl  = document.getElementById('aiLeadSummary');
-    const refreshBtn = document.getElementById('summaryRefreshBtn');
-    if (!summaryEl) return;
 
-    summaryEl.innerHTML  = '<span style="color:rgba(255,255,255,.4);font-style:italic">⏳ Generating lead brief...</span>';
-    refreshBtn.disabled  = true;
-
-    const prompt = `You are a concise mortgage advisor assistant. Write a 3-4 sentence natural language brief about this mortgage lead for an advisor to read before their first contact. Be specific, professional, and highlight the key opportunity and any points of attention. No bullet points — write in natural prose.
-
-LEAD:
-Name: ${lead.name} | Score: ${lead.score}/100 (${lead.band}) | Situation: ${lead.situation}
-Employment: ${lead.employment} | Income: ${lead.income} | Deposit: ${lead.deposit} (${lead.depositPct} of ${lead.property})
-Borrow range: ${lead.borrow} | Credit: ${lead.credit} | Debts: ${lead.debts}
-
-Write the brief now:`;
-
-    try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 250,
-          messages: [{ role: 'user', content: prompt }]
-        })
-      });
-
-      if (!response.ok) throw new Error('API error');
-      const data = await response.json();
-      const text = data.content?.[0]?.text || '';
-      summaryEl.innerHTML = `<span style="color:rgba(255,255,255,.88);font-style:normal">${text}</span>`;
-    } catch(err) {
-      summaryEl.innerHTML = '<span style="color:rgba(255,255,255,.4)">Unable to generate brief right now.</span>';
-    }
-    refreshBtn.disabled = false;
-  }
 
   // ── AI Lead Summary ──────────────────────────────────────
-  async function generateLeadSummary() {
-    const lead = DEMO_LEADS.find(l => l.id === currentLeadId);
-    if (!lead) return;
 
-    document.getElementById('aiSummaryBtn').disabled = true;
-    document.getElementById('aiSummaryLoading').style.display = 'block';
-    document.getElementById('aiSummaryContent').style.display = 'none';
-    document.getElementById('aiSummaryEmpty').style.display = 'none';
 
-    const prompt = `You are a mortgage advisor assistant. Write a concise, professional lead briefing for an advisor preparing for their first call with this buyer.
-
-LEAD DATA:
-- Name: ${lead.name}
-- Kivo Score: ${lead.score}/100 (${lead.band})
-- Situation: ${lead.situation}
-- Employment: ${lead.employment}
-- Annual income: ${lead.income}
-- Deposit: ${lead.deposit} (${lead.depositPct} of ${lead.property})
-- Target property: ${lead.property}
-- Estimated borrowing: ${lead.borrow}
-- Credit: ${lead.credit}
-- Debts: ${lead.debts}
-- AI insights: ${lead.insights.join('; ')}
-
-Write a 3–4 sentence natural language briefing covering:
-1. Who this buyer is and their situation in one sentence
-2. Their key strengths (what works in their favour)
-3. Their main constraint or challenge
-4. One suggested opening topic for the first call
-
-Be professional, concise, and specific. Do not use bullet points. Do not repeat the raw numbers verbatim — synthesise them.`;
-
-    try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 300,
-          messages: [{ role: 'user', content: prompt }]
-        })
-      });
-      const data = await res.json();
-      const text = data.content?.[0]?.text || 'Unable to generate summary.';
-      document.getElementById('aiSummaryContent').style.display = 'block';
-      document.getElementById('aiSummaryContent').textContent = text;
-    } catch(err) {
-      document.getElementById('aiSummaryContent').style.display = 'block';
-      document.getElementById('aiSummaryContent').textContent = 'Unable to generate summary right now. Please try again.';
-    }
-
-    document.getElementById('aiSummaryLoading').style.display = 'none';
-    document.getElementById('aiSummaryBtn').disabled = false;
-    document.getElementById('aiSummaryBtn').textContent = '↻ Regenerate';
-  }
 
   async function generateLeadSummary() {
     const lead = DEMO_LEADS.find(l => l.id === currentLeadId);
