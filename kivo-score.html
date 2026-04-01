@@ -145,6 +145,43 @@
   </div></div>
 </section>
 
+
+<!-- WHAT-IF CHAT ──────────────────────────────────────────── -->
+<section class="chat-section section" id="kivoChat">
+  <div class="container">
+    <div class="chat-wrap">
+      <div class="section-label fade-up"><div class="section-label__line" style="background:rgba(255,255,255,.2)"></div><span style="color:rgba(255,255,255,.5)">Ask Kivo</span></div>
+      <h2 class="t-display-lg fade-up fade-up-d1" style="color:var(--white);margin-bottom:8px">What would change your score?</h2>
+      <p class="t-body-lg fade-up fade-up-d2" style="color:rgba(255,255,255,.55);margin-bottom:32px">Ask Claude anything about your mortgage readiness — what-if questions, or what to focus on next.</p>
+      <div id="chatNoScore" style="text-align:center;padding:40px;background:rgba(255,255,255,.05);border-radius:var(--r-xl);border:1px solid rgba(255,255,255,.1)">
+        <div style="font-size:2rem;margin-bottom:12px">📋</div>
+        <div style="color:rgba(255,255,255,.7);font-size:.9375rem;margin-bottom:16px">Complete the Kivo Check first so Claude has your real numbers to work with.</div>
+        <a href="kivo-check.html" class="btn btn--primary">Get My Kivo Score</a>
+      </div>
+      <div id="chatInterface" style="display:none">
+        <div class="chat-window fade-up">
+          <div class="chat-messages" id="chatMessages"><div class="chat-msg chat-msg--kivo" id="chatWelcome"></div></div>
+          <div class="chat-input-row">
+            <input class="chat-input" id="chatInput" type="text" placeholder="e.g. What if I paid off my car finance?" maxlength="200" aria-label="Ask a question about your mortgage readiness">
+            <button class="chat-send" id="chatSendBtn" onclick="sendChatMessage()" aria-label="Send">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M15.75 9L3.75 3l2.25 6-2.25 6 12-6z" fill="white"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="chat-suggestions" id="chatSuggestions">
+          <button class="chat-suggestion" onclick="askSuggestion(this)">What if I saved £5,000 more deposit?</button>
+          <button class="chat-suggestion" onclick="askSuggestion(this)">What if I applied jointly?</button>
+          <button class="chat-suggestion" onclick="askSuggestion(this)">How long until I could get a mortgage?</button>
+          <button class="chat-suggestion" onclick="askSuggestion(this)">Should I pay off my debts first?</button>
+          <button class="chat-suggestion" onclick="askSuggestion(this)">What does LTV mean for my situation?</button>
+        </div>
+        <p style="font-size:.75rem;color:rgba(255,255,255,.3);margin-top:16px;text-align:center">Powered by Claude · For guidance only · Always speak to an FCA-regulated advisor</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- SCORE BANDS -->
 <section class="section" style="background:var(--mist)">
   <div class="container">
@@ -333,41 +370,6 @@
 
 <footer class="footer"><div class="container"><div class="footer__grid"><div><a href="index.html" class="logo footer__logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a><p class="footer__tagline">Your friendly AI-powered guide to getting mortgage-ready.</p></div><div><div class="footer__col-title">Product</div><div class="footer__links"><a href="how-it-works.html">How it Works</a><a href="kivo-score.html">Kivo Score</a><a href="kivo-check.html">Kivo Check</a><a href="for-advisors.html">For Advisors</a></div></div><div><div class="footer__col-title">Resources</div><div class="footer__links"><a href="learn.html">Learn</a><a href="tools.html">Tools</a><a href="faq.html">FAQs</a></div></div><div><div class="footer__col-title">Company</div><div class="footer__links"><a href="about.html">About</a><a href="security.html">Security</a><a href="contact.html">Contact</a></div></div></div><div class="footer__reg"><strong>Important:</strong> The Kivo Score is indicative only and not a guarantee of a mortgage offer. Always seek qualified advice from an FCA-regulated broker. Kivo Technologies Ltd is registered in England &amp; Wales.</div><div class="footer__bottom"><div class="footer__copy">© 2025 Kivo Technologies Ltd.</div><div class="footer__legal"><a href="privacy.html">Privacy</a><a href="security.html">Security</a></div></div></div></footer>
 
-<!-- WHAT-IF CHAT ──────────────────────────────────────────── -->
-<section class="chat-section section" id="kivoChat">
-  <div class="container">
-    <div class="chat-wrap">
-      <div class="section-label fade-up"><div class="section-label__line" style="background:rgba(255,255,255,.2)"></div><span style="color:rgba(255,255,255,.5)">Ask Kivo</span></div>
-      <h2 class="t-display-lg fade-up fade-up-d1" style="color:var(--white);margin-bottom:8px">What would change your score?</h2>
-      <p class="t-body-lg fade-up fade-up-d2" style="color:rgba(255,255,255,.55);margin-bottom:32px">Ask Claude anything about your mortgage readiness — what-if questions, or what to focus on next.</p>
-      <div id="chatNoScore" style="text-align:center;padding:40px;background:rgba(255,255,255,.05);border-radius:var(--r-xl);border:1px solid rgba(255,255,255,.1)">
-        <div style="font-size:2rem;margin-bottom:12px">📋</div>
-        <div style="color:rgba(255,255,255,.7);font-size:.9375rem;margin-bottom:16px">Complete the Kivo Check first so Claude has your real numbers to work with.</div>
-        <a href="kivo-check.html" class="btn btn--primary">Get My Kivo Score</a>
-      </div>
-      <div id="chatInterface" style="display:none">
-        <div class="chat-window fade-up">
-          <div class="chat-messages" id="chatMessages"><div class="chat-msg chat-msg--kivo" id="chatWelcome"></div></div>
-          <div class="chat-input-row">
-            <input class="chat-input" id="chatInput" type="text" placeholder="e.g. What if I paid off my car finance?" maxlength="200" aria-label="Ask a question about your mortgage readiness">
-            <button class="chat-send" id="chatSendBtn" onclick="sendChatMessage()" aria-label="Send">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M15.75 9L3.75 3l2.25 6-2.25 6 12-6z" fill="white"/></svg>
-            </button>
-          </div>
-        </div>
-        <div class="chat-suggestions" id="chatSuggestions">
-          <button class="chat-suggestion" onclick="askSuggestion(this)">What if I saved £5,000 more deposit?</button>
-          <button class="chat-suggestion" onclick="askSuggestion(this)">What if I applied jointly?</button>
-          <button class="chat-suggestion" onclick="askSuggestion(this)">How long until I could get a mortgage?</button>
-          <button class="chat-suggestion" onclick="askSuggestion(this)">Should I pay off my debts first?</button>
-          <button class="chat-suggestion" onclick="askSuggestion(this)">What does LTV mean for my situation?</button>
-        </div>
-        <p style="font-size:.75rem;color:rgba(255,255,255,.3);margin-top:16px;text-align:center">Powered by Claude · For guidance only · Always speak to an FCA-regulated advisor</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- Explain Score Modal ──────────────────────────────────── -->
 <div class="explain-modal" id="explainModal" style="display:none" onclick="if(event.target===this)closeExplainModal()">
   <div class="explain-modal__card">
@@ -516,7 +518,7 @@ Generate exactly 4 actions ordered by impact. Use the user's ACTUAL numbers in e
 Return ONLY valid JSON (no markdown):
 {"headline":"<one sentence max 80 chars>","actions":[{"impact":"<High|Medium|Quick win>","title":"<max 50 chars>","text":"<specific advice with real numbers, 1-2 sentences>","boost":"<e.g. +8 to +12 points>","timeframe":"<e.g. 3-6 months>"}]}`;
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('/api/ask-claude', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -596,7 +598,7 @@ async function explainPillar(key) {
   };
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('/api/ask-claude', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -667,7 +669,7 @@ async function sendChatMessage() {
   _chatHistory.push({ role: 'user', content: text });
   const loadId = appendChatMsg('Thinking...', 'loading');
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('/api/ask-claude', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
