@@ -40,56 +40,36 @@
     .improve-card__text { font-size:.875rem;color:var(--slate);line-height:1.55; }
     .improve-card__boost { margin-top:12px;font-size:.8125rem;font-weight:600; }
 
+
+    .explain-btn { display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:8px 14px;background:none;border:1.5px solid var(--border);border-radius:var(--r-pill);font-size:.8125rem;font-weight:600;color:var(--slate);cursor:pointer;transition:all var(--ease);font-family:var(--font-body); }
+    .explain-btn:hover { border-color:var(--coral);color:var(--coral); }
+    .explain-modal { position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(15,30,45,.6);backdrop-filter:blur(4px); }
+    .explain-modal__card { background:var(--white);border-radius:var(--r-xl);box-shadow:0 24px 64px rgba(15,30,45,.2);padding:36px;max-width:540px;width:100%;max-height:80vh;overflow-y:auto;animation:modal-in .25s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes modal-in { from { transform:scale(.92);opacity:0; } }
+    .explain-modal__header { display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px; }
+    .explain-modal__title { font-family:var(--font-display);font-weight:700;font-size:1.125rem;color:var(--navy); }
+    .explain-modal__close { background:none;border:none;font-size:1.25rem;cursor:pointer;color:var(--slate-lt); }
+    .explain-modal__body { font-size:.9375rem;color:var(--slate);line-height:1.75; }
+    .chat-section { background:var(--navy); }
+    .chat-wrap { max-width:720px;margin:0 auto; }
+    .chat-window { background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-xl);overflow:hidden; }
+    .chat-messages { padding:24px;display:flex;flex-direction:column;gap:14px;min-height:260px;max-height:400px;overflow-y:auto; }
+    .chat-msg { max-width:85%;padding:12px 16px;border-radius:16px;font-size:.9rem;line-height:1.6; }
+    .chat-msg--kivo { background:rgba(255,255,255,.08);color:rgba(255,255,255,.9);border-radius:4px 16px 16px 16px;align-self:flex-start; }
+    .chat-msg--user { background:var(--coral);color:var(--white);border-radius:16px 16px 4px 16px;align-self:flex-end;margin-left:auto; }
+    .chat-msg--loading { background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);border-radius:4px 16px 16px 16px;font-style:italic;font-size:.875rem;align-self:flex-start; }
+    .chat-input-row { display:flex;gap:8px;padding:16px;border-top:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03); }
+    .chat-input { flex:1;padding:11px 16px;border-radius:var(--r-pill);border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:var(--white);font-family:var(--font-body);font-size:.9rem;outline:none;transition:border-color var(--ease); }
+    .chat-input::placeholder { color:rgba(255,255,255,.3); }
+    .chat-input:focus { border-color:var(--coral); }
+    .chat-send { width:42px;height:42px;border-radius:50%;background:var(--coral);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background var(--ease),transform var(--ease); }
+    .chat-send:hover { background:var(--coral-dk);transform:scale(1.05); }
+    .chat-send:disabled { opacity:.4;cursor:not-allowed;transform:none; }
+    .chat-suggestions { display:flex;flex-wrap:wrap;gap:8px;margin-top:16px; }
+    .chat-suggestion { padding:7px 14px;border-radius:var(--r-pill);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:.8125rem;cursor:pointer;transition:all var(--ease);font-family:var(--font-body); }
+    .chat-suggestion:hover { background:rgba(255,255,255,.14);color:var(--white); }
     @media(max-width:1024px){ .score-hero__inner{grid-template-columns:1fr;gap:40px;} .pillar-deep{grid-template-columns:1fr;gap:32px;} .improve-cards{grid-template-columns:1fr 1fr;} }
     @media(max-width:768px){ .improve-cards{grid-template-columns:1fr;} }
-
-    /* ── Explain button & modal ───────────────────────────── */
-    .explain-btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      margin-top: 14px; padding: 8px 14px;
-      background: none; border: 1.5px solid var(--border);
-      border-radius: var(--r-pill); font-size: .8125rem;
-      font-weight: 600; color: var(--slate); cursor: pointer;
-      transition: all var(--ease); font-family: var(--font-body);
-    }
-    .explain-btn:hover { border-color: var(--coral); color: var(--coral); }
-    .explain-modal {
-      position: fixed; inset: 0; z-index: 200;
-      display: flex; align-items: center; justify-content: center;
-      padding: 24px; background: rgba(15,30,45,.6);
-      backdrop-filter: blur(4px);
-    }
-    .explain-modal__card {
-      background: var(--white); border-radius: var(--r-xl);
-      box-shadow: 0 24px 64px rgba(15,30,45,.2); padding: 36px;
-      max-width: 540px; width: 100%; max-height: 80vh; overflow-y: auto;
-      animation: modal-in .25s cubic-bezier(0.34,1.56,0.64,1);
-    }
-    @keyframes modal-in { from { transform: scale(.92); opacity: 0; } }
-    .explain-modal__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
-    .explain-modal__title { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; color: var(--navy); }
-    .explain-modal__close { background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--slate-lt); }
-    .explain-modal__body { font-size: .9375rem; color: var(--slate); line-height: 1.75; }
-
-    /* ── What-if Chat ─────────────────────────────────────── */
-    .chat-section { background: var(--navy); }
-    .chat-wrap { max-width: 720px; margin: 0 auto; }
-    .chat-window { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: var(--r-xl); overflow: hidden; }
-    .chat-messages { padding: 24px; display: flex; flex-direction: column; gap: 14px; min-height: 260px; max-height: 400px; overflow-y: auto; }
-    .chat-msg { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: .9rem; line-height: 1.6; }
-    .chat-msg--kivo { background: rgba(255,255,255,.08); color: rgba(255,255,255,.9); border-radius: 4px 16px 16px 16px; align-self: flex-start; }
-    .chat-msg--user { background: var(--coral); color: var(--white); border-radius: 16px 16px 4px 16px; align-self: flex-end; margin-left: auto; }
-    .chat-msg--loading { background: rgba(255,255,255,.06); color: rgba(255,255,255,.5); border-radius: 4px 16px 16px 16px; font-style: italic; font-size: .875rem; align-self: flex-start; }
-    .chat-input-row { display: flex; gap: 8px; padding: 16px; border-top: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); }
-    .chat-input { flex: 1; padding: 11px 16px; border-radius: var(--r-pill); border: 1.5px solid rgba(255,255,255,.15); background: rgba(255,255,255,.07); color: var(--white); font-family: var(--font-body); font-size: .9rem; outline: none; transition: border-color var(--ease); }
-    .chat-input::placeholder { color: rgba(255,255,255,.3); }
-    .chat-input:focus { border-color: var(--coral); }
-    .chat-send { width: 42px; height: 42px; border-radius: 50%; background: var(--coral); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background var(--ease), transform var(--ease); }
-    .chat-send:hover { background: var(--coral-dk); transform: scale(1.05); }
-    .chat-send:disabled { opacity: .4; cursor: not-allowed; transform: none; }
-    .chat-suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-    .chat-suggestion { padding: 7px 14px; border-radius: var(--r-pill); background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.7); font-size: .8125rem; cursor: pointer; transition: all var(--ease); font-family: var(--font-body); }
-    .chat-suggestion:hover { background: rgba(255,255,255,.14); color: var(--white); }
   </style>
   <meta property="og:type" content="website">
   <meta property="og:title" content="The Kivo Score Explained | Kivo">
@@ -212,7 +192,7 @@
         </div>
       </div>
       <div class="pillar-deep__score-display">
-        <div class="pillar-deep__score-num" id="deepIncome" style="color:var(--teal)">85</div>
+        <div class="pillar-deep__score-num" style="color:var(--teal)">85</div>
         <div style="font-size:.875rem;font-weight:600;color:var(--teal-dk);margin-bottom:16px">Strong ✓</div>
         <p style="font-size:.875rem;color:var(--slate)">Based on a £35,000 salary and a £150,000 target, your income-to-loan ratio is 4.3× — within standard lending criteria.</p>
         <button class="explain-btn" onclick="explainPillar('income')">💬 Explain my score</button>
@@ -221,7 +201,7 @@
 
     <div class="pillar-deep fade-up">
       <div class="pillar-deep__score-display" style="order:-1">
-        <div class="pillar-deep__score-num" id="deepDeposit" style="color:#F59E0B">62</div>
+        <div class="pillar-deep__score-num" style="color:#F59E0B">62</div>
         <div style="font-size:.875rem;font-weight:600;color:#92400E;margin-bottom:16px">Could improve ↗</div>
         <p style="font-size:.875rem;color:var(--slate)">An 8% deposit gives you some options, but getting to 10% would significantly broaden the range of products and rates available to you.</p>
         <button class="explain-btn" onclick="explainPillar('deposit')">💬 Explain my score</button>
@@ -252,7 +232,7 @@
         </div>
       </div>
       <div class="pillar-deep__score-display">
-        <div class="pillar-deep__score-num" id="deepCredit" style="color:var(--teal)">88</div>
+        <div class="pillar-deep__score-num" style="color:var(--teal)">88</div>
         <div style="font-size:.875rem;font-weight:600;color:var(--teal-dk);margin-bottom:16px">Excellent ✓✓</div>
         <p style="font-size:.875rem;color:var(--slate)">No missed payments and low credit utilisation. This is one of your strongest areas — lenders will view this very favourably.</p>
         <button class="explain-btn" onclick="explainPillar('credit')">💬 Explain my score</button>
@@ -261,7 +241,7 @@
 
     <div class="pillar-deep fade-up">
       <div class="pillar-deep__score-display" style="order:-1">
-        <div class="pillar-deep__score-num" id="deepSpending" style="color:#F59E0B">70</div>
+        <div class="pillar-deep__score-num" style="color:#F59E0B">70</div>
         <div style="font-size:.875rem;font-weight:600;color:#92400E;margin-bottom:16px">Room to improve ↗</div>
         <p style="font-size:.875rem;color:var(--slate)">We've flagged some regular subscription costs that could be reduced. Cutting £80–100/month in discretionary spending could boost this pillar by up to 8 points.</p>
         <button class="explain-btn" onclick="explainPillar('spending')">💬 Explain my score</button>
@@ -288,7 +268,7 @@
     <div class="section-label fade-up"><div class="section-label__line"></div><span>How to improve</span></div>
     <h2 class="t-display-lg section-title fade-up fade-up-d1">The highest-impact actions</h2>
     <p class="t-body-lg tc-slate section-sub fade-up fade-up-d2">These are the actions that consistently move people's scores the most. Your personalised plan will prioritise these based on your specific situation.</p>
-    <!-- AI Plan (injected by JS when score exists) -->
+    <!-- AI Plan container - shown when score exists -->
     <div id="aiPlanContainer" style="display:none;margin-bottom:32px">
       <div id="aiPlanLoading" style="display:none;text-align:center;padding:40px;background:var(--white);border-radius:var(--r-xl);border:1px solid var(--border)">
         <div style="font-size:1.5rem;margin-bottom:12px">⚙️</div>
@@ -353,13 +333,13 @@
 
 <footer class="footer"><div class="container"><div class="footer__grid"><div><a href="index.html" class="logo footer__logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a><p class="footer__tagline">Your friendly AI-powered guide to getting mortgage-ready.</p></div><div><div class="footer__col-title">Product</div><div class="footer__links"><a href="how-it-works.html">How it Works</a><a href="kivo-score.html">Kivo Score</a><a href="kivo-check.html">Kivo Check</a><a href="for-advisors.html">For Advisors</a></div></div><div><div class="footer__col-title">Resources</div><div class="footer__links"><a href="learn.html">Learn</a><a href="tools.html">Tools</a><a href="faq.html">FAQs</a></div></div><div><div class="footer__col-title">Company</div><div class="footer__links"><a href="about.html">About</a><a href="security.html">Security</a><a href="contact.html">Contact</a></div></div></div><div class="footer__reg"><strong>Important:</strong> The Kivo Score is indicative only and not a guarantee of a mortgage offer. Always seek qualified advice from an FCA-regulated broker. Kivo Technologies Ltd is registered in England &amp; Wales.</div><div class="footer__bottom"><div class="footer__copy">© 2025 Kivo Technologies Ltd.</div><div class="footer__legal"><a href="privacy.html">Privacy</a><a href="security.html">Security</a></div></div></div></footer>
 
-<!-- WHAT-IF CHAT ─────────────────────────────────────────── -->
+<!-- WHAT-IF CHAT ──────────────────────────────────────────── -->
 <section class="chat-section section" id="kivoChat">
   <div class="container">
     <div class="chat-wrap">
       <div class="section-label fade-up"><div class="section-label__line" style="background:rgba(255,255,255,.2)"></div><span style="color:rgba(255,255,255,.5)">Ask Kivo</span></div>
       <h2 class="t-display-lg fade-up fade-up-d1" style="color:var(--white);margin-bottom:8px">What would change your score?</h2>
-      <p class="t-body-lg fade-up fade-up-d2" style="color:rgba(255,255,255,.55);margin-bottom:32px">Ask Claude anything about your mortgage readiness — what-if questions, what terms mean for your situation, or what to focus on next.</p>
+      <p class="t-body-lg fade-up fade-up-d2" style="color:rgba(255,255,255,.55);margin-bottom:32px">Ask Claude anything about your mortgage readiness — what-if questions, or what to focus on next.</p>
       <div id="chatNoScore" style="text-align:center;padding:40px;background:rgba(255,255,255,.05);border-radius:var(--r-xl);border:1px solid rgba(255,255,255,.1)">
         <div style="font-size:2rem;margin-bottom:12px">📋</div>
         <div style="color:rgba(255,255,255,.7);font-size:.9375rem;margin-bottom:16px">Complete the Kivo Check first so Claude has your real numbers to work with.</div>
@@ -367,9 +347,7 @@
       </div>
       <div id="chatInterface" style="display:none">
         <div class="chat-window fade-up">
-          <div class="chat-messages" id="chatMessages">
-            <div class="chat-msg chat-msg--kivo" id="chatWelcome"></div>
-          </div>
+          <div class="chat-messages" id="chatMessages"><div class="chat-msg chat-msg--kivo" id="chatWelcome"></div></div>
           <div class="chat-input-row">
             <input class="chat-input" id="chatInput" type="text" placeholder="e.g. What if I paid off my car finance?" maxlength="200" aria-label="Ask a question about your mortgage readiness">
             <button class="chat-send" id="chatSendBtn" onclick="sendChatMessage()" aria-label="Send">
@@ -390,7 +368,7 @@
   </div>
 </section>
 
-<!-- Explain Score Modal ────────────────────────────────────── -->
+<!-- Explain Score Modal ──────────────────────────────────── -->
 <div class="explain-modal" id="explainModal" style="display:none" onclick="if(event.target===this)closeExplainModal()">
   <div class="explain-modal__card">
     <div class="explain-modal__header">
@@ -398,7 +376,7 @@
       <button class="explain-modal__close" onclick="closeExplainModal()" aria-label="Close">✕</button>
     </div>
     <div class="explain-modal__body" id="explainModalBody">
-      <p style="color:var(--slate);font-style:italic">Loading explanation...</p>
+      <p style="color:var(--slate);font-style:italic">Loading...</p>
     </div>
   </div>
 </div>
@@ -424,9 +402,7 @@
     document.getElementById('heroLabel').textContent = 'Your Kivo Score';
     document.getElementById("heroTitle").textContent = "Here's your personalised score";
     document.getElementById('heroSub').textContent =
-      'Based on the information you provided' +
-      (saved.formData?.openBanking ? ' and your bank data' : '') +
-      ", here's how mortgage-ready you are right now.";
+      `Based on the information you provided${saved.formData?.openBanking ? ' and your bank data' : ''}, here's how mortgage-ready you are right now.`;
 
     // Score number
     document.getElementById('personalScoreNum').textContent = s;
@@ -439,7 +415,8 @@
     const marker = document.getElementById('personalGaugeMarker');
     if (marker) marker.style.left = s + '%';
 
-    // Pillar bars + values — use rAF to ensure card is visible before setting widths
+    // Pillar bars + values
+    // rAF ensures card is visible before width is applied so transition fires
     const pillarMap = {
       income:  { bar: 'pb-income',  val: 'pv-income'  },
       deposit: { bar: 'pb-deposit', val: 'pv-deposit' },
@@ -476,49 +453,40 @@
     }
   })();
 </script>
-
 <script>
 // ═══════════════════════════════════════════════════════════════
-// KIVO AI FEATURES — Features 1, 2, 3
-// All API calls use the Anthropic client-side endpoint
+// KIVO AI FEATURES  (separate block — does not touch bar logic)
+// Features: 1. Personalised plan  2. Explain pillar  3. What-if chat
 // ═══════════════════════════════════════════════════════════════
 
-// ── Load saved score once ────────────────────────────────────
 let _kivoSaved = null;
 try { _kivoSaved = JSON.parse(localStorage.getItem('kivoScore')); } catch(e) {}
 
-// ── Trigger all AI features when score exists ─────────────────
-// Use DOMContentLoaded to ensure original IIFE has fully run first
+// Wait for DOM + original IIFE to finish, then activate AI features
 document.addEventListener('DOMContentLoaded', function() {
   if (!_kivoSaved || !_kivoSaved.overallScore) return;
-
-  // Update improve section heading
-  const improveTitle = document.querySelector('.improve-section .section-title');
-  const improveSub   = document.querySelector('.improve-section .section-sub');
-  if (improveTitle) improveTitle.textContent = 'Your personalised improvement plan';
-  if (improveSub)   improveSub.textContent   = 'Generated by Claude based on your exact numbers — not generic advice.';
-
-  // Small delay to ensure original IIFE bar updates complete first
+  // Small delay so original IIFE bar updates complete first
   setTimeout(function() {
     loadImprovementPlan(_kivoSaved);
     initChat(_kivoSaved);
-  }, 100);
+    // Update section heading
+    const t = document.querySelector('.improve-section .section-title');
+    const s = document.querySelector('.improve-section .section-sub');
+    if (t) t.textContent = 'Your personalised improvement plan';
+    if (s) s.textContent = 'Generated by Claude based on your exact numbers.';
+  }, 150);
 });
 
-// ════════════════════════════════════════════════════════════
-// FEATURE 1: AI-GENERATED PERSONALISED IMPROVEMENT PLAN
-// ════════════════════════════════════════════════════════════
+// ── FEATURE 1: Personalised improvement plan ─────────────────
 
 async function loadImprovementPlan(saved) {
   const container = document.getElementById('aiPlanContainer');
   const loading   = document.getElementById('aiPlanLoading');
   const planDiv   = document.getElementById('aiPlanContent');
   if (!container) return;
-
   container.style.display = 'block';
   loading.style.display   = 'block';
 
-  // Cache keyed to score + date so it regenerates when score changes
   const cacheKey = 'kivoPlan_' + saved.overallScore + '_' + (saved.calculatedAt || '').slice(0, 10);
   try {
     const cached = JSON.parse(localStorage.getItem(cacheKey) || 'null');
@@ -526,24 +494,12 @@ async function loadImprovementPlan(saved) {
   } catch(e) {}
 
   try {
-    const plan = await generatePlan(saved);
-    loading.style.display = 'none';
-    planDiv.innerHTML = renderPlan(plan);
-    try { localStorage.setItem(cacheKey, JSON.stringify(plan)); } catch(e) {}
-  } catch(err) {
-    loading.style.display = 'none';
-    planDiv.innerHTML = '<p style="color:var(--slate);font-size:.9rem;padding:16px">Unable to generate your personalised plan right now. The general guidance below still applies.</p>';
-  }
-}
+    const fd = saved.formData || {};
+    const p  = saved.pillars  || {};
+    const depositNeeded = fd.propertyValue && fd.deposit
+      ? Math.max(0, Math.round(fd.propertyValue * 0.1) - fd.deposit) : null;
 
-async function generatePlan(saved) {
-  const fd = saved.formData || {};
-  const p  = saved.pillars  || {};
-  const depositNeeded = fd.propertyValue && fd.deposit
-    ? Math.max(0, Math.round(fd.propertyValue * 0.1) - fd.deposit)
-    : null;
-
-  const prompt = `You are Kivo's AI mortgage advisor. Generate a highly specific, personalised improvement plan.
+    const prompt = `You are Kivo's AI mortgage advisor. Generate a personalised improvement plan.
 
 USER PROFILE:
 - Kivo Score: ${saved.overallScore}/100 (${saved.band})
@@ -554,27 +510,32 @@ USER PROFILE:
 - Employment: ${fd.employment || 'unknown'}
 - Credit band: ${fd.credit || 'unknown'}
 - Debts: ${fd.hasDebts === 'yes' ? (fd.debtAmount || 'some') : 'none'}
-- Estimated borrowing: GBP ${(saved.borrowMin || 0).toLocaleString('en-GB')} to GBP ${(saved.borrowMax || 0).toLocaleString('en-GB')}
-${depositNeeded ? '- Deposit needed to reach 10% LTV: GBP ' + depositNeeded.toLocaleString('en-GB') : ''}
+${depositNeeded ? '- GBP ' + depositNeeded.toLocaleString('en-GB') + ' needed to reach 10% LTV' : ''}
 
-Generate exactly 4 improvement actions ordered by impact. Use the user's ACTUAL numbers in each action.
+Generate exactly 4 actions ordered by impact. Use the user's ACTUAL numbers in each action.
+Return ONLY valid JSON (no markdown):
+{"headline":"<one sentence max 80 chars>","actions":[{"impact":"<High|Medium|Quick win>","title":"<max 50 chars>","text":"<specific advice with real numbers, 1-2 sentences>","boost":"<e.g. +8 to +12 points>","timeframe":"<e.g. 3-6 months>"}]}`;
 
-Return ONLY valid JSON (no markdown fences):
-{"headline":"<one sentence summary max 80 chars>","actions":[{"impact":"<High|Medium|Quick win>","title":"<max 50 chars>","text":"<specific advice with real numbers, 1-2 sentences>","boost":"<e.g. +8 to +12 points>","timeframe":"<e.g. 3-6 months>"}]}`;
-
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 800,
-      messages: [{ role: 'user', content: prompt }]
-    })
-  });
-  if (!response.ok) throw new Error('API ' + response.status);
-  const data = await response.json();
-  const raw  = (data.content?.[0]?.text || '').replace(/```json|```/gi, '').trim();
-  return JSON.parse(raw);
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 800,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    if (!response.ok) throw new Error('API ' + response.status);
+    const data = await response.json();
+    const raw  = (data.content?.[0]?.text || '').replace(/```json|```/gi, '').trim();
+    const plan = JSON.parse(raw);
+    loading.style.display = 'none';
+    planDiv.innerHTML = renderPlan(plan);
+    try { localStorage.setItem(cacheKey, JSON.stringify(plan)); } catch(e) {}
+  } catch(err) {
+    loading.style.display = 'none';
+    planDiv.innerHTML = '<p style="color:var(--slate);font-size:.9rem;padding:16px">Unable to generate your personalised plan right now. The general guidance below still applies.</p>';
+  }
 }
 
 function renderPlan(plan) {
@@ -602,48 +563,37 @@ async function regeneratePlan() {
   let saved;
   try { saved = JSON.parse(localStorage.getItem('kivoScore')); } catch(e) {}
   if (!saved) return;
-  const cacheKey = 'kivoPlan_' + saved.overallScore + '_' + (saved.calculatedAt || '').slice(0, 10);
-  localStorage.removeItem(cacheKey);
+  localStorage.removeItem('kivoPlan_' + saved.overallScore + '_' + (saved.calculatedAt || '').slice(0, 10));
   await loadImprovementPlan(saved);
 }
 
-// ════════════════════════════════════════════════════════════
-// FEATURE 2: EXPLAIN MY PILLAR SCORE
-// ════════════════════════════════════════════════════════════
+// ── FEATURE 2: Explain pillar score ──────────────────────────
 
 const PILLAR_LABELS = {
-  income:   'Income & Affordability',
-  deposit:  'Deposit Strength',
-  credit:   'Credit Profile',
-  spending: 'Spending Behaviour',
+  income: 'Income & Affordability', deposit: 'Deposit Strength',
+  credit: 'Credit Profile', spending: 'Spending Behaviour',
 };
 
 async function explainPillar(key) {
   let saved;
   try { saved = JSON.parse(localStorage.getItem('kivoScore')); } catch(e) {}
 
-  const modal      = document.getElementById('explainModal');
-  const modalTitle = document.getElementById('explainModalTitle');
-  const modalBody  = document.getElementById('explainModalBody');
-
+  const modal = document.getElementById('explainModal');
+  const title = document.getElementById('explainModalTitle');
+  const body  = document.getElementById('explainModalBody');
   modal.style.display = 'flex';
-  modalTitle.textContent = 'Explaining: ' + (PILLAR_LABELS[key] || key);
-  modalBody.innerHTML    = '<p style="color:var(--slate);font-style:italic">Generating your explanation...</p>';
+  title.textContent   = 'Explaining: ' + (PILLAR_LABELS[key] || key);
+  body.innerHTML      = '<p style="color:var(--slate);font-style:italic">Generating your explanation...</p>';
 
   const fd    = saved?.formData || {};
   const p     = saved?.pillars  || {};
   const score = p[key] || 0;
-
-  const context = {
+  const ctx = {
     income:   `Income GBP ${(fd.income||0).toLocaleString('en-GB')}, loan needed GBP ${((fd.propertyValue||0)-(fd.deposit||0)).toLocaleString('en-GB')}, multiple ${fd.income ? (((fd.propertyValue||0)-(fd.deposit||0))/fd.income).toFixed(1) : '?'}x, employment ${fd.employment}.`,
-    deposit:  `Deposit GBP ${(fd.deposit||0).toLocaleString('en-GB')} (${fd.depositPct||0}% of GBP ${(fd.propertyValue||0).toLocaleString('en-GB')} target, LTV ${fd.ltv||0}%).`,
-    credit:   `Self-reported credit band: ${fd.credit}. Outstanding debts: ${fd.hasDebts==='yes' ? (fd.debtAmount||'some') : 'none'}.`,
+    deposit:  `Deposit GBP ${(fd.deposit||0).toLocaleString('en-GB')} (${fd.depositPct||0}% of GBP ${(fd.propertyValue||0).toLocaleString('en-GB')}, LTV ${fd.ltv||0}%).`,
+    credit:   `Credit band: ${fd.credit}. Debts: ${fd.hasDebts==='yes' ? (fd.debtAmount||'some') : 'none'}.`,
     spending: `Debts: ${fd.hasDebts==='yes' ? (fd.debtAmount||'some') : 'none'}. Employment: ${fd.employment}.`,
   };
-
-  const prompt = `You are Kivo's friendly mortgage advisor. Explain in 3-4 short paragraphs why this user scored ${score}/100 for their ${PILLAR_LABELS[key]} pillar, and give 2 specific, actionable things they can do to improve it. Use plain English and their actual numbers. No bullet points. Start directly with the explanation.
-
-Context: ${context[key] || ''} Overall score: ${saved?.overallScore}/100.`;
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -652,50 +602,48 @@ Context: ${context[key] || ''} Overall score: ${saved?.overallScore}/100.`;
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 500,
-        messages: [{ role: 'user', content: prompt }]
+        messages: [{ role: 'user', content: `You are Kivo's friendly mortgage advisor. Explain in 3-4 short paragraphs why this user scored ${score}/100 for their ${PILLAR_LABELS[key]} pillar, and give 2 specific actionable things they can do to improve it. Use plain English and their actual numbers. No bullet points. Start directly.\n\nContext: ${ctx[key] || ''} Overall score: ${saved?.overallScore}/100.` }]
       })
     });
     if (!response.ok) throw new Error('API error');
     const data = await response.json();
     const text = (data.content?.[0]?.text || '').trim();
     const html = text.split(/\n\n+/).map(para => `<p style="margin-bottom:14px">${para}</p>`).join('');
-    modalBody.innerHTML = html + '<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:.8125rem;color:var(--slate-lt)">For guidance only. Always speak to a qualified, FCA-regulated mortgage adviser.</div>';
+    body.innerHTML = html + '<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:.8125rem;color:var(--slate-lt)">For guidance only. Always speak to a qualified, FCA-regulated mortgage adviser.</div>';
   } catch(err) {
-    modalBody.innerHTML = '<p style="color:var(--slate)">Unable to generate explanation right now. Please try again.</p>';
+    body.innerHTML = '<p style="color:var(--slate)">Unable to generate explanation right now. Please try again.</p>';
   }
 }
 
 function closeExplainModal() {
   document.getElementById('explainModal').style.display = 'none';
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeExplainModal(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeExplainModal(); });
 
-// ════════════════════════════════════════════════════════════
-// FEATURE 3: CONVERSATIONAL WHAT-IF CHAT
-// ════════════════════════════════════════════════════════════
+// ── FEATURE 3: What-if chat ───────────────────────────────────
 
 let _chatHistory = [];
 
 function initChat(saved) {
-  const noScore  = document.getElementById('chatNoScore');
-  const chatUI   = document.getElementById('chatInterface');
-  const welcome  = document.getElementById('chatWelcome');
+  const noScore = document.getElementById('chatNoScore');
+  const chatUI  = document.getElementById('chatInterface');
+  const welcome = document.getElementById('chatWelcome');
   if (!noScore || !chatUI) return;
 
   noScore.style.display = 'none';
   chatUI.style.display  = 'block';
 
   const fd  = saved.formData || {};
-  const msg = `Hi! I can see your Kivo Score is ${saved.overallScore} (${saved.band}). I know your income, deposit, credit profile, and target property — ask me anything specific to your situation.`;
+  const msg = `Hi! I can see your Kivo Score is ${saved.overallScore} (${saved.band}). I know your income, deposit, credit profile and target property — ask me anything specific to your situation.`;
   if (welcome) welcome.textContent = msg;
 
   _chatHistory = [
-    { role: 'user', content: `My mortgage profile: Score ${saved.overallScore}/100 (${saved.band}). Income: GBP ${(fd.income||0).toLocaleString('en-GB')}. Deposit: GBP ${(fd.deposit||0).toLocaleString('en-GB')} (${fd.depositPct||0}% of GBP ${(fd.propertyValue||0).toLocaleString('en-GB')}). Employment: ${fd.employment}. Credit: ${fd.credit}. Debts: ${fd.hasDebts==='yes'?fd.debtAmount:'none'}. Pillars — Income: ${saved.pillars?.income}, Deposit: ${saved.pillars?.deposit}, Credit: ${saved.pillars?.credit}, Spending: ${saved.pillars?.spending}.` },
+    { role: 'user', content: `My mortgage profile: Score ${saved.overallScore}/100 (${saved.band}). Income: GBP ${(fd.income||0).toLocaleString('en-GB')}. Deposit: GBP ${(fd.deposit||0).toLocaleString('en-GB')} (${fd.depositPct||0}% of GBP ${(fd.propertyValue||0).toLocaleString('en-GB')}). Employment: ${fd.employment}. Credit: ${fd.credit}. Debts: ${fd.hasDebts==='yes'?fd.debtAmount:'none'}. Pillars: Income ${saved.pillars?.income}, Deposit ${saved.pillars?.deposit}, Credit ${saved.pillars?.credit}, Spending ${saved.pillars?.spending}.` },
     { role: 'assistant', content: msg }
   ];
 
   const input = document.getElementById('chatInput');
-  if (input) input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); sendChatMessage(); } });
+  if (input) input.addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); sendChatMessage(); } });
 }
 
 function askSuggestion(btn) {
@@ -711,17 +659,13 @@ async function sendChatMessage() {
   const sendBtn = document.getElementById('chatSendBtn');
   const text    = input ? input.value.trim() : '';
   if (!text) return;
-
   sendBtn.disabled = true;
   input.value      = '';
-
   const sugg = document.getElementById('chatSuggestions');
   if (sugg) sugg.style.display = 'none';
-
   appendChatMsg(text, 'user');
   _chatHistory.push({ role: 'user', content: text });
   const loadId = appendChatMsg('Thinking...', 'loading');
-
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -729,7 +673,7 @@ async function sendChatMessage() {
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 400,
-        system: 'You are Kivo\'s friendly AI mortgage advisor. Answer questions specifically about this user\'s mortgage readiness using their actual numbers. Keep answers concise (2-3 sentences). Be warm and clear. Note when relevant that this is guidance, not regulated advice.',
+        system: "You are Kivo's friendly AI mortgage advisor. Answer questions specifically about this user's mortgage readiness using their actual numbers. Keep answers concise (2-3 sentences). Be warm and clear. Note when relevant that this is guidance, not regulated advice.",
         messages: _chatHistory
       })
     });
@@ -752,7 +696,7 @@ function appendChatMsg(text, type) {
   const msgs = document.getElementById('chatMessages');
   const div  = document.createElement('div');
   const id   = 'cm-' + Date.now();
-  div.id        = id;
+  div.id = id;
   div.className = 'chat-msg chat-msg--' + type;
   div.textContent = text;
   msgs.appendChild(div);
@@ -765,6 +709,5 @@ function removeChatMsg(id) {
   if (el) el.remove();
 }
 </script>
-
 </body>
 </html>
