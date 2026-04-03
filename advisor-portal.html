@@ -712,7 +712,7 @@
               <div class="card-title" style="margin-bottom:4px">Preview</div>
               <div style="font-size:.8125rem;color:var(--slate-lt);margin-bottom:16px">This is how the banner and header appear to your clients.</div>
               <div id="wlPreviewBanner" style="border-radius:var(--r-sm) var(--r-sm) 0 0;padding:9px 20px;text-align:center;font-size:.8125rem;font-weight:600;color:#fff;background:#FF6B4A;transition:background .3s">
-                Mitchell Mortgage Advice — Mortgage Readiness Check
+                Your Firm Name — Mortgage Readiness Check
               </div>
               <div style="background:var(--white);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--r-sm) var(--r-sm);padding:14px 20px;display:flex;align-items:center;justify-content:space-between">
                 <div id="wlPreviewLogo" style="display:flex;align-items:center;gap:8px">
@@ -726,7 +726,7 @@
                 </div>
               </div>
               <div style="margin-top:12px;padding:12px 16px;background:var(--mist);border-radius:var(--r-sm);font-size:.8125rem;color:var(--slate)">
-                <strong>Results screen CTA: </strong><span id="wlPreviewCTA">Connect with Sarah</span> — <span style="color:var(--slate-lt)">Mitchell Mortgage Advice will receive your Kivo profile and reach out within 48 hours.</span>
+                <strong>Results screen CTA: </strong><span id="wlPreviewCTA">Connect with Sarah</span> — <span id="wlPreviewCTASub" style="color:var(--slate-lt)">Your firm will receive your Kivo profile and reach out within 48 hours.</span>
               </div>
               <div style="margin-top:8px;font-size:.75rem;color:var(--slate-lt);text-align:right">Powered by <span style="color:var(--coral)">Kivo</span> (visible on Professional plan)</div>
             </div>
@@ -737,7 +737,7 @@
               <div style="font-size:.8125rem;color:var(--slate-lt);margin-bottom:16px">Share this link with clients. They'll complete the check under your brand and their profile will come straight to you.</div>
 
               <div style="display:flex;gap:8px;margin-bottom:16px">
-                <input class="form-input" type="text" id="wlRefLink" value="https://getkivo.co.uk/kivo-check.html?ref=sarah-mitchell" readonly style="font-family:monospace;font-size:.875rem;background:var(--mist)">
+                <input class="form-input" type="text" id="wlRefLink" value="https://getkivo.co.uk/kivo-check.html?ref=your-name" readonly style="font-family:monospace;font-size:.875rem;background:var(--mist)">
                 <button class="btn btn-coral" onclick="copyRefLink()" id="copyLinkBtn">Copy</button>
               </div>
 
@@ -1218,6 +1218,9 @@ Write the brief now:`;
     // Preview CTA
     const cta = document.getElementById('wlPreviewCTA');
     if (cta) cta.textContent = 'Connect with ' + advisorName;
+
+    const ctaSub = document.getElementById('wlPreviewCTASub');
+    if (ctaSub) ctaSub.textContent = (firmName || 'Your firm') + ' will receive your Kivo profile and reach out within 48 hours.';
 
     // Update suggested copy
     const slug = makeSlug((advisorName + '-' + firmName).slice(0,40));
