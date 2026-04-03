@@ -749,14 +749,15 @@
       banner.classList.add('visible');
     }
 
-    // Logo: show firm logo if provided, else show firm name as text
-    if (cfg.logo) {
-      const img = document.getElementById('wlLogoImg');
-      const mark = document.getElementById('wlLogoMark');
-      const text = document.getElementById('wlLogoText');
-      if (img)  { img.src = cfg.logo; img.alt = cfg.firmName; img.classList.add('visible'); }
-      if (mark) mark.classList.add('hidden');
-      if (text) text.classList.add('hidden');
+    // Logo: swap entire logo anchor content
+    const logoAnchor = document.getElementById('headerLogo');
+    if (logoAnchor) {
+      if (cfg.logo) {
+        logoAnchor.innerHTML = `<img src="${cfg.logo}" alt="${cfg.firmName}" style="height:28px;width:auto;object-fit:contain;display:block">`;
+      } else {
+        // Show firm name as text wordmark in brand colour
+        logoAnchor.innerHTML = `<span style="font-family:var(--font-display);font-weight:800;font-size:1.125rem;color:${colour};letter-spacing:-.02em">${cfg.firmName}</span>`;
+      }
     }
 
     // Page title

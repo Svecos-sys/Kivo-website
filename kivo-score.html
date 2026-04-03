@@ -497,8 +497,8 @@ try { _kivoSaved = JSON.parse(localStorage.getItem('kivoScore')); } catch(e) {}
 
 // Wait for DOM + original IIFE to finish, then activate AI features
 document.addEventListener('DOMContentLoaded', function() {
-  // Apply white-label branding if arriving from an advisor ref link
-  if (_kivoSaved) initWhiteLabel(_kivoSaved);
+  // Apply white-label branding — works from saved score OR from ?ref= in URL
+  initWhiteLabel(_kivoSaved || {});
 
   if (!_kivoSaved || !_kivoSaved.overallScore) return;
   // Small delay so original IIFE bar updates complete first
@@ -747,7 +747,20 @@ function removeChatMsg(id) {
 
 // ── White-label initialization ────────────────────────────
 function initWhiteLabel(saved) {
-  const cfg = saved?.wlConfig || null;
+  // Config can come from: (1) saved score wlConfig, (2) ?ref= in URL + sessionStorage
+  let cfg = saved?.wlConfig || null;
+
+  if (!cfg) {
+    // Try reading ref from this page's own URL
+    const urlRef = new URLSearchParams(window.location.search).get('ref');
+    if (urlRef) {
+      try { cfg = JSON.parse(sessionStorage.getItem('kivoWLConfig') || 'null'); } catch(e) {}
+      if (!cfg) {
+        try { cfg = JSON.parse(localStorage.getItem('kivoAdvisorConfig_' + urlRef) || 'null'); } catch(e) {}
+      }
+    }
+  }
+
   if (!cfg) return;
 
   const colour = cfg.colour || '#FF6B4A';
@@ -767,13 +780,13 @@ function initWhiteLabel(saved) {
   }
 
   // Logo
-  if (cfg.logo) {
-    const img  = document.getElementById('wlLogoImg');
-    const mark = document.getElementById('wlLogoMark');
-    const text = document.getElementById('wlLogoText');
-    if (img)  { img.src = cfg.logo; img.alt = cfg.firmName; img.classList.add('visible'); }
-    if (mark) mark.classList.add('hidden');
-    if (text) text.classList.add('hidden');
+  const logoAnchor = document.getElementById('headerLogo');
+  if (logoAnchor) {
+    if (cfg.logo) {
+      logoAnchor.innerHTML = `<img src="${cfg.logo}" alt="${cfg.firmName}" style="height:28px;width:auto;object-fit:contain;display:block">`;
+    } else {
+      logoAnchor.innerHTML = `<span style="font-family:var(--font-display);font-weight:800;font-size:1.125rem;color:${colour};letter-spacing:-.02em">${cfg.firmName}</span>`;
+    }
   }
 
   // Hero copy
