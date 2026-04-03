@@ -409,6 +409,9 @@
         <div class="nav-item" onclick="showPage('profile')">
           <span class="nav-item__icon">👤</span> My Profile
         </div>
+        <div class="nav-item" onclick="showPage('brandedTool')">
+          <span class="nav-item__icon">🎨</span> My Branded Tool
+        </div>
         <div class="nav-item" onclick="showPage('billing')">
           <span class="nav-item__icon">💳</span> Plan &amp; Billing
         </div>
@@ -495,11 +498,13 @@
 
         <!-- ── LEAD INBOX ──────────────────────────────────────── -->
         <div id="pageLeads" style="display:none">
-          <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
+          <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center">
             <button class="btn btn-coral btn-sm" id="filterAll"     onclick="filterLeads('all')">All (12)</button>
             <button class="btn btn-outline btn-sm" id="filterNew"      onclick="filterLeads('new')">New (3)</button>
             <button class="btn btn-outline btn-sm" id="filterProgress" onclick="filterLeads('progress')">In Progress (5)</button>
             <button class="btn btn-outline btn-sm" id="filterDone"     onclick="filterLeads('completed')">Completed (4)</button>
+            <div style="flex:1"></div>
+            <button class="btn btn-outline btn-sm" onclick="exportLeadsCSV()" title="Download leads as CSV for your CRM">⬇ Export CSV</button>
           </div>
           <div class="card">
             <table class="table">
@@ -656,6 +661,126 @@
           </div>
         </div>
 
+        <!-- ── MY BRANDED TOOL ────────────────────────────────── -->
+        <div id="pageMyTool" style="display:none">
+          <div style="max-width:760px">
+
+            <!-- Intro banner -->
+            <div style="background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:var(--r-lg);padding:24px 28px;margin-bottom:24px;position:relative;overflow:hidden">
+              <div style="position:absolute;right:-20px;top:-20px;width:160px;height:160px;background:radial-gradient(circle,rgba(255,107,74,.18) 0%,transparent 70%);border-radius:50%;pointer-events:none"></div>
+              <div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:8px">My Branded Tool</div>
+              <div style="font-family:var(--font-d);font-weight:700;font-size:1.125rem;color:var(--white);margin-bottom:6px">Share a check that feels like yours</div>
+              <div style="font-size:.875rem;color:rgba(255,255,255,.6);max-width:520px">Your personalised link sends clients to a mortgage readiness check branded with your firm. When they consent, their full profile arrives directly in your inbox — no mention of other advisors.</div>
+            </div>
+
+            <!-- Branding config card -->
+            <div class="card" style="padding:28px;margin-bottom:20px">
+              <div class="card-title" style="margin-bottom:4px">Brand settings</div>
+              <div style="font-size:.8125rem;color:var(--slate-lt);margin-bottom:24px">These details appear on the check and score pages your clients see.</div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+                <div class="form-group" style="margin:0">
+                  <label class="form-label">Display name / firm name</label>
+                  <input class="form-input" type="text" id="wlFirmName" placeholder="e.g. Mitchell Mortgage Advice" oninput="updateWLPreview()">
+                </div>
+                <div class="form-group" style="margin:0">
+                  <label class="form-label">Your first name (for "Connect with...")</label>
+                  <input class="form-input" type="text" id="wlAdvisorName" placeholder="e.g. Sarah" oninput="updateWLPreview()">
+                </div>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+                <div class="form-group" style="margin:0">
+                  <label class="form-label">Brand colour</label>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <input type="color" id="wlColour" value="#FF6B4A" oninput="updateWLPreview()" style="width:44px;height:36px;border:none;border-radius:var(--r-sm);cursor:pointer;background:none">
+                    <input class="form-input" type="text" id="wlColourHex" value="#FF6B4A" placeholder="#FF6B4A" oninput="syncColourFromHex(this.value)" style="flex:1;font-family:monospace">
+                  </div>
+                </div>
+                <div class="form-group" style="margin:0">
+                  <label class="form-label">Logo URL <span style="font-weight:400;color:var(--slate-lt)">(optional — paste hosted image URL)</span></label>
+                  <input class="form-input" type="url" id="wlLogoUrl" placeholder="https://yourfirm.co.uk/logo.png" oninput="updateWLPreview()">
+                </div>
+              </div>
+
+              <button class="btn btn-coral" onclick="saveBranding()">Save Branding</button>
+              <span id="wlSaveConfirm" style="display:none;margin-left:12px;font-size:.875rem;color:var(--teal-dk);font-weight:600">✓ Saved</span>
+            </div>
+
+            <!-- Live preview card -->
+            <div class="card" style="padding:24px;margin-bottom:20px">
+              <div class="card-title" style="margin-bottom:4px">Preview</div>
+              <div style="font-size:.8125rem;color:var(--slate-lt);margin-bottom:16px">This is how the banner and header appear to your clients.</div>
+              <div id="wlPreviewBanner" style="border-radius:var(--r-sm) var(--r-sm) 0 0;padding:9px 20px;text-align:center;font-size:.8125rem;font-weight:600;color:#fff;background:#FF6B4A;transition:background .3s">
+                Mitchell Mortgage Advice — Mortgage Readiness Check
+              </div>
+              <div style="background:var(--white);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--r-sm) var(--r-sm);padding:14px 20px;display:flex;align-items:center;justify-content:space-between">
+                <div id="wlPreviewLogo" style="display:flex;align-items:center;gap:8px">
+                  <div style="width:28px;height:28px;border-radius:6px;background:var(--coral);display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 20 20" fill="none" width="14" height="14"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  <span style="font-family:var(--font-d);font-weight:800;font-size:1rem;color:var(--navy)">kiv<span style="color:var(--coral)">o</span></span>
+                </div>
+                <div style="display:flex;align-items:center;gap:16px">
+                  <div style="height:6px;width:200px;border-radius:99px;overflow:hidden;background:var(--border)">
+                    <div id="wlPreviewBar" style="height:100%;width:40%;border-radius:99px;background:#FF6B4A;transition:background .3s"></div>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:12px;padding:12px 16px;background:var(--mist);border-radius:var(--r-sm);font-size:.8125rem;color:var(--slate)">
+                <strong>Results screen CTA: </strong><span id="wlPreviewCTA">Connect with Sarah</span> — <span style="color:var(--slate-lt)">Mitchell Mortgage Advice will receive your Kivo profile and reach out within 48 hours.</span>
+              </div>
+              <div style="margin-top:8px;font-size:.75rem;color:var(--slate-lt);text-align:right">Powered by <span style="color:var(--coral)">Kivo</span> (visible on Professional plan)</div>
+            </div>
+
+            <!-- Referral link card -->
+            <div class="card" style="padding:24px;margin-bottom:20px">
+              <div class="card-title" style="margin-bottom:4px">Your referral link</div>
+              <div style="font-size:.8125rem;color:var(--slate-lt);margin-bottom:16px">Share this link with clients. They'll complete the check under your brand and their profile will come straight to you.</div>
+
+              <div style="display:flex;gap:8px;margin-bottom:16px">
+                <input class="form-input" type="text" id="wlRefLink" value="https://getkivo.co.uk/kivo-check.html?ref=sarah-mitchell" readonly style="font-family:monospace;font-size:.875rem;background:var(--mist)">
+                <button class="btn btn-coral" onclick="copyRefLink()" id="copyLinkBtn">Copy</button>
+              </div>
+
+              <!-- QR Code display -->
+              <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
+                <div>
+                  <canvas id="wlQRCanvas" width="120" height="120" style="border:1px solid var(--border);border-radius:var(--r-sm);display:block"></canvas>
+                  <button class="btn btn-outline btn-sm" style="margin-top:8px;width:120px;justify-content:center" onclick="downloadQR()">⬇ Download QR</button>
+                </div>
+                <div style="flex:1;min-width:200px">
+                  <div style="font-size:.8125rem;font-weight:600;color:var(--navy);margin-bottom:8px">Suggested copy for emails &amp; social:</div>
+                  <div id="wlSuggestedCopy" style="background:var(--mist);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 16px;font-size:.8125rem;color:var(--slate);line-height:1.65">
+                    "Before our first call, I'd love you to complete a quick mortgage readiness check — it takes 2 minutes and means I can prepare a more tailored conversation for you. Click here: [your link]"
+                  </div>
+                  <button class="btn btn-outline btn-sm" style="margin-top:8px" onclick="copySuggestedCopy()">Copy suggested copy</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- What each plan gets -->
+            <div class="card" style="padding:20px">
+              <div class="card-title" style="margin-bottom:12px">What each plan includes</div>
+              <table style="width:100%;font-size:.8125rem;border-collapse:collapse">
+                <thead><tr style="border-bottom:1px solid var(--border)">
+                  <th style="text-align:left;padding:8px 12px;color:var(--slate-lt);font-weight:600">Feature</th>
+                  <th style="text-align:center;padding:8px 12px;color:var(--slate-lt);font-weight:600">Starter</th>
+                  <th style="text-align:center;padding:8px 12px;color:var(--coral);font-weight:700">Professional</th>
+                  <th style="text-align:center;padding:8px 12px;color:var(--teal-dk);font-weight:700">Firm</th>
+                </tr></thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px 12px;color:var(--slate)">Referral link + auto-assignment</td><td style="text-align:center">✓</td><td style="text-align:center;color:var(--coral)">✓</td><td style="text-align:center;color:var(--teal-dk)">✓</td></tr>
+                  <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px 12px;color:var(--slate)">Logo + firm name on check</td><td style="text-align:center;color:var(--slate-lt)">—</td><td style="text-align:center;color:var(--coral)">✓</td><td style="text-align:center;color:var(--teal-dk)">✓</td></tr>
+                  <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px 12px;color:var(--slate)">Brand colour applied</td><td style="text-align:center;color:var(--slate-lt)">—</td><td style="text-align:center;color:var(--coral)">✓</td><td style="text-align:center;color:var(--teal-dk)">✓</td></tr>
+                  <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px 12px;color:var(--slate)">"Powered by Kivo" hidden</td><td style="text-align:center;color:var(--slate-lt)">—</td><td style="text-align:center;color:var(--slate-lt)">—</td><td style="text-align:center;color:var(--teal-dk)">✓</td></tr>
+                  <tr><td style="padding:8px 12px;color:var(--slate)">Custom domain (CNAME)</td><td style="text-align:center;color:var(--slate-lt)">—</td><td style="text-align:center;color:var(--slate-lt)">—</td><td style="text-align:center;color:var(--teal-dk)">✓</td></tr>
+                </tbody>
+              </table>
+              <button class="btn btn-coral btn-sm" style="margin-top:16px" onclick="showPage('billing')">Upgrade Plan →</button>
+            </div>
+
+          </div>
+        </div>
+
         <!-- ── BILLING ─────────────────────────────────────────── -->
         <div id="pageBilling" style="display:none">
           <div style="max-width:640px">
@@ -743,11 +868,12 @@
 
   // ── Navigation ────────────────────────────────────────────
   const pageMap = {
-    dashboard:  { el: 'pageDashboard',  title: 'Dashboard' },
-    leads:      { el: 'pageLeads',      title: 'Lead Inbox' },
-    leadDetail: { el: 'pageLeadDetail', title: 'Lead Detail' },
-    profile:    { el: 'pageProfile',    title: 'My Profile' },
-    billing:    { el: 'pageBilling',    title: 'Plan & Billing' },
+    dashboard:   { el: 'pageDashboard',  title: 'Dashboard' },
+    leads:       { el: 'pageLeads',      title: 'Lead Inbox' },
+    leadDetail:  { el: 'pageLeadDetail', title: 'Lead Detail' },
+    profile:     { el: 'pageProfile',    title: 'My Profile' },
+    brandedTool: { el: 'pageMyTool',     title: 'My Branded Tool' },
+    billing:     { el: 'pageBilling',    title: 'Plan & Billing' },
   };
 
   function showPage(page) {
@@ -758,14 +884,16 @@
     document.getElementById('topbarTitle').textContent = p.title;
     // Nav items
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    if (page === 'dashboard') document.querySelectorAll('.nav-item')[0].classList.add('active');
+    if (page === 'dashboard')  document.querySelectorAll('.nav-item')[0].classList.add('active');
     if (page === 'leads' || page === 'leadDetail') document.querySelectorAll('.nav-item')[1].classList.add('active');
-    if (page === 'profile')  document.querySelectorAll('.nav-item')[2].classList.add('active');
-    if (page === 'billing')  document.querySelectorAll('.nav-item')[3].classList.add('active');
+    if (page === 'profile')      document.querySelectorAll('.nav-item')[2].classList.add('active');
+    if (page === 'brandedTool')  document.querySelectorAll('.nav-item')[3].classList.add('active');
+    if (page === 'billing')      document.querySelectorAll('.nav-item')[4].classList.add('active');
     // Render page-specific content
-    if (page === 'dashboard')  renderDashboard();
-    if (page === 'leads')      renderLeads();
-    if (page === 'profile')    renderProfile();
+    if (page === 'dashboard')    renderDashboard();
+    if (page === 'leads')        renderLeads();
+    if (page === 'profile')      renderProfile();
+    if (page === 'brandedTool')  renderBrandedTool();
     window.scrollTo({ top: 0 });
   }
 
@@ -1030,6 +1158,174 @@ Write the brief now:`;
     btn.textContent = '✓ Profile saved';
     btn.className   = 'btn btn-teal';
     setTimeout(() => { btn.textContent = 'Save Profile Changes'; btn.className = 'btn btn-coral'; }, 2500);
+  }
+
+  // ── CSV Export ────────────────────────────────────────────
+  function exportLeadsCSV() {
+    const headers = ['Name', 'Email', 'Score', 'Band', 'Situation', 'Employment', 'Income', 'Deposit', 'Deposit %', 'Property Value', 'Borrow Range', 'Credit', 'Debts', 'Status', 'Received'];
+    const rows = DEMO_LEADS.map(l => [
+      l.name, l.email, l.score, l.band, l.situation,
+      l.employment || '', l.income || '', l.deposit || '',
+      l.depositPct || '', l.property || '', l.borrow || '',
+      l.credit || '', l.debts || '', l.status, l.received
+    ]);
+    const csv = [headers, ...rows].map(r =>
+      r.map(v => '"' + String(v || '').replace(/"/g, '""') + '"').join(',')
+    ).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url; a.download = 'kivo-leads-' + new Date().toISOString().slice(0,10) + '.csv';
+    a.click(); URL.revokeObjectURL(url);
+  }
+
+  // ── My Branded Tool ───────────────────────────────────────
+  let _wlSaved = {};
+  try { _wlSaved = JSON.parse(localStorage.getItem('kivoPortalWL') || '{}'); } catch(e) {}
+
+  // Generate a URL-safe slug from advisor name
+  function makeSlug(name) {
+    return name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'my-advisor';
+  }
+
+  function renderBrandedTool() {
+    // Restore saved values
+    if (_wlSaved.firmName)    document.getElementById('wlFirmName').value    = _wlSaved.firmName;
+    if (_wlSaved.advisorName) document.getElementById('wlAdvisorName').value = _wlSaved.advisorName;
+    if (_wlSaved.colour)      { document.getElementById('wlColour').value = _wlSaved.colour; document.getElementById('wlColourHex').value = _wlSaved.colour; }
+    if (_wlSaved.logo)        document.getElementById('wlLogoUrl').value      = _wlSaved.logo;
+    updateWLPreview();
+    generateQR();
+  }
+
+  function updateWLPreview() {
+    const firmName    = document.getElementById('wlFirmName')?.value    || 'Your Firm Name';
+    const advisorName = document.getElementById('wlAdvisorName')?.value || 'You';
+    const colour      = document.getElementById('wlColour')?.value      || '#FF6B4A';
+
+    // Sync hex input
+    const hexInput = document.getElementById('wlColourHex');
+    if (hexInput && document.activeElement !== hexInput) hexInput.value = colour;
+
+    // Preview banner
+    const banner = document.getElementById('wlPreviewBanner');
+    if (banner) { banner.style.background = colour; banner.textContent = firmName + ' — Mortgage Readiness Check'; }
+
+    // Preview progress bar
+    const bar = document.getElementById('wlPreviewBar');
+    if (bar) bar.style.background = colour;
+
+    // Preview CTA
+    const cta = document.getElementById('wlPreviewCTA');
+    if (cta) cta.textContent = 'Connect with ' + advisorName;
+
+    // Update suggested copy
+    const slug = makeSlug((advisorName + '-' + firmName).slice(0,40));
+    const link = 'https://getkivo.co.uk/kivo-check.html?ref=' + slug;
+    const refInput = document.getElementById('wlRefLink');
+    if (refInput) refInput.value = link;
+    const copy = document.getElementById('wlSuggestedCopy');
+    if (copy) copy.textContent = '"Before our first call, I\'d love you to complete a quick mortgage readiness check — it takes 2 minutes and means I can prepare a more tailored conversation for you. Click here: ' + link + '"';
+  }
+
+  function syncColourFromHex(val) {
+    if (/^#[0-9a-fA-F]{6}$/.test(val)) {
+      const picker = document.getElementById('wlColour');
+      if (picker) picker.value = val;
+      updateWLPreview();
+    }
+  }
+
+  function saveBranding() {
+    const cfg = {
+      firmName:    document.getElementById('wlFirmName')?.value    || '',
+      advisorName: document.getElementById('wlAdvisorName')?.value || '',
+      colour:      document.getElementById('wlColour')?.value      || '#FF6B4A',
+      logo:        document.getElementById('wlLogoUrl')?.value     || '',
+    };
+    cfg.advisorId = makeSlug(cfg.advisorName + '-' + cfg.firmName);
+    _wlSaved = cfg;
+    // Persist so kivo-check.html can read it via localStorage lookup
+    try {
+      localStorage.setItem('kivoPortalWL', JSON.stringify(cfg));
+      localStorage.setItem('kivoAdvisorConfig_' + cfg.advisorId, JSON.stringify(cfg));
+    } catch(e) {}
+
+    // Update the ref link display
+    updateWLPreview();
+    generateQR();
+
+    // Confirm animation
+    const confirm = document.getElementById('wlSaveConfirm');
+    if (confirm) { confirm.style.display = 'inline'; setTimeout(() => { confirm.style.display = 'none'; }, 2500); }
+  }
+
+  function copyRefLink() {
+    const input = document.getElementById('wlRefLink');
+    if (!input) return;
+    navigator.clipboard.writeText(input.value).then(() => {
+      const btn = document.getElementById('copyLinkBtn');
+      if (btn) { btn.textContent = '✓ Copied'; btn.className = 'btn btn-teal'; setTimeout(() => { btn.textContent = 'Copy'; btn.className = 'btn btn-coral'; }, 2000); }
+    });
+  }
+
+  function copySuggestedCopy() {
+    const el = document.getElementById('wlSuggestedCopy');
+    if (!el) return;
+    navigator.clipboard.writeText(el.textContent).then(() => {
+      const btns = document.querySelectorAll('[onclick="copySuggestedCopy()"]');
+      btns.forEach(b => { b.textContent = '✓ Copied'; setTimeout(() => { b.textContent = 'Copy suggested copy'; }, 2000); });
+    });
+  }
+
+  // ── QR Code generator (pure canvas, no library needed) ────
+  function generateQR() {
+    const canvas = document.getElementById('wlQRCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const link = document.getElementById('wlRefLink')?.value || 'https://getkivo.co.uk';
+    // Draw a placeholder QR-style pattern (real implementation would use a QR library)
+    // This renders a visually representative grid + branding
+    const size = 120;
+    const cell = 6;
+    const cols = Math.floor(size / cell);
+    ctx.clearRect(0, 0, size, size);
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, size, size);
+    // Deterministic pattern based on link hash
+    let hash = 0;
+    for (let i = 0; i < link.length; i++) hash = ((hash << 5) - hash + link.charCodeAt(i)) | 0;
+    ctx.fillStyle = '#0F1E2D';
+    for (let r = 0; r < cols; r++) {
+      for (let c = 0; c < cols; c++) {
+        const bit = (hash ^ (r * 31 + c * 17)) % 3;
+        if (bit !== 0) { ctx.fillRect(c * cell + 1, r * cell + 1, cell - 2, cell - 2); }
+      }
+    }
+    // Corner finder patterns (QR standard)
+    [[0,0],[0,cols-7],[cols-7,0]].forEach(([row, col]) => {
+      ctx.fillStyle = '#0F1E2D';
+      ctx.fillRect(col * cell, row * cell, 7 * cell, 7 * cell);
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(col * cell + cell, row * cell + cell, 5 * cell, 5 * cell);
+      ctx.fillStyle = '#0F1E2D';
+      ctx.fillRect(col * cell + 2 * cell, row * cell + 2 * cell, 3 * cell, 3 * cell);
+    });
+    // Kivo brand dot in centre
+    const colour = document.getElementById('wlColour')?.value || '#FF6B4A';
+    ctx.fillStyle = colour;
+    ctx.beginPath();
+    ctx.arc(size / 2, size / 2, 7, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function downloadQR() {
+    const canvas = document.getElementById('wlQRCanvas');
+    if (!canvas) return;
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'kivo-qr-code.png';
+    a.click();
   }
 
   // ── Init ──────────────────────────────────────────────────

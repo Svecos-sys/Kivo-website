@@ -9,6 +9,46 @@
   <style>
     body { background: var(--mist); }
 
+    /* ── White-label overrides (set by JS when ?ref= present) ── */
+    .wl-banner {
+      display: none;
+      background: var(--wl-colour, var(--navy));
+      color: #fff;
+      text-align: center;
+      font-size: .8125rem;
+      font-weight: 600;
+      padding: 9px 24px;
+      letter-spacing: .01em;
+    }
+    .wl-banner.visible { display: block; }
+    .wl-logo-img {
+      display: none;
+      height: 28px;
+      width: auto;
+      object-fit: contain;
+    }
+    .wl-logo-img.visible { display: block; }
+    .wl-logo-text { display: block; }
+    .wl-logo-text.hidden { display: none; }
+    /* Tint progress bar and primary buttons with advisor colour */
+    body.wl-active .progress-bar-fill {
+      background: linear-gradient(90deg, var(--wl-colour, var(--coral)), var(--wl-colour-lt, var(--teal)));
+    }
+    body.wl-active .btn--primary {
+      background: var(--wl-colour, var(--coral));
+      border-color: var(--wl-colour, var(--coral));
+    }
+    body.wl-active .btn--primary:hover {
+      background: var(--wl-colour-dk, var(--coral-dk));
+      border-color: var(--wl-colour-dk, var(--coral-dk));
+    }
+    .powered-by-kivo {
+      font-size: .75rem;
+      color: var(--slate-lt);
+      text-align: center;
+      padding: 10px 0 4px;
+    }
+
     .check-layout {
       min-height: 100svh;
       display: flex; flex-direction: column;
@@ -151,12 +191,15 @@
 </head>
 <body>
 
+<div class="wl-banner" id="wlBanner"></div>
+
 <header class="header" id="header">
   <div class="container">
     <div class="header__inner">
-      <a href="index.html" class="logo">
-        <div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <span class="logo__wordmark">kiv<span>o</span></span>
+      <a href="index.html" class="logo" id="headerLogo">
+        <div class="logo__mark wl-logo-text" id="wlLogoMark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <span class="logo__wordmark wl-logo-text" id="wlLogoText">kiv<span>o</span></span>
+        <img class="wl-logo-img" id="wlLogoImg" src="" alt="">
       </a>
       <div class="check-header__progress" style="max-width:400px;flex:1">
         <div class="check-header__step-label" id="stepLabel">Step 1 of 5 — About you</div>
@@ -630,7 +673,8 @@
             </a>
             <a href="find-an-advisor.html" class="btn btn--secondary" id="advisorContactBtn">Find an Advisor</a>
           </div>
-          <p style="font-size:.8125rem;color:var(--slate-lt);margin-top:12px;text-align:center">We'll help match you with a vetted, FCA-regulated mortgage advisor.</p>
+          <p style="font-size:.8125rem;color:var(--slate-lt);margin-top:12px;text-align:center" id="advisorContactSub">We'll help match you with a vetted, FCA-regulated mortgage advisor.</p>
+          <div class="powered-by-kivo" id="poweredByKivo" style="display:none">Powered by <a href="https://getkivo.co.uk" target="_blank" style="color:var(--coral)">Kivo</a></div>
         </div>
       </div>
     </div>
@@ -648,7 +692,88 @@
 
 <script src="kivo.js"></script>
 <script>
-  // ── Step navigation ────────────────────────────────────────
+  // ── White-label advisor config lookup ─────────────────────
+  // In production this would be fetched from /api/advisor-config?ref=ID
+  // For now, configs are stored here and in localStorage by the portal
+  const WL_CONFIGS = {
+    'demo-advisor': {
+      advisorId:  'demo-advisor',
+      firmName:   'Mitchell Mortgage Advice',
+      advisorName:'Sarah',
+      logo:       '',
+      colour:     '#0F1E2D',
+      plan:       'professional',
+    },
+    // More advisors are added dynamically when they save their branding in the portal
+  };
+
+  // ── ?ref= parameter handling ───────────────────────────────
+  const _urlRef = new URLSearchParams(window.location.search).get('ref');
+  let _wlConfig = null;
+
+  function initWhiteLabel() {
+    if (!_urlRef) return;
+
+    // 1. Check built-in configs
+    let cfg = WL_CONFIGS[_urlRef] || null;
+
+    // 2. Fallback: check localStorage (set by advisor portal "Save Branding")
+    if (!cfg) {
+      try {
+        const stored = localStorage.getItem('kivoAdvisorConfig_' + _urlRef);
+        if (stored) cfg = JSON.parse(stored);
+      } catch(e) {}
+    }
+
+    if (!cfg) return; // unknown ref — render normally
+    _wlConfig = cfg;
+
+    // Store ref so kivo-score.html can read it
+    sessionStorage.setItem('kivoRef', _urlRef);
+    sessionStorage.setItem('kivoWLConfig', JSON.stringify(cfg));
+
+    // Apply brand colour CSS variable
+    const colour = cfg.colour || '#FF6B4A';
+    const colourDk = shadeColour(colour, -15);
+    const colourLt = shadeColour(colour, 60);
+    document.documentElement.style.setProperty('--wl-colour', colour);
+    document.documentElement.style.setProperty('--wl-colour-dk', colourDk);
+    document.documentElement.style.setProperty('--wl-colour-lt', colourLt);
+    document.body.classList.add('wl-active');
+
+    // Banner
+    const banner = document.getElementById('wlBanner');
+    if (banner) {
+      banner.style.background = colour;
+      banner.textContent = cfg.firmName + ' — Mortgage Readiness Check';
+      banner.classList.add('visible');
+    }
+
+    // Logo: show firm logo if provided, else show firm name as text
+    if (cfg.logo) {
+      const img = document.getElementById('wlLogoImg');
+      const mark = document.getElementById('wlLogoMark');
+      const text = document.getElementById('wlLogoText');
+      if (img)  { img.src = cfg.logo; img.alt = cfg.firmName; img.classList.add('visible'); }
+      if (mark) mark.classList.add('hidden');
+      if (text) text.classList.add('hidden');
+    }
+
+    // Page title
+    document.title = cfg.firmName + ' — Mortgage Readiness Check';
+  }
+
+  // Simple colour shade utility (+/- percent)
+  function shadeColour(hex, pct) {
+    const num = parseInt(hex.replace('#',''), 16);
+    const r = Math.min(255, Math.max(0, (num >> 16) + pct));
+    const g = Math.min(255, Math.max(0, ((num >> 8) & 0xff) + pct));
+    const b = Math.min(255, Math.max(0, (num & 0xff) + pct));
+    return '#' + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
+  }
+
+  // Run on load
+  initWhiteLabel();
   const steps    = ['step1','step2','step3','step4','step5','stepResults'];
   const labels   = ['Step 1 of 5 — About you','Step 2 of 5 — Your income','Step 3 of 5 — Deposit & property','Step 4 of 5 — Credit & debts','Step 5 of 5 — Almost done!','Your Kivo Score'];
   const progress = ['20%','40%','60%','80%','95%','100%'];
@@ -820,7 +945,9 @@ RETURN EXACTLY THIS JSON SHAPE:
       localStorage.setItem('kivoScore', JSON.stringify({
         ...result,
         formData,
-        calculatedAt: new Date().toISOString()
+        calculatedAt: new Date().toISOString(),
+        refAdvisorId: _urlRef || null,
+        wlConfig: _wlConfig || null,
       }));
 
       // Submit to Formspree in background (non-blocking)
@@ -841,7 +968,9 @@ RETURN EXACTLY THIS JSON SHAPE:
       localStorage.setItem('kivoScore', JSON.stringify({
         ...fallback,
         formData,
-        calculatedAt: new Date().toISOString()
+        calculatedAt: new Date().toISOString(),
+        refAdvisorId: _urlRef || null,
+        wlConfig: _wlConfig || null,
       }));
       renderResults(fallback, formData);
       goToStep(6);
@@ -960,6 +1089,17 @@ RETURN EXACTLY THIS JSON SHAPE:
     const ctaText  = document.querySelector('.results-cta__text');
     if (ctaTitle) ctaTitle.textContent = '📌 Your top priority action';
     if (ctaText && result.topAction) ctaText.textContent = result.topAction;
+
+    // White-label: swap advisor button and show "Powered by Kivo"
+    const advisorBtn = document.getElementById('advisorContactBtn');
+    const advisorSub = document.getElementById('advisorContactSub');
+    const poweredBy  = document.getElementById('poweredByKivo');
+    if (_wlConfig && advisorBtn) {
+      advisorBtn.textContent = 'Connect with ' + (_wlConfig.advisorName || _wlConfig.firmName);
+      advisorBtn.href = 'find-an-advisor.html?ref=' + _urlRef;
+      if (advisorSub) advisorSub.textContent = _wlConfig.firmName + ' will receive your Kivo profile and reach out within 48 hours.';
+      if (poweredBy) poweredBy.style.display = 'block';
+    }
   }
 
   // ── Animate the score ring + numbers ──────────────────────

@@ -7,7 +7,32 @@
   <meta name="description" content="Understand your Kivo Score — what it means, how it's calculated, and exactly what you can do to improve it.">
   <link rel="stylesheet" href="kivo.css">
   <style>
-    .score-hero { padding-top: 68px; background: linear-gradient(150deg, var(--navy) 0%, #1a3a5c 100%); position:relative;overflow:hidden; }
+    /* ── White-label banner ───────────────────────────────── */
+    .wl-banner {
+      display: none;
+      color: #fff;
+      text-align: center;
+      font-size: .8125rem;
+      font-weight: 600;
+      padding: 9px 24px;
+      letter-spacing: .01em;
+    }
+    .wl-banner.visible { display: block; }
+    .wl-logo-img { display: none; height: 28px; width: auto; object-fit: contain; }
+    .wl-logo-img.visible { display: block; }
+    .wl-logo-text.hidden { display: none; }
+    body.wl-active .btn--primary {
+      background: var(--wl-colour, var(--coral));
+      border-color: var(--wl-colour, var(--coral));
+    }
+    .powered-by-kivo-score {
+      display: none;
+      font-size: .75rem;
+      color: rgba(255,255,255,.4);
+      text-align: center;
+      margin-top: 16px;
+    }
+    .powered-by-kivo-score.visible { display: block; } background: linear-gradient(150deg, var(--navy) 0%, #1a3a5c 100%); position:relative;overflow:hidden; }
     .score-hero__inner { display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:88px 0; }
     .gauge-card { background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-xl);padding:36px;text-align:center; }
     .gauge-big { font-family:var(--font-display);font-weight:800;font-size:5.5rem;line-height:1;color:var(--white); }
@@ -82,8 +107,13 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23FF6B4A'/><path d='M10 8v16M10 16l8-8M10 16l8 8' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 </head>
 <body>
+<div class="wl-banner" id="wlBanner"></div>
 <header class="header" id="header"><div class="container"><div class="header__inner">
-  <a href="index.html" class="logo"><div class="logo__mark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="logo__wordmark">kiv<span>o</span></span></a>
+  <a href="index.html" class="logo" id="headerLogo">
+    <div class="logo__mark wl-logo-text" id="wlLogoMark"><svg viewBox="0 0 20 20" fill="none"><path d="M5 4v12M5 10l7-6M5 10l7 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <span class="logo__wordmark wl-logo-text" id="wlLogoText">kiv<span>o</span></span>
+    <img class="wl-logo-img" id="wlLogoImg" src="" alt="">
+  </a>
   <nav class="nav">
     <div class="nav__item"><a href="how-it-works.html" class="nav__link active">How it Works <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="how-it-works.html"><span class="dd-icon" style="background:#FFF0EC">🏠</span>For Home Buyers</a><a href="kivo-score.html"><span class="dd-icon" style="background:#E6FAF8">📊</span>Kivo Score</a><a href="kivo-check.html"><span class="dd-icon" style="background:#F0F4FF">✅</span>Kivo Check</a></div></div>
     <div class="nav__item"><a href="learn.html" class="nav__link">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a><a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a><a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a></div></div>
@@ -365,6 +395,7 @@
     <div class="cta-band__actions fade-up fade-up-d2">
       <a href="kivo-check.html" class="btn btn--white btn--lg">Check My Kivo Score — Free <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
+    <div class="powered-by-kivo-score" id="poweredByKivoScore">Powered by <a href="https://getkivo.co.uk" target="_blank" style="color:rgba(255,255,255,.6)">Kivo</a></div>
   </div>
 </section>
 
@@ -466,6 +497,9 @@ try { _kivoSaved = JSON.parse(localStorage.getItem('kivoScore')); } catch(e) {}
 
 // Wait for DOM + original IIFE to finish, then activate AI features
 document.addEventListener('DOMContentLoaded', function() {
+  // Apply white-label branding if arriving from an advisor ref link
+  if (_kivoSaved) initWhiteLabel(_kivoSaved);
+
   if (!_kivoSaved || !_kivoSaved.overallScore) return;
   // Small delay so original IIFE bar updates complete first
   setTimeout(function() {
@@ -709,6 +743,61 @@ function appendChatMsg(text, type) {
 function removeChatMsg(id) {
   const el = document.getElementById(id);
   if (el) el.remove();
+}
+
+// ── White-label initialization ────────────────────────────
+function initWhiteLabel(saved) {
+  const cfg = saved?.wlConfig || null;
+  if (!cfg) return;
+
+  const colour = cfg.colour || '#FF6B4A';
+  const colourDk = shadeColour(colour, -15);
+  const colourLt = shadeColour(colour, 60);
+  document.documentElement.style.setProperty('--wl-colour', colour);
+  document.documentElement.style.setProperty('--wl-colour-dk', colourDk);
+  document.documentElement.style.setProperty('--wl-colour-lt', colourLt);
+  document.body.classList.add('wl-active');
+
+  // Banner
+  const banner = document.getElementById('wlBanner');
+  if (banner) {
+    banner.style.background = colour;
+    banner.textContent = cfg.firmName + ' — Mortgage Readiness Report';
+    banner.classList.add('visible');
+  }
+
+  // Logo
+  if (cfg.logo) {
+    const img  = document.getElementById('wlLogoImg');
+    const mark = document.getElementById('wlLogoMark');
+    const text = document.getElementById('wlLogoText');
+    if (img)  { img.src = cfg.logo; img.alt = cfg.firmName; img.classList.add('visible'); }
+    if (mark) mark.classList.add('hidden');
+    if (text) text.classList.add('hidden');
+  }
+
+  // Hero copy
+  const label = document.getElementById('heroLabel');
+  const title = document.getElementById('heroTitle');
+  const sub   = document.getElementById('heroSub');
+  if (label) label.textContent = cfg.firmName;
+  if (title) title.textContent = 'Your mortgage readiness report';
+  if (sub)   sub.textContent   = 'Prepared by ' + cfg.firmName + '. Your score is based on four pillars — the same factors lenders use — and comes with a personalised action plan.';
+
+  // Page title
+  document.title = cfg.firmName + ' — Your Mortgage Readiness Report';
+
+  // Powered by Kivo badge
+  const pb = document.getElementById('poweredByKivoScore');
+  if (pb) pb.classList.add('visible');
+}
+
+function shadeColour(hex, pct) {
+  const num = parseInt(hex.replace('#',''), 16);
+  const r = Math.min(255, Math.max(0, (num >> 16) + pct));
+  const g = Math.min(255, Math.max(0, ((num >> 8) & 0xff) + pct));
+  const b = Math.min(255, Math.max(0, (num & 0xff) + pct));
+  return '#' + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
 }
 </script>
 </body>
