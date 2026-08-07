@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'POST');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  const { model, max_tokens, messages, system } = req.body;
+  const { model, max_tokens, messages, system, thinking } = req.body;
 
   if (!messages || !Array.isArray(messages)) {
     return res.status(400).json({ error: 'Missing required field: messages' });
@@ -25,6 +25,10 @@ export default async function handler(req, res) {
 
   // Include system prompt if provided (used by the chat feature)
   if (system) body.system = system;
+
+  // Include thinking config if provided (kivo-score.html disables adaptive
+  // thinking on the explain/chat features for faster, tighter responses)
+  if (thinking) body.thinking = thinking;
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
