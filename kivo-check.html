@@ -30,6 +30,12 @@
     .wl-logo-img.visible { display: block; }
     .wl-logo-text { display: block; }
     .wl-logo-text.hidden { display: none; }
+    /* Logo mark must stay flex (to centre the SVG) even while the
+       .wl-logo-text toggle class is applied — a plain `display:block`
+       here was overriding kivo.css's centring and pushing the K icon
+       to the top-left of its box. */
+    .logo__mark.wl-logo-text { display: flex; }
+    .logo__mark.wl-logo-text.hidden { display: none; }
     /* Tint progress bar and primary buttons with advisor colour */
     body.wl-active .progress-bar-fill {
       background: linear-gradient(90deg, var(--wl-colour, var(--coral)), var(--wl-colour-lt, var(--teal)));
@@ -564,8 +570,8 @@
           <label class="option-card" style="cursor:pointer">
             <input type="checkbox" name="openBanking" id="openBankingOpt" style="width:18px;height:18px;flex-shrink:0">
             <div style="margin-left:4px">
-              <div class="option-card__label" style="font-size:.9375rem">🏦 Connect my bank for a more accurate score <span class="badge badge--teal" style="margin-left:6px;font-size:.75rem">Recommended</span></div>
-              <div class="option-card__sub" style="margin-top:4px">Uses Open Banking — read-only, regulated, and secure. Improves your score accuracy significantly.</div>
+              <div class="option-card__label" style="font-size:.9375rem">🏦 I'd like a more accurate spending assessment <span class="badge badge--teal" style="margin-left:6px;font-size:.75rem">Recommended</span></div>
+              <div class="option-card__sub" style="margin-top:4px">Live bank connection via Open Banking is coming soon. For now, ticking this tells us to weight your spending profile more favourably in this estimate.</div>
             </div>
           </label>
         </div>
@@ -951,8 +957,10 @@ RETURN EXACTLY THIS JSON SHAPE:
         wlConfig: _wlConfig || null,
       }));
 
-      // Submit to Formspree in background (non-blocking)
+      // Submit to Formspree and email the visitor their score — both
+      // fire-and-forget so a slow/failed send never blocks the results
       submitToFormspree(formData, result);
+      sendScoreEmail(formData, result);
 
       // Render results into the DOM
       renderResults(result, formData);
@@ -973,6 +981,8 @@ RETURN EXACTLY THIS JSON SHAPE:
         refAdvisorId: _urlRef || null,
         wlConfig: _wlConfig || null,
       }));
+      submitToFormspree(formData, fallback);
+      sendScoreEmail(formData, fallback);
       renderResults(fallback, formData);
       goToStep(6);
       requestAnimationFrame(() => requestAnimationFrame(() => animateResults(fallback)));
@@ -1011,8 +1021,8 @@ RETURN EXACTLY THIS JSON SHAPE:
     else insights.push({ type: 'improve', text: `At ${multiple.toFixed(1)}× income, you're above standard thresholds. A larger deposit or second income would help.` });
     if (d.depositPct < 10) insights.push({ type: 'improve', text: `Your ${d.depositPct}% deposit is below the 10% threshold. Reaching 10% opens significantly better rates.` });
     else insights.push({ type: 'positive', text: `A ${d.depositPct}% deposit is solid. You have access to a good range of mortgage products.` });
-    if (!d.openBanking) insights.push({ type: 'tip', text: 'Connecting your bank via Open Banking could improve your score accuracy by up to 8 points.' });
-    else insights.push({ type: 'tip', text: 'With Open Banking connected, your spending analysis is more accurate — lenders will appreciate this.' });
+    if (!d.openBanking) insights.push({ type: 'tip', text: 'Opting into a more accurate spending assessment could improve your score by up to 8 points — live bank connection is coming soon.' });
+    else insights.push({ type: 'tip', text: 'Your spending profile has been weighted more favourably in this estimate, as requested.' });
 
     const topAction = d.depositPct < 10 ? 'Save to reach a 10% deposit — this is your single biggest unlock.'
       : credit === 'fair' || credit === 'poor' ? 'Focus on improving your credit profile — register to vote and clear any defaults.'
@@ -1023,9 +1033,10 @@ RETURN EXACTLY THIS JSON SHAPE:
 
   // ── Submit to Formspree ────────────────────────────────────
   async function submitToFormspree(formData, result) {
-    // ⚠️  Replace YOUR_FORM_ID with your Formspree form ID
-    // Get one free at formspree.io — takes 2 minutes
-    const FORMSPREE_ID = 'YOUR_FORM_ID'; // ⚠️ Get a free ID at formspree.io — paste it here
+    // ⚠️  STILL NEEDS YOUR REAL FORMSPREE ID — this is the only backend
+    // record of a completed Kivo Check result. Create a form at
+    // formspree.io and paste its ID below to replace 'YOUR_FORM_ID'.
+    const FORMSPREE_ID = 'YOUR_FORM_ID';
     if (FORMSPREE_ID === 'YOUR_FORM_ID') return; // skip if not configured
 
     try {
@@ -1047,6 +1058,49 @@ RETURN EXACTLY THIS JSON SHAPE:
         })
       });
     } catch (e) { /* silent fail — score still shows */ }
+  }
+
+  // ── Email the visitor their score ───────────────────────────
+  // Fixes: form promised "We'll send your score here" but no email
+  // was ever sent. Routes through /api/send-email (the existing
+  // Vercel → Resend proxy already used by find-an-advisor.html) so
+  // the Resend API key stays server-side.
+  async function sendScoreEmail(formData, result) {
+    if (!formData.email) return;
+    try {
+      await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to:      formData.email,
+          subject: `Your Kivo Score: ${result.overallScore}/100 (${result.band})`,
+          html:    buildScoreEmail(formData, result),
+        })
+      });
+    } catch (e) { /* silent fail — score still shows on screen either way */ }
+  }
+
+  function buildScoreEmail(formData, result) {
+    const borrowRange = `£${(result.borrowMin || 0).toLocaleString('en-GB')} – £${(result.borrowMax || 0).toLocaleString('en-GB')}`;
+    return `<!DOCTYPE html><html><body style="margin:0;padding:0;background:#F7F8FA;font-family:Arial,sans-serif">
+      <table width="100%" cellpadding="0" cellspacing="0" style="background:#F7F8FA;padding:32px 16px">
+        <tr><td align="center">
+          <table width="480" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:16px;overflow:hidden;border:1px solid #E8ECF0">
+            <tr><td style="background:#0F1E2D;padding:28px 32px">
+              <div style="color:#fff;font-weight:800;font-size:1.25rem">kiv<span style="color:#FF6B4A">o</span></div>
+            </td></tr>
+            <tr><td style="padding:32px">
+              <p style="margin:0 0 8px;font-size:.8125rem;color:#718096;text-transform:uppercase;letter-spacing:.06em">Your Kivo Score</p>
+              <p style="margin:0 0 20px;font-family:Arial,sans-serif;font-weight:800;font-size:2.5rem;color:#0F1E2D">${result.overallScore}<span style="font-size:1.25rem;color:#A0AEC0">/100</span></p>
+              <p style="margin:0 0 24px;font-size:1rem;color:#0F1E2D"><strong>${result.band}</strong> — you may be able to borrow around <strong>${borrowRange}</strong>.</p>
+              ${result.topAction ? `<p style="margin:0 0 24px;padding:16px;background:#F7F8FA;border-radius:10px;font-size:.9rem;color:#4A5568"><strong>Your top action:</strong> ${result.topAction}</p>` : ''}
+              <a href="https://getkivo.co.uk/kivo-score.html" style="display:inline-block;background:#FF6B4A;color:#fff;font-weight:700;font-size:.9375rem;padding:14px 28px;border-radius:100px;text-decoration:none">View your full breakdown →</a>
+              <p style="margin:28px 0 0;font-size:.75rem;color:#A0AEC0;line-height:1.6">Kivo is not a mortgage broker and does not provide regulated financial advice. This score is indicative only. Always speak to a qualified, FCA-regulated mortgage adviser before making financial decisions.</p>
+            </td></tr>
+          </table>
+        </td></tr>
+      </table>
+    </body></html>`;
   }
 
   // ── Render Claude's result into the results panel ──────────

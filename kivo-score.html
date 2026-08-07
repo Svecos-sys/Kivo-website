@@ -7,6 +7,27 @@
   <meta name="description" content="Understand your Kivo Score — what it means, how it's calculated, and exactly what you can do to improve it.">
   <link rel="stylesheet" href="kivo.css">
   <style>
+    /* ── Score band highlight (which band the visitor falls in) ── */
+    .band-card--active {
+      box-shadow: 0 0 0 2px var(--navy), var(--shadow-lg);
+      transform: translateY(-2px);
+      position: relative;
+    }
+    .band-card--active::before {
+      content: 'Your score';
+      position: absolute;
+      top: -11px;
+      right: 16px;
+      background: var(--navy);
+      color: #fff;
+      font-size: .6875rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
     /* ── White-label banner ───────────────────────────────── */
     .wl-banner {
       display: none;
@@ -219,19 +240,19 @@
     <h2 class="t-display-lg section-title fade-up fade-up-d1">What does your score mean?</h2>
     <p class="t-body-lg tc-slate section-sub fade-up fade-up-d2">Each band comes with a clear picture of where you stand and what to do next.</p>
     <div class="grid-2 mt-48">
-      <div class="card fade-up" style="border-left:4px solid #EF4444">
+      <div class="card fade-up" id="band-card-1" style="border-left:4px solid #EF4444">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="font-family:var(--font-display);font-weight:800;font-size:1.5rem;color:#EF4444">1–30</div><span class="badge" style="background:#FEF2F2;color:#991B1B">Not ready yet</span></div>
         <p class="t-body-sm tc-slate">You have some significant barriers to a mortgage right now — but that's exactly what Kivo is for. We'll give you a detailed plan with the highest-impact actions to take first.</p>
       </div>
-      <div class="card fade-up fade-up-d1" style="border-left:4px solid #F59E0B">
+      <div class="card fade-up fade-up-d1" id="band-card-2" style="border-left:4px solid #F59E0B">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="font-family:var(--font-display);font-weight:800;font-size:1.5rem;color:#F59E0B">31–60</div><span class="badge" style="background:#FFFBEB;color:#92400E">Getting there</span></div>
         <p class="t-body-sm tc-slate">You're on the right track and a few targeted changes could move you forward quickly. Lenders may still consider you, but your options and rates could be significantly better with a higher score.</p>
       </div>
-      <div class="card fade-up" style="border-left:4px solid #3B82F6">
+      <div class="card fade-up" id="band-card-3" style="border-left:4px solid #3B82F6">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="font-family:var(--font-display);font-weight:800;font-size:1.5rem;color:#3B82F6">61–79</div><span class="badge" style="background:#EFF6FF;color:#1E40AF">Good</span></div>
         <p class="t-body-sm tc-slate">You're in a solid position and may qualify for a good range of mortgage products right now. A few small improvements could push you into the top tier and unlock the best rates.</p>
       </div>
-      <div class="card fade-up fade-up-d1" style="border-left:4px solid var(--teal)">
+      <div class="card fade-up fade-up-d1" id="band-card-4" style="border-left:4px solid var(--teal)">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="font-family:var(--font-display);font-weight:800;font-size:1.5rem;color:var(--teal)">80–100</div><span class="badge badge--teal">Excellent</span></div>
         <p class="t-body-sm tc-slate">You're in an excellent position. You're likely to qualify for a wide range of products including the best rates available. Now's a great time to speak to an advisor and start your application.</p>
       </div>
@@ -259,18 +280,18 @@
         </div>
       </div>
       <div class="pillar-deep__score-display">
-        <div class="pillar-deep__score-num" style="color:var(--teal)">85</div>
-        <div style="font-size:.875rem;font-weight:600;color:var(--teal-dk);margin-bottom:16px">Strong ✓</div>
-        <p style="font-size:.875rem;color:var(--slate)">Based on a £35,000 salary and a £150,000 target, your income-to-loan ratio is 4.3× — within standard lending criteria.</p>
+        <div class="pillar-deep__score-num" id="pd-income-num" style="color:var(--teal)">85</div>
+        <div id="pd-income-status" style="font-size:.875rem;font-weight:600;color:var(--teal-dk);margin-bottom:16px">Strong ✓</div>
+        <p id="pd-income-desc" style="font-size:.875rem;color:var(--slate)">Based on a £35,000 salary and a £150,000 target, your income-to-loan ratio is 4.3× — within standard lending criteria.</p>
         <button class="explain-btn" onclick="explainPillar('income')">💬 Explain my score</button>
       </div>
     </div>
 
     <div class="pillar-deep fade-up">
       <div class="pillar-deep__score-display" style="order:-1">
-        <div class="pillar-deep__score-num" style="color:#F59E0B">62</div>
-        <div style="font-size:.875rem;font-weight:600;color:#92400E;margin-bottom:16px">Could improve ↗</div>
-        <p style="font-size:.875rem;color:var(--slate)">An 8% deposit gives you some options, but getting to 10% would significantly broaden the range of products and rates available to you.</p>
+        <div class="pillar-deep__score-num" id="pd-deposit-num" style="color:#F59E0B">62</div>
+        <div id="pd-deposit-status" style="font-size:.875rem;font-weight:600;color:#92400E;margin-bottom:16px">Could improve ↗</div>
+        <p id="pd-deposit-desc" style="font-size:.875rem;color:var(--slate)">An 8% deposit gives you some options, but getting to 10% would significantly broaden the range of products and rates available to you.</p>
         <button class="explain-btn" onclick="explainPillar('deposit')">💬 Explain my score</button>
       </div>
       <div>
@@ -299,18 +320,18 @@
         </div>
       </div>
       <div class="pillar-deep__score-display">
-        <div class="pillar-deep__score-num" style="color:var(--teal)">88</div>
-        <div style="font-size:.875rem;font-weight:600;color:var(--teal-dk);margin-bottom:16px">Excellent ✓✓</div>
-        <p style="font-size:.875rem;color:var(--slate)">No missed payments and low credit utilisation. This is one of your strongest areas — lenders will view this very favourably.</p>
+        <div class="pillar-deep__score-num" id="pd-credit-num" style="color:var(--teal)">88</div>
+        <div id="pd-credit-status" style="font-size:.875rem;font-weight:600;color:var(--teal-dk);margin-bottom:16px">Excellent ✓✓</div>
+        <p id="pd-credit-desc" style="font-size:.875rem;color:var(--slate)">No missed payments and low credit utilisation. This is one of your strongest areas — lenders will view this very favourably.</p>
         <button class="explain-btn" onclick="explainPillar('credit')">💬 Explain my score</button>
       </div>
     </div>
 
     <div class="pillar-deep fade-up">
       <div class="pillar-deep__score-display" style="order:-1">
-        <div class="pillar-deep__score-num" style="color:#F59E0B">70</div>
-        <div style="font-size:.875rem;font-weight:600;color:#92400E;margin-bottom:16px">Room to improve ↗</div>
-        <p style="font-size:.875rem;color:var(--slate)">We've flagged some regular subscription costs that could be reduced. Cutting £80–100/month in discretionary spending could boost this pillar by up to 8 points.</p>
+        <div class="pillar-deep__score-num" id="pd-spending-num" style="color:#F59E0B">70</div>
+        <div id="pd-spending-status" style="font-size:.875rem;font-weight:600;color:#92400E;margin-bottom:16px">Room to improve ↗</div>
+        <p id="pd-spending-desc" style="font-size:.875rem;color:var(--slate)">We've flagged some regular subscription costs that could be reduced. Cutting £80–100/month in discretionary spending could boost this pillar by up to 8 points.</p>
         <button class="explain-btn" onclick="explainPillar('spending')">💬 Explain my score</button>
       </div>
       <div>
@@ -466,6 +487,48 @@
         if (valEl) { valEl.textContent = score; valEl.style.color = colour; }
       });
     });
+
+    // Highlight the score-range band this visitor falls into
+    const bandCardId = s >= 80 ? 'band-card-4' : s >= 61 ? 'band-card-3' : s >= 31 ? 'band-card-2' : 'band-card-1';
+    document.querySelectorAll('.band-card--active').forEach(el => el.classList.remove('band-card--active'));
+    const activeBandCard = document.getElementById(bandCardId);
+    if (activeBandCard) activeBandCard.classList.add('band-card--active');
+
+    // "How your score is built" — populate the four pillar deep-dive
+    // cards with this visitor's real numbers instead of the static
+    // example values (85 / 62 / 88 / 70) that used to sit here.
+    (function populatePillarDeepDive() {
+      const fd = saved.formData || {};
+      const loanNeeded = (fd.propertyValue || 0) - (fd.deposit || 0);
+      const multiple = fd.totalIncome > 0 ? (loanNeeded / fd.totalIncome) : null;
+
+      function statusFor(score) {
+        if (score >= 80) return { label: 'Excellent ✓✓', numColour: 'var(--teal)',  textColour: 'var(--teal-dk)' };
+        if (score >= 61) return { label: 'Strong ✓',      numColour: 'var(--teal)',  textColour: 'var(--teal-dk)' };
+        if (score >= 31) return { label: 'Could improve ↗', numColour: '#F59E0B',   textColour: '#92400E' };
+        return              { label: 'Needs work ⚠',       numColour: '#EF4444',    textColour: '#991B1B' };
+      }
+
+      const descriptions = {
+        income: () => multiple
+          ? `Based on an income of £${(fd.totalIncome || 0).toLocaleString('en-GB')} and a £${(fd.propertyValue || 0).toLocaleString('en-GB')} target, your income-to-loan ratio is ${multiple.toFixed(1)}× — ${multiple <= 4.5 ? 'within standard lending criteria.' : 'above standard thresholds, which lenders will weigh carefully.'}`
+          : `We'll calculate your income-to-loan ratio once your income and target property value are provided.`,
+        deposit: () => `Your ${fd.depositPct != null ? fd.depositPct + '%' : ''} deposit ${fd.depositPct >= 15 ? 'puts you in a strong position for competitive rates.' : fd.depositPct >= 10 ? 'gives you access to a good range of products.' : 'is below the 10% threshold — reaching 10% would open up significantly better rates.'}`,
+        credit: () => `Your credit profile is rated "${fd.credit || 'unknown'}" on your application${fd.credit === 'excellent' || fd.credit === 'good' ? ' — lenders will view this favourably.' : ' — this is an area worth strengthening before you apply.'}`,
+        spending: () => `${fd.hasDebts === 'yes' ? `We've factored in existing debts of ${fd.debtAmount || 'an amount you reported'}.` : 'No existing debts were reported.'} ${fd.openBanking ? 'Your connected bank data made this assessment more accurate.' : 'Connecting your bank could improve the accuracy of this score.'}`,
+      };
+
+      ['income', 'deposit', 'credit', 'spending'].forEach(key => {
+        const score  = p[key] || 0;
+        const status = statusFor(score);
+        const numEl    = document.getElementById('pd-' + key + '-num');
+        const statusEl = document.getElementById('pd-' + key + '-status');
+        const descEl   = document.getElementById('pd-' + key + '-desc');
+        if (numEl)    { numEl.textContent = score; numEl.style.color = status.numColour; }
+        if (statusEl) { statusEl.textContent = status.label; statusEl.style.color = status.textColour; }
+        if (descEl)   { descEl.textContent = descriptions[key](); }
+      });
+    })();
 
     // Date stamp
     const dateEl = document.getElementById('personalScoreDate');
