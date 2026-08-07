@@ -354,22 +354,41 @@
             </div>
             <span style="font-size:.8125rem;color:var(--slate-lt);flex-shrink:0">per year</span>
           </div>
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
-            <span style="font-size:.8125rem;color:var(--slate-lt)">Or use slider:</span>
-          </div>
-          <input class="range-slider" type="range" id="annualIncome" name="annualIncome"
-            min="10000" max="200000" step="1000" value="35000"
-            oninput="syncIncomeFromSlider(this.value)">
-          <div style="display:flex;justify-content:space-between;margin-top:4px">
-            <span class="t-caption">£10,000</span>
-            <span class="t-caption">£200,000+</span>
-          </div>
           <div class="form-hint mt-8" id="incomeHint">Based on £35,000 salary, lenders may offer up to <strong id="incomeMultiple">£157,500</strong></div>
         </div>
 
         <div class="form-group mt-24" id="partnerIncomeGroup" style="display:none">
           <label class="form-label" for="partnerIncome">Partner's annual income (before tax) <span class="optional">(if known)</span></label>
-          <input class="form-input" type="text" id="partnerIncome" name="partnerIncome" placeholder="e.g. £30,000" data-format="currency">
+          <div style="position:relative">
+            <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--slate);font-weight:600;pointer-events:none">£</span>
+            <input class="form-input" type="number" id="partnerIncome" name="partnerIncome" placeholder="30,000" min="0" max="500000" step="1000" style="padding-left:28px">
+          </div>
+        </div>
+
+        <div class="form-group mt-24" id="partnerEmploymentGroup" style="display:none">
+          <label class="form-label">Partner's employment status</label>
+          <div class="option-cards option-cards--2col">
+            <label class="option-card">
+              <input type="radio" name="partnerEmployment" value="employed">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">👔 Employed</div><div class="option-card__sub">PAYE, full or part-time</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="partnerEmployment" value="self-employed">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">🧾 Self-employed</div><div class="option-card__sub">Sole trader or director</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="partnerEmployment" value="contractor">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">📄 Contractor</div><div class="option-card__sub">Fixed-term or day rate</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="partnerEmployment" value="other">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">🔖 Other</div><div class="option-card__sub">Retired, benefits, mixed</div></div>
+            </label>
+          </div>
         </div>
 
         <div class="alert alert--info mt-16">
@@ -458,6 +477,16 @@
               <div class="option-card__content"><div class="option-card__label">💰 Lifetime ISA (LISA)</div><div class="option-card__sub">Government adds 25% bonus</div></div>
             </label>
             <label class="option-card">
+              <input type="radio" name="scheme" value="mortgage-guarantee">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">🏛️ Mortgage Guarantee Scheme</div><div class="option-card__sub">Access to 95% mortgages with a 5% deposit</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="scheme" value="first-homes">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">🏠 First Homes</div><div class="option-card__sub">30–50% off new-build homes (England only)</div></div>
+            </label>
+            <label class="option-card">
               <input type="radio" name="scheme" value="shared-ownership">
               <div class="option-card__radio"></div>
               <div class="option-card__content"><div class="option-card__label">🤝 Shared Ownership</div><div class="option-card__sub">Buy a share of a property</div></div>
@@ -504,7 +533,12 @@
             <label class="option-card">
               <input type="radio" name="credit" value="poor">
               <div class="option-card__radio"></div>
-              <div class="option-card__content"><div class="option-card__label">🔴 Poor / I'm not sure</div><div class="option-card__sub">Defaults, IVA, or unsure of history</div></div>
+              <div class="option-card__content"><div class="option-card__label">🔴 Poor</div><div class="option-card__sub">Defaults, CCJs, or an IVA</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="credit" value="unsure">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">❔ I'm not sure</div><div class="option-card__sub">Haven't checked my credit file</div></div>
             </label>
           </div>
         </div>
@@ -585,7 +619,7 @@
 
         <div class="step-nav">
           <button class="btn-back" onclick="goToStep(4)">← Back</button>
-          <button class="btn btn--primary" style="flex:1" id="calculateBtn" onclick="showResults()">
+          <button class="btn btn--primary" style="margin-left:auto" id="calculateBtn" onclick="showResults()">
             Calculate My Score 🎯
           </button>
         </div>
@@ -812,6 +846,7 @@
       situation:   getRadio('situation')   || 'first-time',
       buyers:      getRadio('buyers')      || 'solo',
       employment:  getRadio('employment')  || 'employed',
+      partnerEmployment: getRadio('partnerEmployment') || '',
       income,
       partnerIncome: partnerInc,
       totalIncome:   income + partnerInc,
@@ -838,7 +873,7 @@
 APPLICANT DATA:
 - Situation: ${d.situation}
 - Buying: ${d.buyers === 'joint' ? 'Joint application' : 'Solo'}
-- Employment: ${d.employment}
+- Employment: ${d.employment}${d.buyers === 'joint' && d.partnerEmployment ? ` (partner: ${d.partnerEmployment})` : ''}
 - Annual income: £${d.income.toLocaleString('en-GB')}${d.partnerIncome > 0 ? ` (partner: £${d.partnerIncome.toLocaleString('en-GB')}, combined: £${d.totalIncome.toLocaleString('en-GB')})` : ''}
 - Deposit saved: £${d.deposit.toLocaleString('en-GB')} (${d.depositPct}% of property, LTV: ${d.ltv}%)
 - Target property value: £${d.propertyValue.toLocaleString('en-GB')}
@@ -1011,12 +1046,25 @@ RETURN EXACTLY THIS JSON SHAPE:
 
     let deposit = d.depositPct >= 25 ? 92 : d.depositPct >= 15 ? 80 : d.depositPct >= 10 ? 66 : d.depositPct >= 5 ? 42 : 18;
     if (d.scheme === 'lisa') deposit = Math.min(100, deposit + 5);
+    // Mortgage Guarantee Scheme specifically exists to make 5-10% deposit
+    // mortgages viable at mainstream lenders, so it meaningfully offsets
+    // the low-deposit penalty in that range.
+    if (d.scheme === 'mortgage-guarantee' && d.depositPct < 10) deposit = Math.min(100, deposit + 15);
 
-    const creditMap = { excellent: 90, good: 72, fair: 48, poor: 22 };
+    // "unsure" is treated as a cautious mid-point, not penalised as harshly
+    // as confirmed poor credit (defaults/IVA) — genuinely not knowing your
+    // history isn't the same as knowing it's bad.
+    const creditMap = { excellent: 90, good: 72, fair: 48, unsure: 45, poor: 22 };
     const credit = creditMap[d.credit] || 60;
 
     const debtPenalty = { none: 0, under5k: 10, '5k-15k': 20, '15k-30k': 30, '30k-50k': 38, over50k: 45 };
-    let spending = (d.employment === 'employed' ? 78 : 66) - (debtPenalty[d.debtAmount] || 0);
+    // Employment stability base — blended across both applicants on a
+    // joint application, since lenders assess both incomes' verifiability.
+    const empBase = e => e === 'employed' ? 78 : 66;
+    const stabilityBase = (d.buyers === 'joint' && d.partnerEmployment)
+      ? Math.round((empBase(d.employment) + empBase(d.partnerEmployment)) / 2)
+      : empBase(d.employment);
+    let spending = stabilityBase - (debtPenalty[d.debtAmount] || 0);
     if (d.openBanking) spending = Math.min(100, spending + 5);
     spending = Math.max(10, spending);
 
@@ -1034,6 +1082,7 @@ RETURN EXACTLY THIS JSON SHAPE:
     else insights.push({ type: 'positive', text: `A ${d.depositPct}% deposit is solid. You have access to a good range of mortgage products.` });
     if (!d.openBanking) insights.push({ type: 'tip', text: 'Opting into a more accurate spending assessment could improve your score by up to 8 points — live bank connection is coming soon.' });
     else insights.push({ type: 'tip', text: 'Your spending profile has been weighted more favourably in this estimate, as requested.' });
+    if (d.credit === 'unsure') insights.push({ type: 'tip', text: 'Checking your free credit report (Experian, Equifax, or TransUnion) before applying could meaningfully improve the accuracy of this score.' });
 
     const topAction = d.depositPct < 10 ? 'Save to reach a 10% deposit — this is your single biggest unlock.'
       : credit === 'fair' || credit === 'poor' ? 'Focus on improving your credit profile — register to vote and clear any defaults.'
@@ -1200,14 +1249,6 @@ RETURN EXACTLY THIS JSON SHAPE:
   // ── Income text ↔ slider sync ─────────────────────────────
   function syncIncomeFromText(val) {
     const n = parseInt(val) || 0;
-    const slider = document.getElementById('annualIncome');
-    if (slider) slider.value = Math.min(Math.max(n, 10000), 200000);
-    updateIncomeHint(n);
-  }
-  function syncIncomeFromSlider(val) {
-    const n = parseInt(val) || 0;
-    const txt = document.getElementById('annualIncomeText');
-    if (txt) txt.value = n;
     updateIncomeHint(n);
   }
   function updateIncomeHint(income) {
@@ -1284,8 +1325,11 @@ RETURN EXACTLY THIS JSON SHAPE:
   // ── Conditional fields ────────────────────────────────────
   document.querySelectorAll('[name="buyers"]').forEach(r => {
     r.addEventListener('change', () => {
-      const g = document.getElementById('partnerIncomeGroup');
-      if (g) g.style.display = r.value === 'joint' ? 'flex' : 'none';
+      const show = r.value === 'joint' ? 'flex' : 'none';
+      const inc  = document.getElementById('partnerIncomeGroup');
+      const emp  = document.getElementById('partnerEmploymentGroup');
+      if (inc) inc.style.display = show;
+      if (emp) emp.style.display = show;
     });
   });
   document.querySelectorAll('[name="hasDebts"]').forEach(r => {
