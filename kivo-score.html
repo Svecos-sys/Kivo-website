@@ -53,7 +53,19 @@
       text-align: center;
       margin-top: 16px;
     }
-    .powered-by-kivo-score.visible { display: block; } background: linear-gradient(150deg, var(--navy) 0%, #1a3a5c 100%); position:relative;overflow:hidden; }
+    .powered-by-kivo-score.visible { display: block; }
+    /* This .score-hero rule was corrupted in the source file — its
+       opening ".score-hero {" had been lost, leaving the background
+       gradient / position / overflow declarations dangling with no
+       selector, silently ignored by the browser. That's why the
+       gauge card's white text (.gauge-big, "Your Kivo Score" label)
+       had nothing dark behind it and was invisible — the "top bar
+       looks wrong" / big blank gap above the gauge. Reconstructed: */
+    .score-hero {
+      background: linear-gradient(150deg, var(--navy) 0%, #1a3a5c 100%);
+      position: relative;
+      overflow: hidden;
+    }
     .score-hero__inner { display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:88px 0; }
     .gauge-card { background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-xl);padding:36px;text-align:center; }
     .gauge-big { font-family:var(--font-display);font-weight:800;font-size:5.5rem;line-height:1;color:var(--white); }
@@ -502,11 +514,15 @@
       const loanNeeded = (fd.propertyValue || 0) - (fd.deposit || 0);
       const multiple = fd.totalIncome > 0 ? (loanNeeded / fd.totalIncome) : null;
 
+      // Thresholds match the hero card's pillar bars above (score >= 75
+      // teal, >= 50 amber, else red) so a given score shows the same
+      // colour everywhere on the page — previously this used a
+      // different 80/61/31 cutoff, which made mid-60s scores show
+      // green here but amber in the hero card just above it.
       function statusFor(score) {
-        if (score >= 80) return { label: 'Excellent ✓✓', numColour: 'var(--teal)',  textColour: 'var(--teal-dk)' };
-        if (score >= 61) return { label: 'Strong ✓',      numColour: 'var(--teal)',  textColour: 'var(--teal-dk)' };
-        if (score >= 31) return { label: 'Could improve ↗', numColour: '#F59E0B',   textColour: '#92400E' };
-        return              { label: 'Needs work ⚠',       numColour: '#EF4444',    textColour: '#991B1B' };
+        if (score >= 75) return { label: 'Strong ✓',        numColour: 'var(--teal)', textColour: 'var(--teal-dk)' };
+        if (score >= 50) return { label: 'Could improve ↗', numColour: '#F59E0B',    textColour: '#92400E' };
+        return              { label: 'Needs work ⚠',        numColour: '#EF4444',    textColour: '#991B1B' };
       }
 
       const descriptions = {
@@ -619,7 +635,7 @@ Return ONLY valid JSON (no markdown):
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-5',
         max_tokens: 800,
         messages: [{ role: 'user', content: prompt }]
       })
@@ -699,7 +715,7 @@ async function explainPillar(key) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-5',
         max_tokens: 500,
         messages: [{ role: 'user', content: `You are Kivo's friendly mortgage advisor. Explain in 3-4 short paragraphs why this user scored ${score}/100 for their ${PILLAR_LABELS[key]} pillar, and give 2 specific actionable things they can do to improve it. Use plain English and their actual numbers. No bullet points. Start directly.\n\nContext: ${ctx[key] || ''} Overall score: ${saved?.overallScore}/100.` }]
       })
@@ -770,7 +786,7 @@ async function sendChatMessage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-5',
         max_tokens: 400,
         system: "You are Kivo's friendly AI mortgage advisor. Answer questions specifically about this user's mortgage readiness using their actual numbers. Keep answers concise (2-3 sentences). Be warm and clear. Note when relevant that this is guidance, not regulated advice.",
         messages: _chatHistory
