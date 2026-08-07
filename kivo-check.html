@@ -297,6 +297,34 @@
           </div>
         </div>
 
+        <div class="form-row mt-24" style="display:flex;gap:16px">
+          <div class="form-group" style="flex:1">
+            <label class="form-label" for="applicantAge">Your age</label>
+            <input class="form-input" type="number" id="applicantAge" name="applicantAge" placeholder="30" min="18" max="90">
+          </div>
+          <div class="form-group" style="flex:1">
+            <label class="form-label" for="dependents">Dependents</label>
+            <select class="form-select" id="dependents" name="dependents">
+              <option value="0">None</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4+">4 or more</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group mt-24">
+          <label class="form-label" for="country">Where are you buying?</label>
+          <select class="form-select" id="country" name="country">
+            <option value="england">England</option>
+            <option value="scotland">Scotland</option>
+            <option value="wales">Wales</option>
+            <option value="northern-ireland">Northern Ireland</option>
+          </select>
+          <div class="form-hint mt-8">Some government schemes and stamp duty rules vary by country.</div>
+        </div>
+
         <div class="step-nav">
           <button class="btn btn--primary" style="flex:1" onclick="goToStep(2)">
             Continue
@@ -340,6 +368,17 @@
               <div class="option-card__content"><div class="option-card__label">🔖 Other</div><div class="option-card__sub">Retired, benefits, mixed</div></div>
             </label>
           </div>
+        </div>
+
+        <div class="form-group mt-24" id="tradingHistoryGroup" style="display:none">
+          <label class="form-label" for="tradingYears">How many years have you been trading?</label>
+          <select class="form-select" id="tradingYears" name="tradingYears">
+            <option value="under1">Under 1 year</option>
+            <option value="1-2">1–2 years</option>
+            <option value="2-3">2–3 years</option>
+            <option value="3+">3+ years</option>
+          </select>
+          <div class="form-hint mt-8">Most lenders want 2–3 years of accounts, though some specialist lenders accept less.</div>
         </div>
 
         <div class="form-group mt-24">
@@ -463,35 +502,36 @@
           </div>
         </div>
 
-        <div class="form-group mt-24">
+        <div class="form-group mt-24" id="schemesGroup">
           <label class="form-label">Are you using any government schemes?</label>
-          <div class="option-cards">
-            <label class="option-card">
-              <input type="radio" name="scheme" value="none">
+          <div class="option-cards" id="schemesList">
+            <label class="option-card" data-scheme="none">
+              <input type="radio" name="scheme" value="none" checked>
               <div class="option-card__radio"></div>
               <div class="option-card__content"><div class="option-card__label">None</div><div class="option-card__sub">Standard purchase</div></div>
             </label>
-            <label class="option-card">
+            <label class="option-card" data-scheme="lisa">
               <input type="radio" name="scheme" value="lisa">
               <div class="option-card__radio"></div>
               <div class="option-card__content"><div class="option-card__label">💰 Lifetime ISA (LISA)</div><div class="option-card__sub">Government adds 25% bonus</div></div>
             </label>
-            <label class="option-card">
+            <label class="option-card" data-scheme="mortgage-guarantee">
               <input type="radio" name="scheme" value="mortgage-guarantee">
               <div class="option-card__radio"></div>
               <div class="option-card__content"><div class="option-card__label">🏛️ Mortgage Guarantee Scheme</div><div class="option-card__sub">Access to 95% mortgages with a 5% deposit</div></div>
             </label>
-            <label class="option-card">
+            <label class="option-card" data-scheme="first-homes">
               <input type="radio" name="scheme" value="first-homes">
               <div class="option-card__radio"></div>
               <div class="option-card__content"><div class="option-card__label">🏠 First Homes</div><div class="option-card__sub">30–50% off new-build homes (England only)</div></div>
             </label>
-            <label class="option-card">
+            <label class="option-card" data-scheme="shared-ownership">
               <input type="radio" name="scheme" value="shared-ownership">
               <div class="option-card__radio"></div>
               <div class="option-card__content"><div class="option-card__label">🤝 Shared Ownership</div><div class="option-card__sub">Buy a share of a property</div></div>
             </label>
           </div>
+          <div class="form-hint mt-8" id="schemesHiddenNote" style="display:none">Some schemes aren't shown as they don't apply to your situation.</div>
         </div>
 
         <div class="step-nav">
@@ -541,6 +581,28 @@
               <div class="option-card__content"><div class="option-card__label">❔ I'm not sure</div><div class="option-card__sub">Haven't checked my credit file</div></div>
             </label>
           </div>
+        </div>
+
+        <div class="form-group mt-24" id="creditRecencyGroup" style="display:none">
+          <label class="form-label">When did this happen?</label>
+          <div class="option-cards option-cards--3col">
+            <label class="option-card">
+              <input type="radio" name="creditRecency" value="under2">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">Under 2 years ago</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="creditRecency" value="2-5">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">2–5 years ago</div></div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="creditRecency" value="5plus">
+              <div class="option-card__radio"></div>
+              <div class="option-card__content"><div class="option-card__label">5+ years ago</div></div>
+            </label>
+          </div>
+          <div class="form-hint mt-8">Older credit issues weigh much less heavily with most lenders.</div>
         </div>
 
         <div class="form-group mt-24">
@@ -604,8 +666,8 @@
           <label class="option-card" style="cursor:pointer">
             <input type="checkbox" name="openBanking" id="openBankingOpt" style="width:18px;height:18px;flex-shrink:0">
             <div style="margin-left:4px">
-              <div class="option-card__label" style="font-size:.9375rem">🏦 I'd like a more accurate spending assessment <span class="badge badge--teal" style="margin-left:6px;font-size:.75rem">Recommended</span></div>
-              <div class="option-card__sub" style="margin-top:4px">Live bank connection via Open Banking is coming soon. For now, ticking this tells us to weight your spending profile more favourably in this estimate.</div>
+              <div class="option-card__label" style="font-size:.9375rem">🏦 Notify me when bank connection launches</div>
+              <div class="option-card__sub" style="margin-top:4px">Live bank connection via Open Banking is coming soon, and will let us assess your real spending rather than what you've told us here. This doesn't affect your score today — just let us know if you'd like to hear when it's live.</div>
             </div>
           </label>
         </div>
@@ -847,6 +909,10 @@
       buyers:      getRadio('buyers')      || 'solo',
       employment:  getRadio('employment')  || 'employed',
       partnerEmployment: getRadio('partnerEmployment') || '',
+      tradingYears: getVal('tradingYears') || '',
+      age:          parseInt(getVal('applicantAge')) || null,
+      dependents:   getVal('dependents') || '0',
+      country:      getVal('country') || 'england',
       income,
       partnerIncome: partnerInc,
       totalIncome:   income + partnerInc,
@@ -856,6 +922,7 @@
       depositPct:    ltvPct,
       scheme:        getRadio('scheme')  || 'none',
       credit:        getRadio('credit')  || 'good',
+      creditRecency: getRadio('creditRecency') || '',
       hasDebts:      getRadio('hasDebts') || 'no',
       debtAmount:    getVal('debtAmount') || 'none',
       email:         getVal('userEmail'),
@@ -872,35 +939,47 @@
 
 APPLICANT DATA:
 - Situation: ${d.situation}
+- Country: ${d.country}
 - Buying: ${d.buyers === 'joint' ? 'Joint application' : 'Solo'}
-- Employment: ${d.employment}${d.buyers === 'joint' && d.partnerEmployment ? ` (partner: ${d.partnerEmployment})` : ''}
+- Age: ${d.age || 'not provided'}
+- Dependents: ${d.dependents}
+- Employment: ${d.employment}${d.employment === 'self-employed' || d.employment === 'contractor' ? ` (trading ${d.tradingYears || 'unknown'} years)` : ''}${d.buyers === 'joint' && d.partnerEmployment ? ` (partner: ${d.partnerEmployment})` : ''}
 - Annual income: £${d.income.toLocaleString('en-GB')}${d.partnerIncome > 0 ? ` (partner: £${d.partnerIncome.toLocaleString('en-GB')}, combined: £${d.totalIncome.toLocaleString('en-GB')})` : ''}
 - Deposit saved: £${d.deposit.toLocaleString('en-GB')} (${d.depositPct}% of property, LTV: ${d.ltv}%)
 - Target property value: £${d.propertyValue.toLocaleString('en-GB')}
 - Loan needed: £${loanNeeded.toLocaleString('en-GB')} (${incomeMultiple}× income)
 - Government scheme: ${d.scheme}
-- Credit history: ${d.credit}
+- Credit history: ${d.credit}${d.credit === 'poor' && d.creditRecency ? ` (${d.creditRecency === 'under2' ? 'under 2 years ago' : d.creditRecency === '2-5' ? '2-5 years ago' : '5+ years ago'})` : ''}
 - Outstanding debts: ${d.hasDebts === 'yes' ? d.debtAmount : 'none'}
 - Open Banking connected: ${d.openBanking ? 'yes' : 'no'}
 
 SCORING RULES:
 Income & Affordability (25% weight, score 1-100):
 - 4.5× income or less = 85-100. 4.5-5× = 65-84. 5-5.5× = 40-64. Over 5.5× = 10-39.
-- Self-employed/contractor: subtract 5-10 points (income harder to verify).
+- Self-employed/contractor with 3+ years trading: subtract only 2-5 points (established, verifiable income). Under 1 year trading: subtract 15-20 points (most lenders want 2-3 years of accounts). 1-3 years: subtract 8-12 points.
 - Joint application with combined income: boost 5-10 points vs solo.
+- Age: most UK lenders cap the mortgage term so it ends by the borrower's mid-to-late 70s. If age is provided and age + a standard 25-30 year term would end past 75, subtract 5-10 points to reflect the likely shorter available term and higher monthly payments — do not apply this if age is not provided.
+- Dependents: each dependent increases committed household expenditure, which UK lenders are required to factor into affordability under FCA rules. 1-2 dependents: subtract 3-5 points. 3+ dependents: subtract 6-10 points. This is a real, modest factor — not a heavy penalty.
 
 Deposit Strength (25% weight, score 1-100):
 - 25%+ deposit (LTV ≤75%) = 90-100. 15-24% = 75-89. 10-14% = 60-74. 5-9% = 30-59. Under 5% = 10-29.
-- LISA scheme: add 5 points. Shared Ownership: subtract 5 points.
+- LISA scheme: add 5 points (25% government savings bonus increases effective deposit).
+- Mortgage Guarantee Scheme: if deposit is 5-9%, add 10-15 points (the scheme exists specifically to make 95% LTV mortgages viable at mainstream lenders, so it substantially offsets the low-deposit risk).
+- First Homes scheme: add 8-12 points (property is bought at a 30-50% discount to market value, so the effective loan-to-value against the discounted price is meaningfully better than the raw deposit % suggests). Only applies in England.
+- Shared Ownership: subtract 3-5 points (smaller pool of specialist lenders, and staircasing/resale can complicate future remortgaging — a modest, not severe, penalty).
 
 Credit Profile (30% weight, score 1-100):
-- Excellent = 85-100. Good = 65-84. Fair = 35-64. Poor/unknown = 10-34.
+- Excellent = 85-100. Good = 65-84. Fair = 35-64.
+- Poor credit, under 2 years ago: 10-20 (most impactful — recent adverse credit is what lenders weigh most heavily).
+- Poor credit, 2-5 years ago: 25-40 (meaningfully better — many lenders' adverse-credit criteria soften after 2-3 years).
+- Poor credit, 5+ years ago: 40-55 (close to Fair territory — old adverse credit matters much less to most lenders).
+- Poor credit with no recency given, or "unsure": 35-45 (treat as a cautious mid-point, not as confirmed-recent-bad).
 
 Spending Behaviour (20% weight, score 1-100):
 - No debts + employed = 75-90. No debts + self-employed = 65-80.
 - Under £5k debts = subtract 10. £5k-£15k = subtract 20. £15k-£30k = subtract 30. Over £30k = subtract 40.
 - Apply floor of 10.
-- Open Banking connected: add 5 points (more data = more confidence).
+- Do NOT adjust the score based on whether the user opted into future Open Banking connection — that's just a stated preference, not actual data, and shouldn't affect the score.
 
 Overall score = weighted average of the four pillar scores, rounded to nearest integer.
 
@@ -1041,8 +1120,22 @@ RETURN EXACTLY THIS JSON SHAPE:
     const multiple   = d.totalIncome > 0 ? loanNeeded / d.totalIncome : 5;
 
     let income = multiple <= 4.5 ? 88 : multiple <= 5 ? 72 : multiple <= 5.5 ? 52 : 28;
-    if (d.employment === 'self-employed' || d.employment === 'contractor') income = Math.max(10, income - 8);
+    if (d.employment === 'self-employed' || d.employment === 'contractor') {
+      // Trading history matters a lot to real lenders (most want 2-3 years
+      // of accounts) — this used to be a flat penalty regardless of years.
+      const tradingPenalty = { under1: 18, '1-2': 10, '2-3': 6, '3+': 3 };
+      income = Math.max(10, income - (tradingPenalty[d.tradingYears] ?? 8));
+    }
     if (d.buyers === 'joint') income = Math.min(100, income + 6);
+    // Most UK lenders cap the mortgage term so it ends by the borrower's
+    // mid-to-late 70s. If a standard 25-30yr term would run past that,
+    // the realistically available term is shorter, raising monthly
+    // payments and reducing effective affordability.
+    if (d.age && d.age + 27 > 75) income = Math.max(10, income - 7);
+    // Dependents increase committed household expenditure, which UK
+    // lenders are required to factor into affordability under FCA rules.
+    const dependentsPenalty = { '0': 0, '1': 4, '2': 4, '3': 8, '4+': 8 };
+    income = Math.max(10, income - (dependentsPenalty[d.dependents] || 0));
 
     let deposit = d.depositPct >= 25 ? 92 : d.depositPct >= 15 ? 80 : d.depositPct >= 10 ? 66 : d.depositPct >= 5 ? 42 : 18;
     if (d.scheme === 'lisa') deposit = Math.min(100, deposit + 5);
@@ -1050,12 +1143,27 @@ RETURN EXACTLY THIS JSON SHAPE:
     // mortgages viable at mainstream lenders, so it meaningfully offsets
     // the low-deposit penalty in that range.
     if (d.scheme === 'mortgage-guarantee' && d.depositPct < 10) deposit = Math.min(100, deposit + 15);
+    // First Homes buys at a 30-50% discount to market value, so the real
+    // LTV against the discounted price is better than the raw % suggests.
+    // (England only — the form already hides this option elsewhere.)
+    if (d.scheme === 'first-homes') deposit = Math.min(100, deposit + 10);
+    // Shared Ownership: smaller pool of specialist lenders and potential
+    // staircasing complexity — a modest penalty, not a severe one.
+    if (d.scheme === 'shared-ownership') deposit = Math.max(10, deposit - 5);
 
     // "unsure" is treated as a cautious mid-point, not penalised as harshly
     // as confirmed poor credit (defaults/IVA) — genuinely not knowing your
-    // history isn't the same as knowing it's bad.
-    const creditMap = { excellent: 90, good: 72, fair: 48, unsure: 45, poor: 22 };
-    const credit = creditMap[d.credit] || 60;
+    // history isn't the same as knowing it's bad. Recency of poor credit
+    // matters enormously to real lenders — a default from 6 years ago is
+    // treated very differently to one from 6 months ago.
+    let credit;
+    if (d.credit === 'poor') {
+      const recencyMap = { under2: 15, '2-5': 32, '5plus': 47 };
+      credit = recencyMap[d.creditRecency] ?? 40; // no recency given — cautious mid-point
+    } else {
+      const creditMap = { excellent: 90, good: 72, fair: 48, unsure: 45 };
+      credit = creditMap[d.credit] || 60;
+    }
 
     const debtPenalty = { none: 0, under5k: 10, '5k-15k': 20, '15k-30k': 30, '30k-50k': 38, over50k: 45 };
     // Employment stability base — blended across both applicants on a
@@ -1065,7 +1173,6 @@ RETURN EXACTLY THIS JSON SHAPE:
       ? Math.round((empBase(d.employment) + empBase(d.partnerEmployment)) / 2)
       : empBase(d.employment);
     let spending = stabilityBase - (debtPenalty[d.debtAmount] || 0);
-    if (d.openBanking) spending = Math.min(100, spending + 5);
     spending = Math.max(10, spending);
 
     const overall = Math.round(income * 0.25 + deposit * 0.25 + credit * 0.30 + spending * 0.20);
@@ -1080,9 +1187,11 @@ RETURN EXACTLY THIS JSON SHAPE:
     else insights.push({ type: 'improve', text: `At ${multiple.toFixed(1)}× income, you're above standard thresholds. A larger deposit or second income would help.` });
     if (d.depositPct < 10) insights.push({ type: 'improve', text: `Your ${d.depositPct}% deposit is below the 10% threshold. Reaching 10% opens significantly better rates.` });
     else insights.push({ type: 'positive', text: `A ${d.depositPct}% deposit is solid. You have access to a good range of mortgage products.` });
-    if (!d.openBanking) insights.push({ type: 'tip', text: 'Opting into a more accurate spending assessment could improve your score by up to 8 points — live bank connection is coming soon.' });
-    else insights.push({ type: 'tip', text: 'Your spending profile has been weighted more favourably in this estimate, as requested.' });
+    if (!d.openBanking) insights.push({ type: 'tip', text: 'Live bank connection via Open Banking is coming soon, and will let us assess your spending with real data rather than what you\'ve told us here.' });
+    else insights.push({ type: 'tip', text: 'Thanks for your interest in Open Banking — we\'ll let you know as soon as live bank connection is available.' });
     if (d.credit === 'unsure') insights.push({ type: 'tip', text: 'Checking your free credit report (Experian, Equifax, or TransUnion) before applying could meaningfully improve the accuracy of this score.' });
+    if (d.age && d.age + 27 > 75) insights.push({ type: 'tip', text: `At your age, the mortgage term most mainstream lenders can offer may be shorter than the standard 25-30 years — a specialist later-life lender could open up a longer term and better monthly affordability.` });
+    if ((d.employment === 'self-employed' || d.employment === 'contractor') && d.tradingYears === 'under1') insights.push({ type: 'tip', text: 'Most lenders want 2-3 years of trading accounts. Once you reach that, your income pillar should improve meaningfully.' });
 
     const topAction = d.depositPct < 10 ? 'Save to reach a 10% deposit — this is your single biggest unlock.'
       : credit === 'fair' || credit === 'poor' ? 'Focus on improving your credit profile — register to vote and clear any defaults.'
@@ -1338,6 +1447,72 @@ RETURN EXACTLY THIS JSON SHAPE:
       if (g) g.style.display = r.value === 'yes' ? 'flex' : 'none';
     });
   });
+  document.querySelectorAll('[name="employment"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const g = document.getElementById('tradingHistoryGroup');
+      if (g) g.style.display = (r.value === 'self-employed' || r.value === 'contractor') ? 'block' : 'none';
+    });
+  });
+  document.querySelectorAll('[name="credit"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const g = document.getElementById('creditRecencyGroup');
+      if (g) g.style.display = r.value === 'poor' ? 'block' : 'none';
+    });
+  });
+
+  // ── Government scheme eligibility by buying situation & country ──
+  // LISA and First Homes both require genuine first-time-buyer status.
+  // Mortgage Guarantee and Shared Ownership are open to movers too, but
+  // none of the purchase schemes apply to someone remortgaging an
+  // existing property (they're not buying anything).
+  const SCHEME_ELIGIBILITY = {
+    'none':              ['first-time', 'moving', 'remortgage', 'exploring'],
+    'lisa':              ['first-time', 'exploring'],
+    'first-homes':       ['first-time', 'exploring'],
+    'mortgage-guarantee':['first-time', 'moving', 'exploring'],
+    'shared-ownership':  ['first-time', 'moving', 'exploring'],
+  };
+  // First Homes is an England-only scheme — this was previously offered
+  // to everyone regardless of country, which was inaccurate for anyone
+  // buying in Scotland, Wales, or Northern Ireland.
+  const SCHEME_COUNTRIES = {
+    'first-homes': ['england'],
+  };
+  function applySchemeEligibility(situation, country) {
+    const cards = document.querySelectorAll('#schemesList [data-scheme]');
+    let hiddenAny = false;
+    cards.forEach(card => {
+      const key = card.dataset.scheme;
+      const situationOk = !situation || (SCHEME_ELIGIBILITY[key] || []).includes(situation);
+      const countryOk   = !country || !SCHEME_COUNTRIES[key] || SCHEME_COUNTRIES[key].includes(country);
+      const eligible = situationOk && countryOk;
+      card.style.display = eligible ? '' : 'none';
+      if (!eligible) {
+        hiddenAny = true;
+        const input = card.querySelector('input[type="radio"]');
+        if (input && input.checked) {
+          // Selected scheme is no longer eligible — reset to None
+          input.checked = false;
+          const noneInput = document.querySelector('#schemesList [data-scheme="none"] input');
+          if (noneInput) noneInput.checked = true;
+        }
+      }
+    });
+    const note = document.getElementById('schemesHiddenNote');
+    if (note) note.style.display = hiddenAny ? 'block' : 'none';
+  }
+  function currentSituation() { const el = document.querySelector('[name="situation"]:checked'); return el ? el.value : null; }
+  function currentCountry()   { const el = document.getElementById('country'); return el ? el.value : null; }
+  function refreshSchemeEligibility() { applySchemeEligibility(currentSituation(), currentCountry()); }
+
+  document.querySelectorAll('[name="situation"]').forEach(r => {
+    r.addEventListener('change', refreshSchemeEligibility);
+  });
+  const countrySelect = document.getElementById('country');
+  if (countrySelect) countrySelect.addEventListener('change', refreshSchemeEligibility);
+
+  // Apply on load in case fields were already set (e.g. back navigation)
+  refreshSchemeEligibility();
 </script>
 </body>
 </html>

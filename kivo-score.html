@@ -152,7 +152,7 @@
     <div class="nav__item"><a href="learn.html" class="nav__link">Resources <svg class="nav__caret" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="nav__dropdown"><a href="learn.html"><span class="dd-icon" style="background:#FFF0EC">📖</span>Learn</a><a href="tools.html"><span class="dd-icon" style="background:#E6FAF8">🧮</span>Tools</a><a href="faq.html"><span class="dd-icon" style="background:#FFF9E6">❓</span>FAQs</a></div></div>
     <a href="for-advisors.html" class="nav__link nav__link--teal">For Advisors</a>
   </nav>
-  <div class="header__actions"><a href="kivo-check.html" class="btn btn--primary btn--sm">Check Your Score <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a><button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
+  <div class="header__actions"><a href="kivo-check.html" class="btn btn--primary btn--sm" id="navScoreCta">Check Your Score <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a><button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
 </div></div></header>
 <div class="mobile-menu" id="mobile-menu"><div class="mobile-menu__section"><div class="mobile-menu__label">Features</div><a href="how-it-works.html">🏠 How it Works</a><a href="kivo-score.html">📊 Kivo Score</a><a href="kivo-check.html">✅ Kivo Check</a></div><div class="mobile-menu__cta"><a href="kivo-check.html" class="btn btn--primary btn--full">Check My Score — Free</a></div></div>
 
@@ -373,13 +373,13 @@
       <div id="aiPlanLoading" style="display:none;text-align:center;padding:40px;background:var(--white);border-radius:var(--r-xl);border:1px solid var(--border)">
         <div style="font-size:1.5rem;margin-bottom:12px">⚙️</div>
         <div style="font-family:var(--font-display);font-weight:600;color:var(--navy);margin-bottom:6px">Generating your personalised plan...</div>
-        <div style="font-size:.875rem;color:var(--slate)">Claude is analysing your specific numbers</div>
+        <div style="font-size:.875rem;color:var(--slate)">AI is analysing your specific numbers</div>
       </div>
       <div id="aiPlanContent"></div>
       <button onclick="regeneratePlan()" style="margin-top:12px;font-size:.8125rem;color:var(--slate);background:none;border:none;cursor:pointer;text-decoration:underline">↻ Regenerate plan</button>
     </div>
 
-    <div class="improve-cards">
+    <div class="improve-cards" id="genericImproveCards">
       <div class="improve-card fade-up">
         <div class="improve-card__impact" style="color:var(--teal)">High impact</div>
         <div class="improve-card__title">Save for a bigger deposit</div>
@@ -417,6 +417,17 @@
         <div class="improve-card__boost" style="color:var(--slate-lt)">↑ Up to +3 points</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- Advisories — real factors that matter to lenders but aren't scored
+     here, either because they need a human conversation (visa/residency)
+     or only apply to a subset of situations (chain dependency). -->
+<section class="section" id="advisoriesSection" style="display:none;background:var(--mist);padding-top:0">
+  <div class="container" style="max-width:760px">
+    <div class="section-label fade-up"><div class="section-label__line"></div><span>Worth Mentioning To Your Advisor</span></div>
+    <h2 class="t-display-md section-title fade-up fade-up-d1" style="margin-bottom:32px">A couple of things your score doesn't capture</h2>
+    <div id="advisoriesList" style="display:flex;flex-direction:column;gap:16px"></div>
   </div>
 </section>
 
@@ -460,6 +471,17 @@
     // Switch cards
     document.getElementById('scoreCardExample').style.display = 'none';
     document.getElementById('scoreCardPersonal').style.display = 'block';
+
+    // A score already exists — the top-right CTA is more useful pointing
+    // at the natural next step (finding an advisor) than back at the
+    // check they've already completed. The CTA at the bottom of the page
+    // still covers this too, but people rarely scroll that far on a
+    // return visit, and the nav is visible the whole time.
+    const navCta = document.getElementById('navScoreCta');
+    if (navCta) {
+      navCta.href = 'find-an-advisor.html';
+      navCta.innerHTML = 'Find an Advisor <svg class="btn-arrow" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    }
 
     const s = saved.overallScore;
     const p = saved.pillars || {};
@@ -546,6 +568,42 @@
       });
     })();
 
+    // Advisories — real factors worth flagging to a human advisor, but
+    // not scored here (either they need a conversation, like visa
+    // status, or only apply to some situations, like chain dependency).
+    (function populateAdvisories() {
+      const fd = saved.formData || {};
+      const cards = [];
+
+      if (fd.situation === 'moving') {
+        cards.push({
+          icon: '🔗',
+          title: 'Is your purchase chain-dependent?',
+          text: 'If buying this property depends on selling your current home first, that\'s a timing and readiness factor your score can\'t see. Flagging this early helps your advisor plan realistically around your chain.',
+        });
+      }
+
+      cards.push({
+        icon: '🛂',
+        title: 'Visa or residency status',
+        text: 'If you\'re not a UK or Irish citizen, your visa type and how long it has left to run can affect which lenders will consider you — some require a minimum remaining validity. This varies a lot by lender, so it\'s worth raising with your advisor early rather than after you\'ve found a property.',
+      });
+
+      const list = document.getElementById('advisoriesList');
+      const section = document.getElementById('advisoriesSection');
+      if (list && cards.length) {
+        list.innerHTML = cards.map(c => `
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 24px;display:flex;gap:16px;align-items:flex-start">
+            <div style="font-size:1.5rem;flex-shrink:0">${c.icon}</div>
+            <div>
+              <div style="font-weight:700;color:var(--navy);margin-bottom:4px">${c.title}</div>
+              <div style="font-size:.9375rem;color:var(--slate)">${c.text}</div>
+            </div>
+          </div>`).join('');
+        if (section) section.style.display = 'block';
+      }
+    })();
+
     // Date stamp
     const dateEl = document.getElementById('personalScoreDate');
     if (dateEl && saved.calculatedAt) {
@@ -612,6 +670,15 @@ async function loadImprovementPlan(saved) {
   container.style.display = 'block';
   loading.style.display   = 'block';
 
+  // The generic examples below are only a "before your real plan loads"
+  // placeholder — hide them once a personalised plan actually renders,
+  // otherwise both sets show at once (real plan above, generic examples
+  // still visible below it).
+  const hideGeneric = () => {
+    const generic = document.getElementById('genericImproveCards');
+    if (generic) generic.style.display = 'none';
+  };
+
   const cacheKey = 'kivoPlan_' + saved.overallScore + '_' + (saved.calculatedAt || '').slice(0, 10);
   try {
     const cached = JSON.parse(localStorage.getItem(cacheKey) || 'null');
@@ -621,6 +688,7 @@ async function loadImprovementPlan(saved) {
     if (cached && cached.headline && Array.isArray(cached.actions) && cached.actions.length > 0) {
       loading.style.display = 'none';
       planDiv.innerHTML = renderPlan(cached);
+      hideGeneric();
       return;
     }
     if (cached) localStorage.removeItem(cacheKey); // stale/invalid — clear it and regenerate
@@ -669,6 +737,7 @@ Return ONLY valid JSON (no markdown):
     }
     loading.style.display = 'none';
     planDiv.innerHTML = renderPlan(plan);
+    hideGeneric();
     try { localStorage.setItem(cacheKey, JSON.stringify(plan)); } catch(e) {}
   } catch(err) {
     loading.style.display = 'none';
@@ -678,14 +747,35 @@ Return ONLY valid JSON (no markdown):
 
 function renderPlan(plan) {
   const colours = { 'High': 'var(--teal)', 'Medium': '#F59E0B', 'Quick win': 'var(--slate)' };
+
+  // Turn generic advice into an actual next step where a real, neutral
+  // resource exists today — these don't depend on any unbuilt Kivo
+  // feature, so there's no reason to make people go find them themselves.
+  function actionLink(a) {
+    const t = (a.title + ' ' + a.text).toLowerCase();
+    if (/electoral roll|register to vote|voting/.test(t))
+      return { url: 'https://www.gov.uk/register-to-vote', label: 'Register now on gov.uk →' };
+    if (/credit report|credit file|credit score|credit history|ccj|default/.test(t))
+      return { url: 'https://www.moneyhelper.org.uk/en/everyday-money/credit/how-to-check-your-credit-report', label: 'Check your credit report free →' };
+    if (/stamp duty/.test(t))
+      return { url: 'tools.html', label: 'Estimate your stamp duty →' };
+    if (/lisa|lifetime isa/.test(t))
+      return { url: 'tools.html', label: 'See how much a LISA could add →' };
+    if (/pay down|outstanding debt|debt-to-income|consolidat/.test(t))
+      return { url: 'https://www.moneyhelper.org.uk/en/money-troubles/dealing-with-debt', label: 'Get free debt guidance →' };
+    return null;
+  }
+
   return `
     <div style="background:linear-gradient(135deg,var(--coral-lt),var(--teal-lt));border-radius:var(--r-lg);padding:20px 24px;margin-bottom:20px;border:1px solid var(--border)">
       <div style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--coral-dk);margin-bottom:6px">Your personalised plan</div>
       <div style="font-family:var(--font-display);font-weight:700;font-size:1.0625rem;color:var(--navy)">${plan.headline}</div>
     </div>
     <div class="improve-cards">
-      ${plan.actions.map((a, i) => `
-      <div class="improve-card fade-up" style="animation-delay:${i * 0.1}s">
+      ${plan.actions.map((a, i) => {
+        const link = actionLink(a);
+        return `
+      <div class="improve-card">
         <div class="improve-card__impact" style="color:${colours[a.impact] || 'var(--teal)'}">${a.impact}</div>
         <div class="improve-card__title">${a.title}</div>
         <div class="improve-card__text">${a.text}</div>
@@ -693,7 +783,9 @@ function renderPlan(plan) {
           <div class="improve-card__boost" style="color:${colours[a.impact] || 'var(--teal)'}">&#8593; ${a.boost}</div>
           <div style="font-size:.75rem;color:var(--slate-lt)">&#9201; ${a.timeframe}</div>
         </div>
-      </div>`).join('')}
+        ${link ? `<a href="${link.url}" ${link.url.startsWith('http') ? 'target="_blank" rel="noopener"' : ''} style="display:inline-block;margin-top:12px;font-size:.8125rem;font-weight:600;color:var(--coral)">${link.label}</a>` : ''}
+      </div>`;
+      }).join('')}
     </div>`;
 }
 
