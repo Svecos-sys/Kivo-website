@@ -727,8 +727,9 @@ async function explainPillar(key) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-5',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: `You are Kivo's friendly mortgage advisor. Explain in 3-4 short paragraphs why this user scored ${score}/100 for their ${PILLAR_LABELS[key]} pillar, and give 2 specific actionable things they can do to improve it. Use plain English and their actual numbers. No bullet points. Start directly.\n\nContext: ${ctx[key] || ''} Overall score: ${saved?.overallScore}/100.` }]
+        max_tokens: 500,
+        thinking: { type: 'disabled' },
+        messages: [{ role: 'user', content: `You are Kivo's friendly mortgage advisor. Explain in exactly 2 short paragraphs (no more) why this user scored ${score}/100 for their ${PILLAR_LABELS[key]} pillar, and give 2 specific actionable things they can do to improve it. Use plain English and their actual numbers. No bullet points. Start directly.\n\nContext: ${ctx[key] || ''} Overall score: ${saved?.overallScore}/100.` }]
       })
     });
     if (!response.ok) throw new Error('API error');
@@ -776,8 +777,6 @@ function initChat(saved) {
 function askSuggestion(btn) {
   const input = document.getElementById('chatInput');
   if (input) input.value = btn.textContent.trim();
-  const sugg = document.getElementById('chatSuggestions');
-  if (sugg) sugg.style.display = 'none';
   sendChatMessage();
 }
 
@@ -788,8 +787,6 @@ async function sendChatMessage() {
   if (!text) return;
   sendBtn.disabled = true;
   input.value      = '';
-  const sugg = document.getElementById('chatSuggestions');
-  if (sugg) sugg.style.display = 'none';
   appendChatMsg(text, 'user');
   _chatHistory.push({ role: 'user', content: text });
   const loadId = appendChatMsg('Thinking...', 'loading');
@@ -799,7 +796,8 @@ async function sendChatMessage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-5',
-        max_tokens: 800,
+        max_tokens: 400,
+        thinking: { type: 'disabled' },
         system: "You are Kivo's friendly AI mortgage advisor. Answer questions specifically about this user's mortgage readiness using their actual numbers. Keep answers concise (2-3 sentences). Be warm and clear. Note when relevant that this is guidance, not regulated advice.",
         messages: _chatHistory
       })
