@@ -592,6 +592,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }, 150);
 });
 
+// Claude Sonnet 5 has adaptive thinking on by default, which can put a
+// "thinking" content block before the "text" block — content[0] is no
+// longer reliably the answer. This finds the actual text block
+// regardless of position, instead of assuming index 0.
+function extractClaudeText(data) {
+  if (!data || !Array.isArray(data.content)) return '';
+  const textBlock = data.content.find(b => b.type === 'text');
+  return textBlock?.text || '';
+}
+
 // ── FEATURE 1: Personalised improvement plan ─────────────────
 
 async function loadImprovementPlan(saved) {
@@ -636,13 +646,14 @@ Return ONLY valid JSON (no markdown):
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-5',
-        max_tokens: 800,
+        max_tokens: 1500,
         messages: [{ role: 'user', content: prompt }]
       })
     });
     if (!response.ok) throw new Error('API ' + response.status);
     const data = await response.json();
-    const raw  = (data.content?.[0]?.text || '').replace(/```json|```/gi, '').trim();
+    const raw  = extractClaudeText(data).replace(/```json|```/gi, '').trim();
+    if (!raw) throw new Error('No text content in API response');
     const plan = JSON.parse(raw);
     loading.style.display = 'none';
     planDiv.innerHTML = renderPlan(plan);
@@ -716,13 +727,14 @@ async function explainPillar(key) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-5',
-        max_tokens: 500,
+        max_tokens: 1000,
         messages: [{ role: 'user', content: `You are Kivo's friendly mortgage advisor. Explain in 3-4 short paragraphs why this user scored ${score}/100 for their ${PILLAR_LABELS[key]} pillar, and give 2 specific actionable things they can do to improve it. Use plain English and their actual numbers. No bullet points. Start directly.\n\nContext: ${ctx[key] || ''} Overall score: ${saved?.overallScore}/100.` }]
       })
     });
     if (!response.ok) throw new Error('API error');
     const data = await response.json();
-    const text = (data.content?.[0]?.text || '').trim();
+    const text = extractClaudeText(data).trim();
+    if (!text) throw new Error('No text content in API response');
     const html = text.split(/\n\n+/).map(para => `<p style="margin-bottom:14px">${para}</p>`).join('');
     body.innerHTML = html + '<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:.8125rem;color:var(--slate-lt)">For guidance only. Always speak to a qualified, FCA-regulated mortgage adviser.</div>';
   } catch(err) {
@@ -787,14 +799,14 @@ async function sendChatMessage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-5',
-        max_tokens: 400,
+        max_tokens: 800,
         system: "You are Kivo's friendly AI mortgage advisor. Answer questions specifically about this user's mortgage readiness using their actual numbers. Keep answers concise (2-3 sentences). Be warm and clear. Note when relevant that this is guidance, not regulated advice.",
         messages: _chatHistory
       })
     });
     if (!response.ok) throw new Error('API ' + response.status);
     const data  = await response.json();
-    const reply = data.content?.[0]?.text || 'Sorry, something went wrong.';
+    const reply = extractClaudeText(data) || 'Sorry, something went wrong.';
     removeChatMsg(loadId);
     appendChatMsg(reply, 'kivo');
     _chatHistory.push({ role: 'assistant', content: reply });

@@ -438,7 +438,7 @@
         </div>
 
         <div class="form-group mt-24" id="ltv-hint" style="padding:14px;background:var(--teal-lt);border-radius:var(--r-md);border:1px solid #99E6DC">
-          <div style="font-size:.875rem;color:var(--teal-dk)">
+          <div id="ltvMsgWrap" style="font-size:.875rem;color:var(--teal-dk)">
             <strong>Your estimated LTV:</strong> <span id="ltvDisplay">92%</span> — 
             <span id="ltvMessage">A 10% deposit gives access to a wider range of mortgage products.</span>
           </div>
@@ -915,6 +915,16 @@ RETURN EXACTLY THIS JSON SHAPE:
   }
 
   // ── Main: call Claude API, render results ──────────────────
+  // Claude Sonnet 5 has adaptive thinking on by default, which can put
+  // a "thinking" content block before the "text" block — content[0]
+  // is no longer reliably the answer. This finds the actual text
+  // block regardless of position, instead of assuming index 0.
+  function extractClaudeText(data) {
+    if (!data || !Array.isArray(data.content)) return '';
+    const textBlock = data.content.find(b => b.type === 'text');
+    return textBlock?.text || '';
+  }
+
   async function showResults() {
     const emailInput = document.getElementById('userEmail');
     const consent    = document.getElementById('consentCheck');
@@ -933,14 +943,15 @@ RETURN EXACTLY THIS JSON SHAPE:
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model: 'claude-sonnet-5',
-          max_tokens: 1000,
+          max_tokens: 2000,
           messages: [{ role: 'user', content: buildPrompt(formData) }]
         })
       });
 
       if (!response.ok) throw new Error(`API error ${response.status}`);
       const data = await response.json();
-      const raw  = data.content?.[0]?.text || '';
+      const raw  = extractClaudeText(data);
+      if (!raw) throw new Error('No text content in API response — check for a truncated or thinking-only response');
 
       // Strip any accidental markdown fences
       const clean  = raw.replace(/```json|```/gi, '').trim();
@@ -1246,15 +1257,25 @@ RETURN EXACTLY THIS JSON SHAPE:
     const dep  = parseInt(depositSlider.value);
     const prop = parseInt(propertySlider.value);
     const ltv  = Math.round(((prop - dep) / prop) * 100);
-    const ltvEl = document.getElementById('ltvDisplay');
-    const msgEl = document.getElementById('ltvMessage');
+    const ltvEl  = document.getElementById('ltvDisplay');
+    const msgEl  = document.getElementById('ltvMessage');
+    const hintEl = document.getElementById('ltv-hint');
+    const wrapEl = document.getElementById('ltvMsgWrap');
     if (ltvEl) ltvEl.textContent = ltv + '%';
-    if (msgEl) {
-      if (ltv <= 75)      msgEl.textContent = 'Excellent LTV — you\'ll get access to the very best rates.';
-      else if (ltv <= 85) msgEl.textContent = 'Good LTV — a solid range of products available to you.';
-      else if (ltv <= 90) msgEl.textContent = 'A 10% deposit gives access to a wider range of products.';
-      else                msgEl.textContent = 'A smaller deposit may limit your options — we\'ll help you plan.';
-    }
+
+    // Colour now scales with risk, not just the message — lower LTV
+    // (bigger deposit) is lower risk/green, higher LTV is higher
+    // risk/amber-red. Previously the box was hardcoded teal regardless
+    // of the actual number.
+    let tier;
+    if (ltv <= 75)      tier = { msg: 'Excellent LTV — you\'ll get access to the very best rates.',            bg: 'var(--teal-lt)', border: '#99E6DC', text: 'var(--teal-dk)' };
+    else if (ltv <= 85) tier = { msg: 'Good LTV — a solid range of products available to you.',                 bg: 'var(--teal-lt)', border: '#99E6DC', text: 'var(--teal-dk)' };
+    else if (ltv <= 90) tier = { msg: 'A 10% deposit gives access to a wider range of products.',                bg: '#FFFBEB',        border: '#FDE68A', text: '#92400E' };
+    else                tier = { msg: 'A smaller deposit may limit your options — we\'ll help you plan.',       bg: '#FEF2F2',        border: '#FCA5A5', text: '#991B1B' };
+
+    if (msgEl)  msgEl.textContent = tier.msg;
+    if (hintEl) { hintEl.style.background = tier.bg; hintEl.style.borderColor = tier.border; }
+    if (wrapEl) wrapEl.style.color = tier.text;
   }
   if (depositSlider)  depositSlider.addEventListener('input', updateLTV);
   if (propertySlider) propertySlider.addEventListener('input', updateLTV);
